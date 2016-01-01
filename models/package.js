@@ -8,9 +8,11 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
     destinationCity: { type: DataTypes.STRING, allowNull: false },
     destinationState: { type: DataTypes.STRING },
     destinationCountry: { type: DataTypes.STRING, allowNull: false },
+    eta: { type: DataTypes.STRING },
+    serviceLevel: { type: DataTypes.DATE, allowNull: false },
   });
 
-  Package.createPackage = function createPackage(trackingNumber, carrier, origin, destination) {
+  Package.createPackage = function createPackage(trackingNumber, carrier, origin, destination, eta, serviceLevel) {
     return Package.create({
       trackingNumber,
       carrier,
@@ -20,6 +22,8 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
       destinationCity: destination.city,
       destinationState: destination.state,
       destinationCountry: destination.country,
+      eta,
+      serviceLevel,
     });
   };
 

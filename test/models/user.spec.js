@@ -8,6 +8,8 @@ const User = db.user;
 
 const email = 'dory@blue.fish';
 const password = 'findingbluefish';
+const eta = '2016-06-03T15:21:00Z';
+const serviceLevel = 'priority';
 
 describe('User Model', () => {
   beforeEach(setupDB);
@@ -57,6 +59,8 @@ describe('User Model', () => {
             originCountry: origin.country,
             destinationCity: destination.city,
             destinationCountry: destination.country,
+            eta,
+            serviceLevel,
           },
           {
             trackingNumber: '1800dankmemes',
@@ -65,6 +69,8 @@ describe('User Model', () => {
             originCountry: origin.country,
             destinationCity: destination.city,
             destinationCountry: destination.country,
+            eta,
+            serviceLevel,
           },
         ],
       }, {

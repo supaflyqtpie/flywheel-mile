@@ -41,6 +41,13 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      eta: {
+        type: Sequelize.DATE,
+      },
+      serviceLevel: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,

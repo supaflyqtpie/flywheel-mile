@@ -13,6 +13,9 @@ const country = 'Altoids';
 const status = 'Transit';
 const statusDetail = 'In transit';
 
+const eta = '2016-06-03T15:21:00Z';
+const serviceLevel = 'priority';
+
 describe('PackageHistory Model', () => {
   beforeEach(setupDB);
 
@@ -49,6 +52,8 @@ describe('PackageHistory Model', () => {
           originCountry: origin.country,
           destinationCity: destination.city,
           destinationCountry: destination.country,
+          eta,
+          serviceLevel,
         },
       }, {
         include: [Package],
