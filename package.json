@@ -1,0 +1,24 @@
+{
+  "name": "projects",
+  "version": "1.0.0",
+  "description": "hello world",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.13.4",
+    "httpdispatcher": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/supaflyqtpie/flywheel-mile.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/supaflyqtpie/flywheel-mile/issues"
+  },
+  "homepage": "https://github.com/supaflyqtpie/flywheel-mile"
+}
