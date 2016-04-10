@@ -37,7 +37,7 @@ jspm_packages
 target/*
 
 # sublime project
-flywheel-mile.sublime*
+flywheel_mile.sublime*
 
 # DS_Store
 .DS_Store
