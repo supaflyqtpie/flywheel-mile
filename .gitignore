@@ -28,3 +28,18 @@ node_modules
 
 # Debug log from npm
 npm-debug.log
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# target
+target/*
+
+# sublime project
+flywheel_mile.sublime*
+
+# DS_Store
+**/.DS_Store
