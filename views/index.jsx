@@ -3,14 +3,6 @@ var bootstrap = require('react-bootstrap');
 
 var Index = React.createClass({
   render: function() {
-    return  <div>
-              <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" charset="utf-8"></link>
-
-            </div>;
-          }
-});
-var Index = React.createClass({
-  render: function() {
     // return <div>Hello {this.props.name}</div>;
     return  <div>
               <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" charset="utf-8"></link>
