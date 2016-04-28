@@ -9,7 +9,6 @@ var Index = React.createClass({
               <div className="container">
                 <div className="row">
                   <div className="Absolute-Center is-Responsive vertical-center">
-                    <div id="logo-container"></div>
                     <div className="col-sm-12 col-md-10 col-md-offset-1">
                       <form action="" id="loginForm">
                         <div className="form-group input-group">
