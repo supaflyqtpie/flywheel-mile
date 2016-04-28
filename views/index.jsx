@@ -5,7 +5,7 @@ var Index = React.createClass({
   render: function() {
     // return <div>Hello {this.props.name}</div>;
     return  <div>
-              <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" charset="utf-8"></link>
+              <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" charSet="utf-8"></link>
               <div className="container">
                 <div className="row">
                   <div className="Absolute-Center is-Responsive vertical-center">
