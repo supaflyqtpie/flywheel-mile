@@ -1,0 +1,4 @@
+= Flywheel-Mile
+
+== Setup Database
+  node_modules/.bin/sequelize db:migrate

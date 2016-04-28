@@ -44,3 +44,6 @@ flywheel_mile.sublime*
 
 # DS_Store
 **/.DS_Store
+
+# database
+*.sqlite
