@@ -2,7 +2,11 @@ var React = require('react');
 
 var Error = React.createClass({
   render: function() {
-    return <h1>Error</h1>;
+    return  <div>
+              <h3>Error</h3>
+              <p>{this.props.message}</p>
+              <p>{this.props.err}</p>
+            </div>;
   }
 });
 
