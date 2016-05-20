@@ -1,9 +1,13 @@
 var React = require('react');
-var LandingPage = require('../landing_page');
 
 var ApplicationContainer = React.createClass({
   render: function() {
-    return <LandingPage />
+    return (
+      <html>
+        <head><title>{this.props.title}</title></head>
+        <body>{this.props.children}</body>
+      </html>
+    );
   }
 });
 

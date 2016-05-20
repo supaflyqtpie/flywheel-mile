@@ -1,9 +1,12 @@
 var React = require('react');
 var bootstrap = require('react-bootstrap');
+var ApplicationContainer = require('./layout/application_container');
 
 var LandingPage = React.createClass({
   render: function() {
-    return <div>Hello World</div>;
+    return  <ApplicationContainer title="Flywheel-Mile">
+              <div>Hello World</div>
+            </ApplicationContainer>
     // return  <div>
     //           <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" charSet="utf-8"></link>
     //           <div className="container">
