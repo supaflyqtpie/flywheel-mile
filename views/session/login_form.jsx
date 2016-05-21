@@ -5,11 +5,11 @@ var LoginForm = React.createClass({
     return  <div>
               <form action="" id="loginForm">
                 <div className="form-group input-group">
-                  <span className="input-group-addon"><i className="glyphicon glyphicon-user"></i></span>
+                  <span className="input-group-addon"><i className="fa fa-user" aria-hidden="true"></i></span>
                   <input className="form-control" type="text" name='username' placeholder="username"/>
                 </div>
                 <div className="form-group input-group">
-                  <span className="input-group-addon"><i className="glyphicon glyphicon-lock"></i></span>
+                  <span className="input-group-addon"><i className="fa fa-lock" aria-hidden="true"></i></span>
                   <input className="form-control" type="password" name='password' placeholder="password"/>
                 </div>
                 <div className="form-group">
