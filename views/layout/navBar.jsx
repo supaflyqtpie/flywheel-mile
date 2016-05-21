@@ -1,11 +1,8 @@
 var React = require('react');
-var bootstrap = require('react-bootstrap');
 
 var navBar = React.createClass({
   render: function() {
-    // return <div>Hello {this.props.name}</div>;
     return  <div>
-              <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" charSet="utf-8"></link>
               <nav className="navbar navbar-inverse navbar-static-top">
                 <div className="container">
                   <div className="navbar-header">

@@ -1,5 +1,6 @@
 var React = require('react');
 var LoginForm = require('./login_form');
+var RegistrationForm = require('./registration_form');
 
 var SessionContainer = React.createClass({
   render: function() {
