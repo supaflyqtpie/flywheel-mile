@@ -1,20 +1,23 @@
-var React = require('react');
+const React = require('react');
 
-var ApplicationContainer = React.createClass({
-  render: function() {
-    return (
-      <html>
-        <head>
-          <title>{this.props.title}</title>
-          <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" charSet="utf-8" />
-          <link rel="stylesheet" href="/css/font-awesome.min.css" />
-        </head>
-        <body>
-          {this.props.children}
-        </body>
-      </html>
-    );
-  }
-});
+const ApplicationContainer = function applicationContainer(props) {
+  return (
+    <html>
+      <head>
+        <title>{props.title}</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" charSet="utf-8" />
+        <link rel="stylesheet" href="/css/font-awesome.min.css" />
+      </head>
+      <body>
+        {props.children}
+      </body>
+    </html>
+  );
+};
+
+ApplicationContainer.propTypes = {
+  title: React.PropTypes.string,
+  children: React.PropTypes.element,
+};
 
 module.exports = ApplicationContainer;
