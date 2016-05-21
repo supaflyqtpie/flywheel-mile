@@ -1,13 +1,23 @@
-var React = require('react');
+const React = require('react');
+const ApplicationContainer = require('./application_container');
 
-var Error = React.createClass({
-  render: function() {
-    return  <div>
-              <h3>Error</h3>
-              <p>{this.props.message}</p>
-              <p>{this.props.err}</p>
-            </div>;
-  }
-});
+const Error = function error(props) {
+  return (
+    <ApplicationContainer title="Flywheel-Mile">
+      <div>
+        <h3>Error</h3>
+        <p>{props.message}</p>
+        <br />
+        <p>{props.err}</p>
+      </div>
+    </ApplicationContainer>
+  );
+};
+
+
+Error.propTypes = {
+  message: React.PropTypes.string,
+  err: React.PropTypes.object,
+};
 
 module.exports = Error;
