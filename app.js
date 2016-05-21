@@ -4,28 +4,51 @@ const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-
-const routes = require('./routes/index');
-const users = require('./routes/users');
+const passport = require('passport');
+const session = require('express-session');
+const flash = require('connect-flash');
 
 const app = express();
+
+// Passport setup and initialization
+app.use(session({
+    secret: "lalala",
+    name: "lalala",
+    proxy: true,
+    resave: true,
+    saveUninitialized: true
+}));
+
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+const initPassport = require('./passport_strategies/initLocalAuth');
+initPassport(passport);
+
+const routes = require('./routes/index')(passport);
+const users = require('./routes/users');
+const registration = require('./routes/registration')(passport);
+const logout = require('./routes/logout');
 
 // view engine setup
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
 
-
 // uncomment after placing your favicon in /public
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use('/', routes);
 app.use('/users', users);
+app.use('/register', registration);
+app.use('/logout', logout);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -41,11 +64,10 @@ app.use((req, res, next) => {
 // (err, req, res, next)
 if (app.get('env') === 'development') {
   app.use((err, req, res) => {
-    res.status(err.status || 500);
-    res.render('layout/error_page', {
-      message: err.message,
-      error: err,
-    });
+  res.status(err.status || 500);
+  res.render('layout/error_page', {
+    message: err.message,
+    error: err,
   });
 }
 
