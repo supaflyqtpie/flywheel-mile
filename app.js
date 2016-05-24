@@ -46,7 +46,7 @@ app.engine('jsx', require('express-react-views').createEngine());
 app.use('/', routes);
 app.use('/users', users);
 app.use('/register', registration);
-app.use('/logout', logout);
+app.use('/session', session);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -62,10 +62,11 @@ app.use((req, res, next) => {
 // (err, req, res, next)
 if (app.get('env') === 'development') {
   app.use((err, req, res) => {
-  res.status(err.status || 500);
-  res.render('layout/error_page', {
-    message: err.message,
-    error: err,
+    res.status(err.status || 500);
+    res.render('layout/error_page', {
+      message: err.message,
+      error: err,
+    });
   });
 }
 
