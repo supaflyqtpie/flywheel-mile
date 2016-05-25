@@ -1,38 +1,38 @@
-var models = require("../projects/models");
+const models = require('../models');
 
-var exports = module.exports = {};
+const exports = module.exports = {};
 
-exports.insertUser = function(email, password) {
-    return models.User.create({
-        email: email,
-        password: password
-    });
+exports.insertUser = function insertUser(email, password) {
+  return models.User.create({
+    email,
+    password,
+  });
 };
 
-exports.containsUser = function(email) {
-    return models.User.findOne({
-        where: {
-            email: email
-        }
-    });
+exports.containsUser = function containsUser(email) {
+  return models.User.findOne({
+    where: {
+      email,
+    },
+  });
 };
 
-exports.findOrCreate = function(email, password) {
-    models.User.findOrCreate({
-        where: {
-            email: email
-        },
-        defaults: {
-            email: email,
-            password: password
-        }
-    }).spread(function(user, created) {
-        if (!created) {
-            // TODO: logic for already existing user
-            console.log("User already exists!");
-        } else {
-            console.log("Created User");
-            console.log(user.dataValues);
-        }
-    });
+exports.findOrCreate = function findOrCreate(email, password) {
+  models.User.findOrCreate({
+    where: {
+      email,
+    },
+    defaults: {
+      email,
+      password,
+    },
+  }).spread((user, created) => {
+    if (!created) {
+      // TODO: logic for already existing user
+      console.log('User already exists!');
+    } else {
+      console.log('Created User');
+      console.log(user.dataValues);
+    }
+  });
 };

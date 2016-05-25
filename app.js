@@ -9,44 +9,47 @@ const session = require('express-session');
 
 const app = express();
 
-// Passport setup and initialization
-app.use(session({
-    secret: "lalala",
-    name: "lalala",
-    proxy: true,
-    resave: true,
-    saveUninitialized: true
-}));
-
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// Initialize App
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Setup sessions
+// TODO: setup secret key
+app.use(session({
+  secret: 'lalala',
+  name: 'user_session',
+  proxy: true,
+  resave: true,
+  saveUninitialized: true,
+}));
+
+// Setup Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
 const initPassport = require('./passport_strategies/initLocalAuth');
 initPassport(passport);
 
+// Initialize Routes
 const routes = require('./routes/index');
 const users = require('./routes/users');
 const registration = require('./routes/registration')(passport);
-const logout = require('./routes/session');
-
-// view engine setup
-app.set('views', path.join(__dirname, '/views'));
-app.set('view engine', 'jsx');
-app.engine('jsx', require('express-react-views').createEngine());
+const userSession = require('./routes/session');
 
 // Setup Routes
 app.use('/', routes);
 app.use('/users', users);
 app.use('/register', registration);
-app.use('/session', session);
+app.use('/session', userSession);
+
+// view engine setup
+app.set('views', path.join(__dirname, '/views'));
+app.set('view engine', 'jsx');
+app.engine('jsx', require('express-react-views').createEngine());
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
