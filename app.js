@@ -18,6 +18,7 @@ app.use(session({
     saveUninitialized: true
 }));
 
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -31,18 +32,17 @@ app.use(passport.session());
 const initPassport = require('./passport_strategies/initLocalAuth');
 initPassport(passport);
 
-const routes = require('./routes/index')(passport);
+const routes = require('./routes/index');
 const users = require('./routes/users');
 const registration = require('./routes/registration')(passport);
-const logout = require('./routes/logout');
+const logout = require('./routes/session');
 
 // view engine setup
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// Setup Routes
 app.use('/', routes);
 app.use('/users', users);
 app.use('/register', registration);
