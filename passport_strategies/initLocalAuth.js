@@ -1,35 +1,39 @@
-LocalStrategy = require('passport-local').Strategy;
-var models = require('../models');
+const LocalStrategy = require('passport-local').Strategy;
+const models = require('../models');
 
-module.exports = function(passport) {
-
-    passport.use('auth', new LocalStrategy({
-        usernameField: "email",
-        passwordField: "password",
-        passReqToCallback: true
-    }, function(req, email, password, done) {
-        models.User.findOne({
-            where: {
-                email: email
-            }
-        }).then(function(user) {
-            // Username does not exist, log the error and redirect back
-            if (!user) {
-                return done(null, false, { message: "Get REKT son" });
-            }
-            // User and password both match, return user from done method
-            // which will be treated like success
-            console.log("Successfully Authenticated: " + user.email);
-            return done(null, user);
+module.exports = function localAuthStrategy(passport) {
+  passport.use('auth', new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true,
+  }, (req, email, password, done) => {
+    models.User.findOne({
+      where: {
+        email,
+      },
+    }).then((user) => {
+      // Username does not exist, log the error and redirect back
+      if (!user) {
+        return done(null, false, {
+          message: 'Get REKT son',
         });
-    }));
-
-    passport.serializeUser(function(user, done) {
-        var sessionUser = { id: user.id, email: user.email };
-        done(null, sessionUser);
+      }
+      // User and password both match, return user from done method
+      // which will be treated like success
+      console.log(`Successfully Authenticated:  + ${user.email}`);
+      return done(null, user);
     });
+  }));
 
-    passport.deserializeUser(function(sessionUser, done) {
-        done(null, sessionUser);
-    });
+  passport.serializeUser((user, done) => {
+    const sessionUser = {
+      id: user.id,
+      email: user.email,
+    };
+    done(null, sessionUser);
+  });
+
+  passport.deserializeUser((sessionUser, done) => {
+    done(null, sessionUser);
+  });
 };
