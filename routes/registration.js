@@ -1,28 +1,31 @@
 const express = require('express');
 const router = express.Router();
-const UserModelProxy = require('../seed/UserModelProxy');
+const User = require('../models').User;
 
 module.exports = function registrationRoute(passport) {
+  // Post /register
   router.post('/', (req, res, next) => {
     const postData = req.body;
     if (postData.password !== postData.confirmPassword) {
-      res.send('passwords do not match');
+      res.status(422).send({ error: 'Passwords do not match.' });
       return;
     }
 
-    UserModelProxy.insertUser(postData.email,
-      postData.password).then(() => {
-        passport.authenticate('auth', (err, user, info) => {
-          if (err) {
-            console.log(err);
-            return next(err);
-          }
-
-          req.login(user, () => {
-            res.redirect('/users');
-          });
-        })(req, res, next);
-      });
+    User.createUser(postData.email, postData.password).then(() => {
+      passport.authenticate('auth', (err, user, info) => {
+        if (err) {
+          console.log(err);
+          return next(err);
+        }
+        // could be an issue
+        req.login(user, () => {
+          res.status(201).send({ email: user.email });
+        });
+      })(req, res, next);
+    }).catch((exception) => {
+      console.log(exception);
+      res.status(422).send({ error: 'Unable to create User.' });
+    });
   });
 
   return router;
