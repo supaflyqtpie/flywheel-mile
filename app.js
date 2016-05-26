@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
+const sassMiddleware = require('node-sass-middleware');
 
 const app = express();
 
@@ -15,6 +16,12 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(sassMiddleware({
+  src: 'public/scss',
+  dest: 'public',
+  root: __dirname,
+  prefix: '/css',
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Setup sessions

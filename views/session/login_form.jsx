@@ -4,6 +4,7 @@ class LoginForm extends React.Component {
   render() {
     return (
       <div>
+        <h2 className="text-center">Login</h2>
         <form action="" id="loginForm">
           <div className="form-group input-group">
             <span className="input-group-addon">
@@ -12,8 +13,8 @@ class LoginForm extends React.Component {
             <input
               className="form-control"
               type="text"
-              name="username"
-              placeholder="username"
+              name="email"
+              placeholder="Email Address"
             />
           </div>
           <div className="form-group input-group">
@@ -24,7 +25,7 @@ class LoginForm extends React.Component {
               className="form-control"
               type="password"
               name="password"
-              placeholder="password"
+              placeholder="Password"
             />
           </div>
           <div className="form-group">
