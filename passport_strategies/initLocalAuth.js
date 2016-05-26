@@ -1,39 +1,38 @@
 const LocalStrategy = require('passport-local').Strategy;
-const models = require('../models');
+const User = require('../models').User;
 
 module.exports = function localAuthStrategy(passport) {
   passport.use('auth', new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
-    passReqToCallback: true,
-  }, (req, email, password, done) => {
-    models.User.findOne({
-      where: {
-        email,
-      },
-    }).then((user) => {
-      // Username does not exist, log the error and redirect back
+  }, (email, password, done) => {
+    User.findByEmail(email).then((user) => {
       if (!user) {
+        console.log(`Email does not exist: ${email}`);
         return done(null, false, {
           message: 'Get REKT son',
         });
       }
-      // User and password both match, return user from done method
-      // which will be treated like success
-      console.log(`Successfully Authenticated:  + ${user.email}`);
+
+      // if (!user.validPassword(password)) {
+      //   return done(null, false, { message: 'Incorrect password.' });
+      // }
+
+      console.log(`Successfully Authenticated: ${user.email}`);
       return done(null, user);
+    }).catch((err) => {
+      console.log(err);
+      return done(err);
     });
   }));
 
   passport.serializeUser((user, done) => {
-    const sessionUser = {
-      id: user.id,
-      email: user.email,
-    };
-    done(null, sessionUser);
+    done(null, user.id);
   });
 
-  passport.deserializeUser((sessionUser, done) => {
-    done(null, sessionUser);
+  passport.deserializeUser((id, done) => {
+    User.findById(id).then((user) => {
+      done(null, user);
+    });
   });
 };

@@ -11,7 +11,7 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
     });
   };
 
-  User.containsUserByEmail = function containsUserByEmail(email) {
+  User.findByEmail = function findByEmail(email) {
     return User.findOne({
       where: {
         email,

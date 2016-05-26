@@ -36,14 +36,12 @@ initPassport(passport);
 
 // Initialize Routes
 const routes = require('./routes/index');
-const users = require('./routes/users');
-const registration = require('./routes/registration')(passport);
+const user = require('./routes/user');
 const userSession = require('./routes/session');
 
 // Setup Routes
 app.use('/', routes);
-app.use('/users', users);
-app.use('/register', registration);
+app.use('/user', user);
 app.use('/session', userSession);
 
 // view engine setup
