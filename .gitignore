@@ -47,3 +47,6 @@ flywheel_mile.sublime*
 
 # database
 *.sqlite
+
+# scss generated css files
+public/static
