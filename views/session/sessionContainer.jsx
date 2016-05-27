@@ -1,6 +1,6 @@
 const React = require('react');
-const LoginForm = require('./login_form');
-const RegistrationForm = require('./registration_form');
+const LoginForm = require('./loginForm');
+const RegistrationForm = require('./registrationForm');
 
 class SessionContainer extends React.Component {
 

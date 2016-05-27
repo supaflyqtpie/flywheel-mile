@@ -71,7 +71,7 @@ app.use((req, res, next) => {
 if (app.get('env') === 'development') {
   app.use((err, req, res) => {
     res.status(err.status || 500);
-    res.render('layout/error_page', {
+    res.render('layout/errorContainer', {
       message: err.message,
       error: err,
     });
@@ -83,7 +83,7 @@ if (app.get('env') === 'development') {
 // (err, req, res, next)
 app.use((err, req, res) => {
   res.status(err.status || 500);
-  res.render('layout/error_page', {
+  res.render('layout/errorContainer', {
     message: err.message,
     error: {},
   });

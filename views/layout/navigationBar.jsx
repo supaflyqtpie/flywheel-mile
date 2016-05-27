@@ -1,6 +1,6 @@
 const React = require('react');
 
-class navBar extends React.Component {
+class NavigationBar extends React.Component {
   render() {
     return (
       <div>
@@ -76,4 +76,4 @@ class navBar extends React.Component {
   }
 }
 
-module.exports = navBar;
+module.exports = NavigationBar;
