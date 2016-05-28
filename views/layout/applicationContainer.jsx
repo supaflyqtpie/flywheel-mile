@@ -18,7 +18,7 @@ const ApplicationContainer = function applicationContainer(props) {
 
 ApplicationContainer.propTypes = {
   title: React.PropTypes.string,
-  children: React.PropTypes.element,
+  children: React.PropTypes.arrayOf(React.PropTypes.element),
 };
 
 module.exports = ApplicationContainer;
