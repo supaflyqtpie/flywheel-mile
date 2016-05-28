@@ -1,5 +1,5 @@
 const React = require('react');
-const ApplicationContainer = require('./application_container');
+const ApplicationContainer = require('./applicationContainer');
 
 const Error = function error(props) {
   return (

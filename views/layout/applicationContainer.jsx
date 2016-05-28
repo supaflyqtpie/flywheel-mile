@@ -7,6 +7,7 @@ const ApplicationContainer = function applicationContainer(props) {
         <title>{props.title}</title>
         <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" charSet="utf-8" />
         <link rel="stylesheet" href="/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="/static/css/application.css" />
       </head>
       <body>
         {props.children}
