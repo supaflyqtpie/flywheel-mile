@@ -1,16 +1,16 @@
 const React = require('react');
-const ApplicationContainer = require('./applicationContainer');
+const ApplicationBase = require('./applicationBase');
 
 const Error = function error(props) {
   return (
-    <ApplicationContainer title="Flywheel-Mile">
+    <ApplicationBase title="Flywheel-Mile">
       <div>
         <h3>Error</h3>
         <p>{props.message}</p>
         <br />
         <p>{props.err}</p>
       </div>
-    </ApplicationContainer>
+    </ApplicationBase>
   );
 };
 

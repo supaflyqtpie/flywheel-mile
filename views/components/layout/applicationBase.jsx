@@ -1,6 +1,6 @@
 const React = require('react');
 
-const ApplicationContainer = function applicationContainer(props) {
+const ApplicationBase = function applicationBase(props) {
   return (
     <html>
       <head>
@@ -16,9 +16,9 @@ const ApplicationContainer = function applicationContainer(props) {
   );
 };
 
-ApplicationContainer.propTypes = {
+ApplicationBase.propTypes = {
   title: React.PropTypes.string,
   children: React.PropTypes.arrayOf(React.PropTypes.element),
 };
 
-module.exports = ApplicationContainer;
+module.exports = ApplicationBase;
