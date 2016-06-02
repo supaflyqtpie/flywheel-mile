@@ -5,7 +5,7 @@ const Error = function error(props) {
   return (
     <ApplicationBase title="Flywheel-Mile">
       <div>
-        <h3>Error</h3>
+        <h3>Get rekt!</h3>
         <p>{props.message}</p>
         <br />
         <p>{props.err}</p>

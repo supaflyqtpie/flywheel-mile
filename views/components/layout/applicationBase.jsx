@@ -1,4 +1,5 @@
 const React = require('react');
+const NavigationBar = require('./navigationBar');
 
 const ApplicationBase = function applicationBase(props) {
   return (
@@ -10,6 +11,8 @@ const ApplicationBase = function applicationBase(props) {
         <link rel="stylesheet" href="/static/css/application.css" />
       </head>
       <body>
+        {/* provider*/}
+        <NavigationBar />
         {props.children}
       </body>
     </html>
