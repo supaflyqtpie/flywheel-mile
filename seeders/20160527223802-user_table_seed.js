@@ -14,7 +14,7 @@ module.exports = {
     */
     return queryInterface.bulkInsert('Users', [
         // id must be unique in db
-        { id: 1, createdAt: new Date(), updatedAt: new Date(), email: 'test@gmail.com', password: 'test' }
+        { createdAt: new Date(), updatedAt: new Date(), email: 'test@gmail.com', password: 'test' }
     ]);
   },
   down: function (queryInterface, Sequelize) {
