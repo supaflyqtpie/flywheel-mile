@@ -12,10 +12,12 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    return [queryInterface.bulkInsert('User', [
-        { email: 'test@gmail.com', password: 'test' },
-        { email: 'raymondjiang2001@yahoo.com', password: 'test' },
-        { email: 'alanlysuckslol@hotmail.com', password: 'test' }
-    ])];
+    return queryInterface.bulkInsert('Users', [
+        // id must be unique in db
+        { id: 1, createdAt: new Date(), updatedAt: new Date(), email: 'test@gmail.com', password: 'test' }
+    ]);
+  },
+  down: function (queryInterface, Sequelize) {
+
   }
 };

@@ -2,3 +2,6 @@
 
 == Setup Database
   node_modules/.bin/sequelize db:migrate
+
+== Seed Database
+  node_modules/.bin/sequelize db:seed:all
