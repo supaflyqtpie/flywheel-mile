@@ -1,8 +1,8 @@
 const React = require('react');
-const LoginForm = require('./loginForm');
-const RegistrationForm = require('./registrationForm');
+const LoginForm = require('./loginForm.jsx');
+const RegistrationForm = require('./registrationForm.jsx');
 
-class SessionComponent extends React.Component {
+class Session extends React.Component {
 
   render() {
     return (
@@ -21,4 +21,4 @@ class SessionComponent extends React.Component {
 
 }
 
-module.exports = SessionComponent;
+module.exports = Session;
