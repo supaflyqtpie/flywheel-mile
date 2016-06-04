@@ -1,6 +1,6 @@
-const React = require('react');
-const LoginForm = require('./loginForm.jsx');
-const RegistrationForm = require('./registrationForm.jsx');
+import React from 'react';
+import LoginForm from './loginForm.jsx';
+import RegistrationForm from './registrationForm.jsx';
 
 class Session extends React.Component {
 

@@ -7,7 +7,10 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
 const sassMiddleware = require('node-sass-middleware');
-const config = require('./webpack.config')
+const webpackConfig = require('./webpack.config');
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
 
 const app = express();
 
@@ -26,9 +29,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Setup dev webpack
 if (app.get('env') === 'development') {
-  const compiler = require('webpack')(config)
-  app.use(require('webpack-dev-middleware')(compiler, { noInfo: true, publicPath: config.output.publicPath }))
-  app.use(require('webpack-hot-middleware')(compiler))
+  const compiler = webpack(webpackConfig);
+  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: webpackConfig.output.publicPath }));
+  app.use(webpackHotMiddleware(compiler));
 }
 
 // Setup sessions
