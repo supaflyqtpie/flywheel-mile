@@ -1,5 +1,5 @@
 import React from 'react';
-import NavigationBar from './navigationBar.jsx';
+import NavigationBar from './navigationBar';
 
 const App = function app({ children }) {
   return (

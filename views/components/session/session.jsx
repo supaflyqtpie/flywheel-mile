@@ -1,6 +1,6 @@
 import React from 'react';
-import LoginForm from './loginForm.jsx';
-import RegistrationForm from './registrationForm.jsx';
+import LoginForm from './loginForm';
+import RegistrationForm from './registrationForm';
 
 class Session extends React.Component {
 

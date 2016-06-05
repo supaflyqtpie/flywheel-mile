@@ -24,4 +24,7 @@ module.exports = {
       include: __dirname,
     }],
   },
+  resolve: {
+    extensions: ['', '.js', '.jsx'],
+  },
 };
