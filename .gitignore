@@ -50,3 +50,6 @@ flywheel_mile.sublime*
 
 # scss generated css files
 public/static
+
+# ctags -R --exclude=.git --exclude=node_modules
+tags
