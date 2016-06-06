@@ -32,9 +32,7 @@ function session(state = {}, action) {
     case PROCESS_USER:
     case SIGNED_IN:
     case SIGNED_OUT:
-      return Object.assign({}, state, {
-        session: user(state.session, action),
-      });
+      return Object.assign({}, state, user(state.session, action));
     default:
       return state;
   }

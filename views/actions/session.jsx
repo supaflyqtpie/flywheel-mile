@@ -53,7 +53,10 @@ function destroySession() {
     dispatch(processUser());
     return fetch('/session', {
       method: 'DELETE',
-    }).then(() => dispatch(signedOut()));
+    }).then(() => {
+      dispatch(signedOut());
+      dispatch(push('/'));
+    });
   };
 }
 
