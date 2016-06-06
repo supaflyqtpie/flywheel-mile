@@ -41,6 +41,12 @@ const NavigationBar = function navigationBar({ email, signedIn, onLogoutClick })
   );
 };
 
+NavigationBar.propTypes = {
+  email: React.PropTypes.string,
+  signedIn: React.PropTypes.bool,
+  onLogoutClick: React.PropTypes.func,
+};
+
 function mapStateToProps(state) {
   return {
     email: state.session.email,
