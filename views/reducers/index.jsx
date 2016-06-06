@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import userSessions from './session';
 
-const index = combineReducers({
+const rootReducer = combineReducers({
   userSessions,
 });
 
-module.exports = index;
+export default rootReducer;
