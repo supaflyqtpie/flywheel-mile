@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import userSessions from './session';
+import session from './session';
 
 const rootReducer = combineReducers({
-  userSessions,
+  session,
   routing: routerReducer,
 });
 

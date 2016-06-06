@@ -13,7 +13,7 @@ module.exports = function sessionRoutes(passport) {
   // Destroy user session: destroy /session
   router.delete('/', (req, res) => {
     req.session.destroy((err) => {
-      res.redirect('/');
+      res.end();
     });
   });
 

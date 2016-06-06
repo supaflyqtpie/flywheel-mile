@@ -27,7 +27,7 @@ const user = function user(state = {
   }
 };
 
-function userSessions(state = {}, action) {
+function session(state = {}, action) {
   switch (action.type) {
     case PROCESS_USER:
     case SIGNED_IN:
@@ -40,4 +40,4 @@ function userSessions(state = {}, action) {
   }
 }
 
-module.exports = userSessions;
+module.exports = session;
