@@ -4,7 +4,10 @@ const router = express.Router();
 module.exports = function sessionRoutes(passport) {
   // Create user session: post /session
   router.post('/', passport.authenticate('auth'), (req, res) => {
-    res.json(req.user);
+    res.json({
+      id: req.user.id,
+      email: req.user.email,
+    });
   });
 
   // Destroy user session: destroy /session

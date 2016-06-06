@@ -1,5 +1,3 @@
-import fetch from 'isomorphic-fetch';
-
 export const PROCESS_USER = 'PROCESS_USER';
 export const SIGNED_IN = 'SIGNED_IN';
 export const SIGNED_OUT = 'SIGNED_OUT';
@@ -13,7 +11,7 @@ function processUser() {
 function signedIn(json) {
   return {
     type: SIGNED_IN,
-    email: json.data.email,
+    email: json.email,
   };
 }
 
@@ -28,6 +26,9 @@ function createSession(user) {
     dispatch(processUser());
     return fetch('/session', {
       method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
       body: JSON.stringify(user),
     }).then(response => response.json())
       .then(json => dispatch(signedIn(json)));
@@ -46,7 +47,7 @@ function destroySession() {
   return dispatch => {
     dispatch(processUser());
     return fetch('/session', {
-      method: 'DESTROY',
+      method: 'DELETE',
     }).then(response => response.json())
       .then(json => dispatch(signedOut()));
   };
