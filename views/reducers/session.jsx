@@ -3,7 +3,7 @@ import { PROCESS_USER, SIGNED_IN, SIGNED_OUT } from '../actions/session';
 const user = function user(state = {
   isProcessing: false,
   signedIn: false,
-  username: '',
+  email: '',
 }, action) {
   switch (action.type) {
     case PROCESS_USER:
@@ -14,13 +14,13 @@ const user = function user(state = {
       return Object.assign({}, state, {
         isProcessing: false,
         signedIn: true,
-        username: action.username,
+        email: action.email,
       });
     case SIGNED_OUT:
       return Object.assign({}, state, {
         isProcessing: false,
         signedIn: false,
-        username: '',
+        email: '',
       });
     default:
       return state;

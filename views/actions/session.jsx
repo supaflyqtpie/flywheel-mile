@@ -13,7 +13,7 @@ function processUser() {
 function signedIn(json) {
   return {
     type: SIGNED_IN,
-    username: json.data.username,
+    email: json.data.email,
   };
 }
 
@@ -34,7 +34,11 @@ function createSession(user) {
   };
 }
 
-export function userSignIn(user) {
+export function loginUser(email, password) {
+  const user = {
+    email,
+    password,
+  };
   return (dispatch, getState) => dispatch(createSession(user));
 }
 
@@ -48,6 +52,6 @@ function destroySession() {
   };
 }
 
-export function userSignOut() {
+export function logoutUser() {
   return (dispatch, getState) => dispatch(destroySession());
 }
