@@ -28,7 +28,7 @@ function createSession(user) {
     dispatch(processUser());
     return fetch('/session', {
       method: 'POST',
-      body: user.json,
+      body: JSON.stringify(user),
     }).then(response => response.json())
       .then(json => dispatch(signedIn(json)));
   };
