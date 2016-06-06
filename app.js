@@ -7,6 +7,10 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
 const sassMiddleware = require('node-sass-middleware');
+const webpackConfig = require('./webpack.config');
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
 
 const app = express();
 
@@ -22,6 +26,13 @@ app.use(sassMiddleware({
   prefix: '/static/css',
 }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Setup dev webpack
+if (app.get('env') === 'development') {
+  const compiler = webpack(webpackConfig);
+  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: webpackConfig.output.publicPath }));
+  app.use(webpackHotMiddleware(compiler));
+}
 
 // Setup sessions
 // TODO: setup secret key
@@ -50,11 +61,6 @@ app.use('/', routes);
 app.use('/user', user);
 app.use('/session', userSession);
 
-// view engine setup
-app.set('views', path.join(__dirname, '/views'));
-app.set('view engine', 'jsx');
-app.engine('jsx', require('express-react-views').createEngine());
-
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');
@@ -69,7 +75,7 @@ app.use((req, res, next) => {
 if (app.get('env') === 'development') {
   app.use((err, req, res, next) => {
     res.status(err.status || 500);
-    res.render('layout/errorContainer', {
+    res.json({
       message: err.message,
       error: err,
     });
@@ -80,7 +86,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
-  res.render('layout/errorContainer', {
+  res.json({
     message: err.message,
     error: {},
   });

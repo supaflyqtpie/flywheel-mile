@@ -1,0 +1,17 @@
+import React from 'react';
+import NavigationBar from './navigationBar.jsx';
+
+const App = function app({ children }) {
+  return (
+    <div>
+      <NavigationBar />
+      {children}
+    </div>
+  );
+};
+
+App.propTypes = {
+  children: React.PropTypes.arrayOf(React.PropTypes.element),
+};
+
+module.exports = App;
