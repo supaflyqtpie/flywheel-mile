@@ -5,3 +5,16 @@
 
 == Seed Database
   node_modules/.bin/sequelize db:seed:all
+
+== TODO
+=== UI
+  * Landing page
+  * Package detail page
+  * Update user page with list of packages
+  * Logout functionality
+  * basic error handling for authentication
+=== Back-end
+  * Hook up logout/register functionality
+  * New table for package information
+  * RESTful API to update package information in db
+  * Hook up redux to server
