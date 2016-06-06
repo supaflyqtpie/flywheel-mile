@@ -4,58 +4,50 @@ export const PROCESS_USER = 'PROCESS_USER';
 export const SIGNED_IN = 'SIGNED_IN';
 export const SIGNED_OUT = 'SIGNED_OUT';
 
-export function processUser() {
+function processUser() {
   return {
     type: PROCESS_USER,
   };
 }
 
-export function signedIn(json) {
+function signedIn(json) {
   return {
     type: SIGNED_IN,
     username: json.data.username,
   };
 }
 
-export function signedOut() {
+function signedOut() {
   return {
     type: SIGNED_OUT,
   };
 }
 
-// function receivePosts(reddit, json) {
-//   return {
-//     type: RECEIVE_POSTS,
-//     reddit,
-//     posts: json.data.children.map(child => child.data),
-//     receivedAt: Date.now()
-//   }
-// }
-//
-// function fetchPosts(reddit) {
-//   return dispatch => {
-//     dispatch(requestPosts(reddit))
-//     return fetch(`https://www.reddit.com/r/${reddit}.json`)
-//       .then(response => response.json())
-//       .then(json => dispatch(receivePosts(reddit, json)))
-//   }
-// }
-//
-// function shouldFetchPosts(state, reddit) {
-//   const posts = state.postsByReddit[reddit]
-//   if (!posts) {
-//     return true
-//   }
-//   if (posts.isFetching) {
-//     return false
-//   }
-//   return posts.didInvalidate
-// }
-//
-// export function fetchPostsIfNeeded(reddit) {
-//   return (dispatch, getState) => {
-//     if (shouldFetchPosts(getState(), reddit)) {
-//       return dispatch(fetchPosts(reddit))
-//     }
-//   }
-// }
+function createSession(user) {
+  return dispatch => {
+    dispatch(processUser());
+    return fetch('/session', {
+      method: 'POST',
+      body: user.json,
+    }).then(response => response.json())
+      .then(json => dispatch(signedIn(json)));
+  };
+}
+
+export function userSignIn(user) {
+  return (dispatch, getState) => dispatch(createSession(user));
+}
+
+function destroySession() {
+  return dispatch => {
+    dispatch(processUser());
+    return fetch('/session', {
+      method: 'DESTROY',
+    }).then(response => response.json())
+      .then(json => dispatch(signedOut()));
+  };
+}
+
+export function userSignOut() {
+  return (dispatch, getState) => dispatch(destroySession());
+}

@@ -1,4 +1,4 @@
-import { PROCESS_USER, SIGNED_IN, SIGNED_OUT } from '../actions/user';
+import { PROCESS_USER, SIGNED_IN, SIGNED_OUT } from '../actions/session';
 
 const user = function user(state = {
   isProcessing: false,
