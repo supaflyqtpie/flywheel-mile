@@ -11,7 +11,7 @@ const App = function app({ children }) {
 };
 
 App.propTypes = {
-  children: React.PropTypes.arrayOf(React.PropTypes.element),
+  children: React.PropTypes.object,
 };
 
 module.exports = App;
