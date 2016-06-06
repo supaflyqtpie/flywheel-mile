@@ -1,3 +1,5 @@
+import { push } from 'react-router-redux';
+
 export const PROCESS_USER = 'PROCESS_USER';
 export const SIGNED_IN = 'SIGNED_IN';
 export const SIGNED_OUT = 'SIGNED_OUT';
@@ -31,7 +33,10 @@ function createSession(user) {
       },
       body: JSON.stringify(user),
     }).then(response => response.json())
-      .then(json => dispatch(signedIn(json)));
+      .then(json => {
+        dispatch(signedIn(json));
+        dispatch(push('/packages'));
+      });
   };
 }
 
