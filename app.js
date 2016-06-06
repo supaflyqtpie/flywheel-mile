@@ -54,7 +54,7 @@ initPassport(passport);
 // Initialize Routes
 const routes = require('./routes/index');
 const user = require('./routes/user');
-const userSession = require('./routes/session');
+const userSession = require('./routes/session')(passport);
 
 // Setup Routes
 app.use('/', routes);

@@ -8,7 +8,7 @@ module.exports = function sessionRoutes(passport) {
   });
 
   // Destroy user session: destroy /session
-  router.destroy('/', (req, res) => {
+  router.delete('/', (req, res) => {
     req.session.destroy((err) => {
       res.redirect('/');
     });
