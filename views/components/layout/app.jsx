@@ -1,5 +1,5 @@
 import React from 'react';
-import NavigationBar from './navigationBar.jsx';
+import NavigationBar from './navigationBar';
 
 const App = function app({ children }) {
   return (
@@ -11,7 +11,7 @@ const App = function app({ children }) {
 };
 
 App.propTypes = {
-  children: React.PropTypes.arrayOf(React.PropTypes.element),
+  children: React.PropTypes.object,
 };
 
 module.exports = App;
