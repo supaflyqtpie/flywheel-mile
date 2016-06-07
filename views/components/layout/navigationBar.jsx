@@ -26,13 +26,20 @@ const NavigationBar = function navigationBar({ email, signedIn, onLogoutClick })
           </div>
           <div id="navbar3" className="navbar-collapse collapse">
             <ul className="nav navbar-nav navbar-right">
-              <li>
-                {
-                  signedIn
-                  ? <a onClick={onLogoutClick}>Logout</a>
-                  : <Link to="/login">Login</Link>
-                }
-              </li>
+              {signedIn?
+                <li>
+                  <Link to="/packages">My Packages</Link>
+                </li> : false
+              }
+              {signedIn?
+                <li>
+                  <a onClick={onLogoutClick}>Logout</a>
+                </li>
+              :
+                <li>
+                  <Link to="/login">Login</Link>
+                </li>
+              }
             </ul>
           </div>
         </div>
