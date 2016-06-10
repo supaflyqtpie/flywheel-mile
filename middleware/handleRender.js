@@ -3,7 +3,7 @@ import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { createMemoryHistory, match, RouterContext } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
-import { configureStore } from '../views/store/configureStore';
+import configureStore from '../views/store/configureStore';
 import routes from '../views/components/routes';
 
 function renderFullPage(html, initialState) {
@@ -31,7 +31,6 @@ module.exports = function handleRender(req, res, next) {
   const memoryHistory = createMemoryHistory(req.url);
   const store = configureStore(memoryHistory);
   const history = syncHistoryWithStore(memoryHistory, store);
-  console.log("In handleRender:", req);
   match({ history, routes, location: req.url }, (error, redirectLocation, renderProps) => {
     if (error) {
       res.status(500).send(error.message);
@@ -45,6 +44,9 @@ module.exports = function handleRender(req, res, next) {
       );
 
       res.send(renderFullPage(htmlContent, store));
+    } else {
+      // continue any server routes - should remove on full client/server split
+      next();
     }
   });
-}
+};
