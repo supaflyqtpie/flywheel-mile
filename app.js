@@ -54,13 +54,11 @@ const initPassport = require('./passport_strategies/initLocalAuth');
 initPassport(passport);
 
 // Initialize Routes
-// const routes = require('./routes/index');
 const user = require('./routes/user');
 const userSession = require('./routes/session')(passport);
 
 // Setup Routes
 app.use(handleRender);
-// app.use('/', routes);
 app.use('/user', user);
 app.use('/session', userSession);
 
