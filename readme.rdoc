@@ -20,7 +20,5 @@
 === Back-end
   * New table for package information and link to users table with foreign key
   * restful packages routes for get list, post new, delete old
-  * initialize state from server
-  * redirect all get routes to home, and pass in route resource and directly set route state/page
-  * authenticate all routes except get index and session
+  * authenticate all routes except get index and session and send to unauthorized page
   * implement initial mail api

@@ -10,7 +10,7 @@ function processUser() {
   };
 }
 
-function signedIn(json) {
+export function signedIn(json) {
   return {
     type: SIGNED_IN,
     email: json.email,

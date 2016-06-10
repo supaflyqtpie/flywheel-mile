@@ -33,7 +33,7 @@ const NavigationBar = function navigationBar({ email, signedIn, onLogoutClick })
               }
               {signedIn?
                 <li>
-                  <a onClick={onLogoutClick}>Logout</a>
+                  <Link to="/" onClick={onLogoutClick}>Logout</Link>
                 </li>
               :
                 <li>
@@ -63,7 +63,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {
-    onLogoutClick: () => {
+    onLogoutClick: (e) => {
+      e.preventDefault();
       dispatch(logoutUser());
     },
   };
