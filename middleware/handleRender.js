@@ -5,6 +5,7 @@ import { createMemoryHistory, match, RouterContext } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import configureStore from '../views/store/configureStore';
 import routes from '../views/components/routes';
+import { signedIn } from '../views/actions/session';
 
 function renderFullPage(html, initialState) {
   return `
@@ -37,13 +38,16 @@ module.exports = function handleRender(req, res, next) {
     } else if (redirectLocation) {
       res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (renderProps) {
+      if (req.user) {
+        store.dispatch(signedIn(req.user));
+      }
       const htmlContent = renderToString(
         <Provider store={store}>
           <RouterContext {...renderProps} />
         </Provider>
       );
 
-      res.send(renderFullPage(htmlContent, store));
+      res.send(renderFullPage(htmlContent, store.getState()));
     } else {
       // continue any server routes - should remove on full client/server split
       next();
