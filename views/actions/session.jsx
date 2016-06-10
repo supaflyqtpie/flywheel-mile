@@ -28,6 +28,7 @@ function createSession(user) {
     dispatch(processUser());
     return fetch('/session', {
       method: 'POST',
+      credentials: 'same-origin',
       headers: {
         'Content-type': 'application/json',
       },
@@ -52,6 +53,7 @@ function destroySession() {
   return dispatch => {
     dispatch(processUser());
     return fetch('/session', {
+      credentials: 'same-origin',
       method: 'DELETE',
     }).then(() => {
       dispatch(signedOut());
