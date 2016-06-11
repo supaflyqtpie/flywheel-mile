@@ -26,7 +26,7 @@ function signedOut() {
 function createSession(user) {
   return dispatch => {
     dispatch(processUser());
-    return fetch('/session', {
+    return fetch('/api/session', {
       method: 'POST',
       credentials: 'same-origin',
       headers: {
@@ -52,7 +52,7 @@ export function loginUser(email, password) {
 function destroySession() {
   return dispatch => {
     dispatch(processUser());
-    return fetch('/session', {
+    return fetch('/api/session', {
       credentials: 'same-origin',
       method: 'DELETE',
     }).then(() => {
