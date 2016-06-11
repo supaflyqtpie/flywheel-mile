@@ -13,6 +13,7 @@ const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const handleRender = require('./middleware/handleRender');
+const handleAuthentication = require('./middleware/handleAuthentication');
 
 const app = express();
 
@@ -57,12 +58,15 @@ initPassport(passport);
 const user = require('./routes/user');
 const userSession = require('./routes/session')(passport);
 
+// Setup client route rendering
+app.use(handleRender);
+
 // Setup server API routes
 app.use('/user', user);
 app.use('/session', userSession);
 
-// Setup client route rendering
-app.use(handleRender);
+// Setup authentication for routes after
+app.use(handleAuthentication);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
