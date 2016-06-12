@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { registerUser } from '../../actions/session';
 
 const RegistrationForm = ({ dispatch }) => {
   let emailInput;
@@ -17,7 +18,7 @@ const RegistrationForm = ({ dispatch }) => {
           if (!emailInput.value.trim() || !passwordInput.value || !passwordConfirmInput.value) {
             return;
           }
-          // dispatch(loginUser(emailInput.value, passwordInput.value));
+          dispatch(registerUser(emailInput.value, passwordInput.value, passwordConfirmInput.value));
           passwordInput.value = emailInput.value = passwordConfirmInput.value ='';
         }}
       >
