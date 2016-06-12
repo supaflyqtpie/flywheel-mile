@@ -1,51 +1,78 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-class RegistrationForm extends React.Component {
-  render() {
-    return (
-      <div>
-        <h2 className="text-center">Sign Up</h2>
-        <form className="form-horizontal" action="/user" method="post" id="registerForm">
-          <div className="form-group input-group">
-            <span className="input-group-addon">
-              <i className="fa fa-user" aria-hidden="true" />
-            </span>
-            <input
-              className="form-control"
-              type="text"
-              name="email"
-              placeholder="Email address"
-            />
-          </div>
-          <div className="form-group input-group">
-            <span className="input-group-addon">
-              <i className="fa fa-lock" aria-hidden="true" />
-            </span>
-            <input
-              className="form-control"
-              type="password"
-              name="password"
-              placeholder="Password"
-            />
-          </div>
-          <div className="form-group input-group">
-            <span className="input-group-addon">
-              <i className="fa fa-lock" aria-hidden="true" />
-            </span>
-            <input
-              className="form-control"
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-            />
-          </div>
-          <div className="form-group">
-            <input type="submit" className="btn btn-def btn-block" value="Sign Up" />
-          </div>
-        </form>
-      </div>
-    );
-  }
-}
+const RegistrationForm = ({ dispatch }) => {
+  let emailInput;
+  let passwordInput;
+  let passwordConfirmInput;
 
-module.exports = RegistrationForm;
+  return (
+    <div>
+      <h2 className="text-center">Sign Up</h2>
+      <form
+        className="form-horizontal"
+        id="registerForm"
+        onSubmit={e => {
+          e.preventDefault();
+          if (!emailInput.value.trim() || !passwordInput.value || !passwordConfirmInput.value) {
+            return;
+          }
+          // dispatch(loginUser(emailInput.value, passwordInput.value));
+          passwordInput.value = emailInput.value = passwordConfirmInput.value ='';
+        }}
+      >
+        <div className="form-group input-group">
+          <span className="input-group-addon">
+            <i className="fa fa-user" aria-hidden="true" />
+          </span>
+          <input
+            className="form-control"
+            type="text"
+            name="email"
+            placeholder="Email Address"
+            ref={node => {
+              emailInput = node;
+            }}
+          />
+        </div>
+        <div className="form-group input-group">
+          <span className="input-group-addon">
+            <i className="fa fa-lock" aria-hidden="true" />
+          </span>
+          <input
+            className="form-control"
+            type="password"
+            name="password"
+            placeholder="Password"
+            ref={node => {
+              passwordInput = node;
+            }}
+          />
+        </div>
+        <div className="form-group input-group">
+          <span className="input-group-addon">
+            <i className="fa fa-lock" aria-hidden="true" />
+          </span>
+          <input
+            className="form-control"
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            ref={node => {
+              passwordConfirmInput = node;
+            }}
+          />
+        </div>
+        <div className="form-group">
+          <button type="submit" className="btn btn-block">Sign Up</button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+RegistrationForm.propTypes = {
+  dispatch: React.PropTypes.func.isRequired,
+};
+
+export default connect()(RegistrationForm);
