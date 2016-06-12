@@ -22,17 +22,4 @@ router.post('/', (req, res, next) => {
   });
 });
 
-/* GET users listing. */
-router.get('/', isAuthenticated, (req, res) => {
-  res.send('respond with a resource');
-});
-
-// This should be global except for a few routes
-function isAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  return res.redirect('/');
-}
-
 module.exports = router;
