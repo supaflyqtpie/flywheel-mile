@@ -15,7 +15,6 @@
 === Redux
   * error
   * packages
-  * register
   * redux devtools
 === Back-end
   * New table for package information and link to users table with foreign key
