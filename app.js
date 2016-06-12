@@ -62,8 +62,8 @@ const userSession = require('./routes/session')(passport);
 app.use(handleRender);
 
 // Setup server API routes
-app.use('/user', user);
-app.use('/session', userSession);
+app.use('/api/user', user);
+app.use('/api/session', userSession);
 
 // Setup authentication for routes after
 app.use(handleAuthentication);

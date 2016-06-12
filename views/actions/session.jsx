@@ -1,4 +1,5 @@
 import { push } from 'react-router-redux';
+import { query } from '../helpers';
 
 export const PROCESS_USER = 'PROCESS_USER';
 export const SIGNED_IN = 'SIGNED_IN';
@@ -26,14 +27,14 @@ function signedOut() {
 function createSession(user) {
   return dispatch => {
     dispatch(processUser());
-    return fetch('/session', {
+    const request = {
+      path: '/session',
       method: 'POST',
-      credentials: 'same-origin',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(user),
-    }).then(response => response.json())
+      body: user,
+    };
+
+    return query(request)
+      .then(response => response.json())
       .then(json => {
         dispatch(signedIn(json));
         dispatch(push('/packages'));
@@ -52,10 +53,13 @@ export function loginUser(email, password) {
 function destroySession() {
   return dispatch => {
     dispatch(processUser());
-    return fetch('/session', {
-      credentials: 'same-origin',
+    const request = {
+      path: '/session',
       method: 'DELETE',
-    }).then(() => {
+    };
+
+    return query(request)
+    .then(() => {
       dispatch(signedOut());
       dispatch(push('/'));
     });
