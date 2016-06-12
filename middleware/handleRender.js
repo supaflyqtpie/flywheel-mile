@@ -28,30 +28,35 @@ function renderFullPage(html, initialState) {
     `;
 }
 
+function isServerRoute(path) {
+  return /^\/api\//.exec(path);
+}
+
 module.exports = function handleRender(req, res, next) {
-  const memoryHistory = createMemoryHistory(req.url);
-  const store = configureStore(memoryHistory);
-  const history = syncHistoryWithStore(memoryHistory, store);
+  if (isServerRoute(req.url)) {
+    next();
+  } else {
+    const memoryHistory = createMemoryHistory(req.url);
+    const store = configureStore(memoryHistory);
+    const history = syncHistoryWithStore(memoryHistory, store);
 
-  if (req.user) {
-    store.dispatch(signedIn(req.user));
-  }
-  match({ history, routes: getRoutes(store), location: req.url }, (error, redirectLocation, renderProps) => {
-    if (error) {
-      res.status(500).send(error.message);
-    } else if (redirectLocation) {
-      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-    } else if (renderProps) {
-      const htmlContent = renderToString(
-        <Provider store={store}>
-          <RouterContext {...renderProps} />
-        </Provider>
-      );
-
-      res.send(renderFullPage(htmlContent, store.getState()));
-    } else {
-      // continue any server routes - should remove on full client/server split
-      next();
+    if (req.user) {
+      store.dispatch(signedIn(req.user));
     }
-  });
+    match({ history, routes: getRoutes(store), location: req.url }, (error, redirectLocation, renderProps) => {
+      if (error) {
+        res.status(500).send(error.message);
+      } else if (redirectLocation) {
+        res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+      } else if (renderProps) {
+        const htmlContent = renderToString(
+          <Provider store={store}>
+            <RouterContext {...renderProps} />
+          </Provider>
+        );
+
+        res.send(renderFullPage(htmlContent, store.getState()));
+      }
+    });
+  }
 };
