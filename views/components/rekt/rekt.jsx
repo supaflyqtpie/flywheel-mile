@@ -3,8 +3,8 @@ import React from 'react';
 export default function rekt() {
   return (
     <div className="container">
-      <h1>Doh! 404!</h1>
-      <p>These are <em>not</em> the droids you are looking for!</p>
+      <h1>Get Rekt 404!</h1>
+      <p>Should print stack trace here?</p>
     </div>
   );
 }

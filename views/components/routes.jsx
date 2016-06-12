@@ -22,7 +22,7 @@ export default function getRoutes(store) {
       <Route onEnter={requireLogin}>
         <Route path="packages" component={Packages} />
       </Route>
-      <Route path="*" component={Rekt} status={404} />
+      <Route path="*" component={Rekt} />
     </Route>
   );
 }
