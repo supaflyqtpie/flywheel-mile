@@ -5,12 +5,22 @@ import Session from './session/session';
 import Packages from './package/packages';
 import Landing from './landing';
 
-const routes = (
-  <Route path="/" component={App}>
-    <IndexRoute component={Landing} />
-    <Route path="login" component={Session} />
-    <Route path="packages" component={Packages} />
-  </Route>
-);
+export default function getRoutes(store) {
+  // client route authorization
+  const requireLogin = (nextState, replace) => {
+    const { session: { signedIn } } = store.getState();
+    if (!signedIn) {
+      replace('/');
+    }
+  };
 
-module.exports = routes;
+  return (
+    <Route path="/" component={App}>
+      <IndexRoute component={Landing} />
+      <Route path="login" component={Session} />
+      <Route onEnter={requireLogin}>
+        <Route path="packages" component={Packages} />
+      </Route>
+    </Route>
+  );
+}

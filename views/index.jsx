@@ -4,15 +4,17 @@ import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import configureStore from './store/configureStore';
-import routes from './components/routes';
+import getRoutes from './components/routes';
 
-const store = configureStore();
+const initialState = window.__INITIAL_STATE__; // eslint-disable-line no-underscore-dangle
+
+const store = configureStore(browserHistory, initialState);
 const history = syncHistoryWithStore(browserHistory, store);
 
 const rootElement = document.getElementById('root');
 render(
   <Provider store={store}>
-    <Router history={history} routes={routes} />
+    <Router history={history} routes={getRoutes(store)} />
   </Provider>,
   rootElement
 );

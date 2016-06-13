@@ -1,3 +1,4 @@
+require('babel-core/register');
 const express = require('express');
 const path = require('path');
 // const favicon = require('serve-favicon');
@@ -11,6 +12,8 @@ const webpackConfig = require('./webpack.config');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
+const handleRender = require('./middleware/handleRender');
+const handleAuthentication = require('./middleware/handleAuthentication');
 
 const app = express();
 
@@ -52,14 +55,18 @@ const initPassport = require('./passport_strategies/initLocalAuth');
 initPassport(passport);
 
 // Initialize Routes
-const routes = require('./routes/index');
 const user = require('./routes/user');
 const userSession = require('./routes/session')(passport);
 
-// Setup Routes
-app.use('/', routes);
-app.use('/user', user);
-app.use('/session', userSession);
+// Setup client route rendering
+app.use(handleRender);
+
+// Setup server API routes
+app.use('/api/user', user);
+app.use('/api/session', userSession);
+
+// Setup authentication for routes after
+app.use(handleAuthentication);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

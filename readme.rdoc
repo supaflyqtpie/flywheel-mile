@@ -5,3 +5,20 @@
 
 == Seed Database
   node_modules/.bin/sequelize db:seed:all
+
+== TODO
+=== UI
+  * Landing page
+  * Package detail page
+  * Packages page with table listing package history
+  * error page
+=== Redux
+  * error
+  * packages
+  * register
+  * redux devtools
+=== Back-end
+  * New table for package information and link to users table with foreign key
+  * restful packages routes for get list, post new, delete old
+  * authenticate all routes except get index and session and send to unauthorized page
+  * implement initial mail api
