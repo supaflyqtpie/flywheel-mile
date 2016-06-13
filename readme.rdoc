@@ -14,7 +14,6 @@
   * login failure
 === Redux
   * packages
-  * register
   * redux devtools
 === Back-end
   * new table for packages -> link to users table

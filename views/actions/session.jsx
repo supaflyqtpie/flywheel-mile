@@ -24,15 +24,9 @@ function signedOut() {
   };
 }
 
-function createSession(user) {
+function createSession(request) {
   return dispatch => {
     dispatch(processUser());
-    const request = {
-      path: '/session',
-      method: 'POST',
-      body: user,
-    };
-
     return query(request)
       .then(response => response.json())
       .then(json => {
@@ -42,22 +36,9 @@ function createSession(user) {
   };
 }
 
-export function loginUser(email, password) {
-  const user = {
-    email,
-    password,
-  };
-  return (dispatch, getState) => dispatch(createSession(user));
-}
-
-function destroySession() {
+function destroySession(request) {
   return dispatch => {
     dispatch(processUser());
-    const request = {
-      path: '/session',
-      method: 'DELETE',
-    };
-
     return query(request)
     .then(() => {
       dispatch(signedOut());
@@ -66,6 +47,35 @@ function destroySession() {
   };
 }
 
+export function registerUser(email, password, confirmPassword) {
+  const request = {
+    path: '/user',
+    method: 'POST',
+    body: {
+      email,
+      password,
+      confirmPassword,
+    },
+  };
+  return (dispatch, getState) => dispatch(createSession(request));
+}
+
+export function loginUser(email, password) {
+  const request = {
+    path: '/session',
+    method: 'POST',
+    body: {
+      email,
+      password,
+    },
+  };
+  return (dispatch, getState) => dispatch(createSession(request));
+}
+
 export function logoutUser() {
-  return (dispatch, getState) => dispatch(destroySession());
+  const request = {
+    path: '/session',
+    method: 'DELETE',
+  };
+  return (dispatch, getState) => dispatch(destroySession(request));
 }
