@@ -31,7 +31,7 @@ function createSession(user) {
       body: user
     };
 
-    return query(request).then(response => response.json()).then(response => {
+    return query(request).then(response => {
       if (response.ok) {
         response.json().then(json => {
           dispatch(signedIn(response));
