@@ -5,6 +5,7 @@ export const PROCESS_USER = 'PROCESS_USER';
 export const SIGNED_IN = 'SIGNED_IN';
 export const SIGNED_OUT = 'SIGNED_OUT';
 export const ERROR = 'AUTH_ERROR';
+export const RESET_AUTH_ERROR = 'RESET_AUTH_ERROR';
 
 function processUser() {
   return {type: PROCESS_USER};
@@ -20,6 +21,10 @@ function signedOut() {
 
 function authError() {
   return {type: ERROR};
+}
+
+export function resetAuthError() {
+  return {type: RESET_AUTH_ERROR};
 }
 
 function createSession(user) {

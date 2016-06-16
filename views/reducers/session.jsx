@@ -1,4 +1,4 @@
-import { PROCESS_USER, SIGNED_IN, SIGNED_OUT, ERROR } from '../actions/session';
+import { PROCESS_USER, SIGNED_IN, SIGNED_OUT, ERROR, RESET_AUTH_ERROR } from '../actions/session';
 
 const user = function user(state = {
   isProcessing: false,
@@ -28,6 +28,10 @@ const user = function user(state = {
       return Object.assign({}, state, {
         authError: true,
       });
+    case RESET_AUTH_ERROR:
+      return Object.assign({}, state, {
+        authError: false,
+      });
     default:
       return state;
   }
@@ -38,6 +42,7 @@ function session(state = {}, action) {
     case PROCESS_USER:
     case SIGNED_IN:
     case ERROR:
+    case RESET_AUTH_ERROR:
     case SIGNED_OUT:
       return Object.assign({}, state, user(state.session, action));
     default:
