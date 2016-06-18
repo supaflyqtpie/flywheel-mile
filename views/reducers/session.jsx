@@ -40,15 +40,15 @@ const user = function user(state = {
 function session(state = {}, action) {
   switch (action.type) {
     case PROCESS_USER:
-      return Object.assign({}, state, user(state.session, action));
+      return Object.assign({}, state, user(state, action));
     case SIGNED_IN:
-      return Object.assign({}, state, user(state.session, action));
+      return Object.assign({}, state, user(state, action));
     case AUTH_ERROR:
-      return Object.assign({}, state, user(state.session, action));
+      return Object.assign({}, state, user(state, action));
     case RESET_AUTH_ERROR:
       return Object.assign({}, state, user(state, action));
     case SIGNED_OUT:
-      return Object.assign({}, state, user(state.session, action));
+      return Object.assign({}, state, user(state, action));
     default:
       return state;
   }
