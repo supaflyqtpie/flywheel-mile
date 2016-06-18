@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { createMemoryHistory, match, RouterContext } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import configureStore from '../views/store/configureStore';
-import getRoutes from '../views/components/routes';
+import getRoutes from '../views/routes';
 import { signedIn } from '../views/actions/session';
 
 function renderFullPage(html, initialState) {
