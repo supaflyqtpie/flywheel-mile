@@ -38,7 +38,7 @@ const user = function user(state = {
   }
 };
 
-function session(state = {}, action) {
+export default function session(state = {}, action) {
   switch (action.type) {
     case PROCESS_USER:
     case SIGNED_IN:
@@ -50,5 +50,3 @@ function session(state = {}, action) {
       return state;
   }
 }
-
-module.exports = session;

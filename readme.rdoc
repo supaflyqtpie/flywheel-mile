@@ -7,16 +7,21 @@
   node_modules/.bin/sequelize db:seed:all
 
 == TODO
-=== UI
+=== Front End ui/ux
   * Landing page
   * Package detail page
   * Packages page with table listing package history
-  * login failure
-=== Redux
-  * packages
-  * redux devtools
+  * registration failure
+=== Front End logic
+  * redux get packages from API
+  * redux add package
+  * redux remove package
+  * redux get a package
+  * block going to login page when logged in
 === Back-end
   * new table for packages -> link to users table
   * new table for carriers -> link to packages
   * restful packages routes
   * implement carrier APIs
+  * encrypt password
+  * log errors

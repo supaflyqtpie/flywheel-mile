@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import App from './layout/app';
-import Session from './session/session';
-import Packages from './package/packages';
-import Landing from './landing/landing';
-import Rekt from './rekt/rekt';
-import { resetAuthError } from '../actions/session';
+import App from './components/layout/app';
+import Session from './components/session/session';
+import Packages from './components/package/packages';
+import Landing from './components/landing/landing';
+import Rekt from './components/rekt/rekt';
+import { resetAuthError } from './actions/session';
 
 export default function getRoutes(store) {
   // client route authorization
