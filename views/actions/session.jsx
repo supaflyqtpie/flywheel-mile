@@ -1,5 +1,5 @@
-import {push} from 'react-router-redux';
-import {query} from '../helpers';
+import { push } from 'react-router-redux';
+import { query } from '../helpers';
 
 export const PROCESS_USER = 'PROCESS_USER';
 export const SIGNED_IN = 'SIGNED_IN';
@@ -8,24 +8,34 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 export const RESET_AUTH_ERROR = 'RESET_AUTH_ERROR';
 
 function processUser() {
-  return {type: PROCESS_USER};
+  return {
+    type: PROCESS_USER,
+  };
 }
 
 export function signedIn(json) {
-  return {type: SIGNED_IN, email: json.email};
+  return {
+    type: SIGNED_IN,
+    email: json.email,
+  };
 }
 
 function signedOut() {
-  return {type: SIGNED_OUT};
+  return {
+    type: SIGNED_OUT,
+  };
 }
 
 function authError() {
-  return {type: AUTH_ERROR};
+  return {
+    type: AUTH_ERROR,
+  };
 }
 
 export function resetAuthError() {
-  return {type: RESET_AUTH_ERROR};
-}
+  return {
+    type: RESET_AUTH_ERROR,
+  };
 
 function createSession(user) {
   return dispatch => {
@@ -33,7 +43,7 @@ function createSession(user) {
     const request = {
       path: '/session',
       method: 'POST',
-      body: user
+      body: user,
     };
 
     return query(request).then(response => {
@@ -45,14 +55,14 @@ function createSession(user) {
       } else {
         dispatch(authError());
       }
-    });
-  };
+    })
+  }
 }
 
 export function loginUser(email, password) {
   const user = {
     email,
-    password
+    password,
   };
   return (dispatch, getState) => dispatch(createSession(user));
 }
@@ -62,10 +72,11 @@ function destroySession() {
     dispatch(processUser());
     const request = {
       path: '/session',
-      method: 'DELETE'
+      method: 'DELETE',
     };
 
-    return query(request).then(() => {
+    return query(request)
+    .then(() => {
       dispatch(signedOut());
       dispatch(push('/'));
     });
