@@ -4,6 +4,8 @@ module.exports = function handleAuthentication(req, res, next) {
     next();
   } else {
     res.status(401);
-    res.end();
+    res.json({
+      message: 'Authentication required!',
+    });
   }
 };

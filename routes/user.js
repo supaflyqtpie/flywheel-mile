@@ -6,19 +6,23 @@ const User = require('../models').User;
 router.post('/', (req, res, next) => {
   const postData = req.body;
   if (postData.password !== postData.confirmPassword) {
-    res.status(422).send({ error: 'Passwords do not match.' });
+    res.status(422).send({ message: 'Passwords do not match.' });
   }
 
   User.createUser(postData.email, postData.password).then((user) => {
     req.login(user, (err) => {
       if (err) {
-        return next(err);
+        next(err);
+      } else {
+        res.status(201).json({
+          id: user.id,
+          email: user.email,
+        });
       }
-      return res.status(201).send();
     });
   }).catch((exception) => {
     console.log(exception);
-    return res.status(422).send({ error: 'Unable to create User.' });
+    res.status(422).send({ message: 'Unable to create User.' });
   });
 });
 

@@ -13,7 +13,6 @@ const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const handleRender = require('./middleware/handleRender');
-const handleAuthentication = require('./middleware/handleAuthentication');
 
 const app = express();
 
@@ -64,9 +63,6 @@ app.use(handleRender);
 // Setup server API routes
 app.use('/api/user', user);
 app.use('/api/session', userSession);
-
-// Setup authentication for routes after
-app.use(handleAuthentication);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

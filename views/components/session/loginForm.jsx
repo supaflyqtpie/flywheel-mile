@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import { loginUser } from '../../actions/session';
 
 const LoginForm = ({ dispatch, authError }) => {
@@ -10,6 +11,7 @@ const LoginForm = ({ dispatch, authError }) => {
     <div>
       <h2 className="text-center">Login</h2>
       <form
+        id="loginForm"
         onSubmit={e => {
           e.preventDefault();
           if (!emailInput.value.trim() || !passwordInput.value) {
@@ -18,7 +20,6 @@ const LoginForm = ({ dispatch, authError }) => {
           dispatch(loginUser(emailInput.value, passwordInput.value));
           passwordInput.value = emailInput.value = '';
         }}
-        id="loginForm"
       >
         <div className="form-group input-group">
           <span className="input-group-addon">
@@ -54,10 +55,10 @@ const LoginForm = ({ dispatch, authError }) => {
           </div> : false
         }
         <div className="form-group">
-          <button type="submit" className="btn btn-def btn-block">Login</button>
+          <button type="submit" className="btn btn-block">Login</button>
         </div>
         <div className="form-group text-center">
-          <a href="#">Forgot Password</a>&nbsp;|&nbsp;<a href="#">Support</a>
+          <p>Forgot Password? <span><Link to="/">Click here to reset</Link></span></p>
         </div>
       </form>
     </div>
