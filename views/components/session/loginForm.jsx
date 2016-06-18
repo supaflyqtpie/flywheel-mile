@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { loginUser } from '../../actions/session';
 
-const LoginForm = ({ dispatch }) => {
+const LoginForm = ({ dispatch, authError }) => {
   let emailInput;
   let passwordInput;
 
@@ -49,6 +49,11 @@ const LoginForm = ({ dispatch }) => {
             }}
           />
         </div>
+        {authError?
+          <div className="panel panel-danger">
+            <div className="panel-heading">Oops! Incorrect username or Password</div>
+          </div> : false
+        }
         <div className="form-group">
           <button type="submit" className="btn btn-block">Login</button>
         </div>
@@ -62,6 +67,13 @@ const LoginForm = ({ dispatch }) => {
 
 LoginForm.propTypes = {
   dispatch: React.PropTypes.func.isRequired,
+  authError: React.PropTypes.bool,
 };
 
-export default connect()(LoginForm);
+function mapStateToProps(state) {
+  return {
+    authError: state.session.authError,
+  };
+}
+
+export default connect(mapStateToProps)(LoginForm);

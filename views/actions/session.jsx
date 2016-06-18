@@ -4,6 +4,8 @@ import { query } from '../helpers';
 export const PROCESS_USER = 'PROCESS_USER';
 export const SIGNED_IN = 'SIGNED_IN';
 export const SIGNED_OUT = 'SIGNED_OUT';
+export const AUTH_ERROR = 'AUTH_ERROR';
+export const RESET_AUTH_ERROR = 'RESET_AUTH_ERROR';
 
 function processUser() {
   return {
@@ -24,15 +26,31 @@ function signedOut() {
   };
 }
 
+function authError() {
+  return {
+    type: AUTH_ERROR,
+  };
+}
+
+export function resetAuthError() {
+  return {
+    type: RESET_AUTH_ERROR,
+  };
+}
+
 function createSession(request) {
   return dispatch => {
     dispatch(processUser());
-    return query(request)
-      .then(response => response.json())
-      .then(json => {
-        dispatch(signedIn(json));
-        dispatch(push('/packages'));
-      });
+    return query(request).then(response => {
+      if (response.ok) {
+        response.json().then(json => {
+          dispatch(signedIn(json));
+          dispatch(push('/packages'));
+        });
+      } else {
+        dispatch(authError());
+      }
+    });
   };
 }
 
