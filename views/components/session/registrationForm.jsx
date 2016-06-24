@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/session';
 
-const RegistrationForm = ({ dispatch }) => {
+const RegistrationForm = ({ dispatch, registrationErrorPassword }) => {
   let emailInput;
   let passwordInput;
   let passwordConfirmInput;
@@ -64,6 +64,11 @@ const RegistrationForm = ({ dispatch }) => {
             }}
           />
         </div>
+        {registrationErrorPassword?
+          <div className="panel panel-danger">
+            <div className="panel-heading">Oops! Passwords do not match.</div>
+          </div> : false
+        }
         <div className="form-group">
           <button type="submit" className="btn btn-block">Sign Up</button>
         </div>
@@ -74,6 +79,13 @@ const RegistrationForm = ({ dispatch }) => {
 
 RegistrationForm.propTypes = {
   dispatch: React.PropTypes.func.isRequired,
+  registrationErrorPassword: React.PropTypes.bool,
 };
 
-export default connect()(RegistrationForm);
+function mapStateToProps(state) {
+  return {
+    registrationErrorPassword: state.session.registrationErrorPassword,
+  };
+}
+
+export default connect(mapStateToProps)(RegistrationForm);

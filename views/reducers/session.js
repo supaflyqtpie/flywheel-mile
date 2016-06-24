@@ -1,10 +1,17 @@
-import { PROCESS_USER, SIGNED_IN, SIGNED_OUT, AUTH_ERROR, RESET_AUTH_ERROR } from '../actions/session';
+import {
+  PROCESS_USER,
+  SIGNED_IN,
+  SIGNED_OUT, AUTH_ERROR,
+  RESET_AUTH_ERROR,
+  REGISTRATION_ERROR_PASSWORD,
+} from '../actions/session';
 
 const user = function user(state = {
   isProcessing: false,
   signedIn: false,
   email: '',
   authError: false,
+  registrationErrorPassword: false,
 }, action) {
   switch (action.type) {
     case PROCESS_USER:
@@ -32,6 +39,11 @@ const user = function user(state = {
     case RESET_AUTH_ERROR:
       return Object.assign({}, state, {
         authError: false,
+        registrationErrorPassword: false,
+      });
+    case REGISTRATION_ERROR_PASSWORD:
+      return Object.assign({}, state, {
+        registrationErrorPassword: true,
       });
     default:
       return state;
@@ -45,6 +57,7 @@ export default function session(state = {}, action) {
     case SIGNED_OUT:
     case AUTH_ERROR:
     case RESET_AUTH_ERROR:
+    case REGISTRATION_ERROR_PASSWORD:
       return Object.assign({}, state, user(state, action));
     default:
       return state;

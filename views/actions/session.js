@@ -6,6 +6,7 @@ export const SIGNED_IN = 'SIGNED_IN';
 export const SIGNED_OUT = 'SIGNED_OUT';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const RESET_AUTH_ERROR = 'RESET_AUTH_ERROR';
+export const REGISTRATION_ERROR_PASSWORD = 'REGISTRATION_ERROR_PASSWORD';
 
 function processUser() {
   return {
@@ -38,6 +39,12 @@ export function resetAuthError() {
   };
 }
 
+export function registrationErrorPassword() {
+  return {
+    type: REGISTRATION_ERROR_PASSWORD,
+  };
+}
+
 function createSession(request) {
   return dispatch => {
     dispatch(processUser());
@@ -65,6 +72,15 @@ function destroySession(request) {
   };
 }
 
+function doRegistration(email, password, confirmPassword, request) {
+  if (password !== confirmPassword) {
+    return dispatch => {
+      dispatch(registrationErrorPassword());
+    };
+  }
+  return (dispatch, getState) => dispatch(createSession(request));
+}
+
 export function registerUser(email, password, confirmPassword) {
   const request = {
     path: '/user',
@@ -75,7 +91,10 @@ export function registerUser(email, password, confirmPassword) {
       confirmPassword,
     },
   };
-  return (dispatch, getState) => dispatch(createSession(request));
+  return (dispatch, getState) => dispatch(doRegistration(email,
+    password,
+    confirmPassword,
+    request));
 }
 
 export function loginUser(email, password) {
