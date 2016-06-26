@@ -10,14 +10,12 @@
 === Front End ui/ux
   * Landing page
   * Package detail page
-  * Packages page with table listing package history
   * registration failure
+  * packages failure on get packages, add, delete?
 === Front End logic
-  * redux get packages from API
-  * redux add package
-  * redux remove package
   * redux get a package
   * block going to login page when logged in
+  * redux packages failure
 === Back-end
   * new table for packages -> link to users table
   * new table for carriers -> link to packages
@@ -25,3 +23,4 @@
   * implement carrier APIs
   * encrypt password
   * log errors
+  * forgot password
