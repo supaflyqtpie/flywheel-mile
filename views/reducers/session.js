@@ -3,7 +3,7 @@ import {
   SIGNED_IN,
   SIGNED_OUT, AUTH_ERROR,
   RESET_AUTH_ERROR,
-  REGISTRATION_ERROR_PASSWORD,
+  ADD_REGISTRATION_ERROR,
 } from '../actions/session';
 
 const user = function user(state, action) {
@@ -33,11 +33,11 @@ const user = function user(state, action) {
     case RESET_AUTH_ERROR:
       return Object.assign({}, state, {
         authError: false,
-        registrationErrorPassword: false,
+        registrationErrors: [],
       });
-    case REGISTRATION_ERROR_PASSWORD:
+    case ADD_REGISTRATION_ERROR:
       return Object.assign({}, state, {
-        registrationErrorPassword: true,
+        registrationErrors: action.errors,
       });
     default:
       return state;
@@ -49,6 +49,7 @@ export default function session(state = {
   signedIn: false,
   email: '',
   authError: false,
+  registrationErrors: [],
 }, action) {
   switch (action.type) {
     case PROCESS_USER:
@@ -56,7 +57,7 @@ export default function session(state = {
     case SIGNED_OUT:
     case AUTH_ERROR:
     case RESET_AUTH_ERROR:
-    case REGISTRATION_ERROR_PASSWORD:
+    case ADD_REGISTRATION_ERROR:
       return Object.assign({}, state, user(state, action));
     default:
       return state;

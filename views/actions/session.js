@@ -6,7 +6,14 @@ export const SIGNED_IN = 'SIGNED_IN';
 export const SIGNED_OUT = 'SIGNED_OUT';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const RESET_AUTH_ERROR = 'RESET_AUTH_ERROR';
-export const REGISTRATION_ERROR_PASSWORD = 'REGISTRATION_ERROR_PASSWORD';
+export const ADD_REGISTRATION_ERROR = 'ADD_REGISTRATION_ERROR';
+
+const REGISTRATION_MATCH_ERROR = 'Oops! Passwords do not match';
+const REGISTRATION_LENGTH_ERROR = 'Password must be 6 or more characters';
+const REGISTRATION_EMAIL_ERROR = 'Oops! That email is already taken';
+const REGISTRATION_EMAIL_PASSWORD_ERROR = 'Please enter email and password';
+
+let errorKey = 0;
 
 function processUser() {
   return {
@@ -39,9 +46,10 @@ export function resetAuthError() {
   };
 }
 
-export function registrationErrorPassword() {
+export function addRegistrationErrors(errors) {
   return {
-    type: REGISTRATION_ERROR_PASSWORD,
+    type: ADD_REGISTRATION_ERROR,
+    errors,
   };
 }
 
@@ -55,7 +63,15 @@ function createSession(request) {
           dispatch(push('/packages'));
         });
       } else {
-        dispatch(authError());
+        if (response.status === 422 &&
+          response.statusText === 'Unprocessable Entity') {
+          dispatch(addRegistrationErrors([{
+            message: REGISTRATION_EMAIL_ERROR,
+            key: errorKey++,
+          }]));
+        } else {
+          dispatch(authError());
+        }
       }
     });
   };
@@ -73,9 +89,28 @@ function destroySession(request) {
 }
 
 function doRegistration(email, password, confirmPassword, request) {
+  const errorList = [];
   if (password !== confirmPassword) {
+    errorList.push({
+      message: REGISTRATION_MATCH_ERROR,
+      key: errorKey++,
+    });
+  }
+  if (password && password.length < 6) {
+    errorList.push({
+      message: REGISTRATION_LENGTH_ERROR,
+      key: errorKey++,
+    });
+  }
+  if (!password || !email) {
+    errorList.push({
+      message: REGISTRATION_EMAIL_PASSWORD_ERROR,
+      key: errorKey++,
+    });
+  }
+  if (errorList.length > 0) {
     return dispatch => {
-      dispatch(registrationErrorPassword());
+      dispatch(addRegistrationErrors(errorList));
     };
   }
   return (dispatch, getState) => dispatch(createSession(request));

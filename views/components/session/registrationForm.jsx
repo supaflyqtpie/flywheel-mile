@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/session';
 
-const RegistrationForm = ({ dispatch, registrationErrorPassword }) => {
+const RegistrationForm = ({ dispatch, registrationErrors }) => {
   let emailInput;
   let passwordInput;
   let passwordConfirmInput;
@@ -64,11 +64,13 @@ const RegistrationForm = ({ dispatch, registrationErrorPassword }) => {
             }}
           />
         </div>
-        {registrationErrorPassword?
-          <div className="panel panel-danger">
-            <div className="panel-heading">Oops! Passwords do not match.</div>
-          </div> : false
-        }
+        <ul className="list-group">
+          {registrationErrors.map(error =>
+            <div key={error.key} className="panel panel-danger">
+              <div className="panel-heading">{error.message}</div>
+            </div>
+          )}
+        </ul>
         <div className="form-group">
           <button type="submit" className="btn btn-block">Sign Up</button>
         </div>
@@ -79,12 +81,12 @@ const RegistrationForm = ({ dispatch, registrationErrorPassword }) => {
 
 RegistrationForm.propTypes = {
   dispatch: React.PropTypes.func.isRequired,
-  registrationErrorPassword: React.PropTypes.bool,
+  registrationErrors: React.PropTypes.array,
 };
 
 function mapStateToProps(state) {
   return {
-    registrationErrorPassword: state.session.registrationErrorPassword,
+    registrationErrors: state.session.registrationErrors,
   };
 }
 

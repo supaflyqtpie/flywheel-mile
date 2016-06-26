@@ -62,7 +62,6 @@ export function getSubscribedPackages() {
     query(request).then((json) => {
       dispatch(receivedPackages(json));
     }).catch((error) => {
-      debugger;
     });
   };
 }
@@ -86,7 +85,6 @@ export function requestToAddPackage(trackingNumber) {
     query(request).then((json) => {
       dispatch(addPackage(json.id, json.trackingNumber));
     }).catch((error) => {
-      debugger;
     });
   };
 }
@@ -105,7 +103,6 @@ export function requestToDeletePackage(id) {
     query(request).then((json) => {
       dispatch(deletePackage(id));
     }).catch((error) => {
-      debugger;
     });
   };
 }
