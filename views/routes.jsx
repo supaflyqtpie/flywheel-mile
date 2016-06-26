@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './components/layout/app';
 import Session from './components/session/session';
-import Packages from './components/package/packages';
+import Packages from './components/packages/packages';
 import Landing from './components/landing/landing';
 import Rekt from './components/rekt/rekt';
 import { resetAuthError } from './actions/session';

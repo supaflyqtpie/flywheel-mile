@@ -33,11 +33,11 @@ function processDeletePackage(id) {
   };
 }
 
-function addPackage(id, carrier) {
+function addPackage(id, trackingNumber) {
   return {
     type: ADD_PACKAGE,
     id,
-    carrier,
+    trackingNumber,
   };
 }
 
@@ -67,24 +67,24 @@ export function getSubscribedPackages() {
   };
 }
 
-function createAddPackageRequest(carrier) {
+function createAddPackageRequest(trackingNumber) {
   return {
     path: '/packages',
     method: 'POST',
     body: {
       package: {
-        carrier,
+        trackingNumber,
       },
     },
   };
 }
 
-export function requestToAddPackage(carrier) {
-  const request = createAddPackageRequest(carrier);
+export function requestToAddPackage(trackingNumber) {
+  const request = createAddPackageRequest(trackingNumber);
   return (dispatch, getState) => {
     dispatch(processAddPackage());
     query(request).then((json) => {
-      dispatch(addPackage(json.id, json.carrier));
+      dispatch(addPackage(json.id, json.trackingNumber));
     }).catch((error) => {
       debugger;
     });

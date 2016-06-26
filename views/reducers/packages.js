@@ -11,7 +11,7 @@ function singlePackage(item, action) {
     case ADD_PACKAGE:
       return {
         id: action.id,
-        carrier: action.carrier,
+        trackingNumber: action.trackingNumber,
         isProcessingDelete: false,
       };
     case PROCESS_DELETE_PACKAGE:
@@ -36,7 +36,7 @@ function packages(state, action) {
     case RECEIVED_PACKAGES:
       return Object.assign({}, state, {
         isFetching: false,
-        items: action.feeds,
+        items: action.packages,
       });
     case PROCESS_ADD_PACKAGE:
       return Object.assign({}, state, {

@@ -1,11 +1,20 @@
 import React from 'react';
+import PackagesTable from './packagesTable';
+import AddPackage from './addPackage';
 
 export default function Packages() {
   return (
     <div className="container">
-      <h1>
-        Hello User
-      </h1>
+      <div className="row">
+        <div className="col-md-6 text-right">
+          <AddPackage />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-12">
+          <PackagesTable />
+        </div>
+      </div>
     </div>
   );
 }
