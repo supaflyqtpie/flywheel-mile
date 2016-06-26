@@ -6,13 +6,7 @@ import {
   REGISTRATION_ERROR_PASSWORD,
 } from '../actions/session';
 
-const user = function user(state = {
-  isProcessing: false,
-  signedIn: false,
-  email: '',
-  authError: false,
-  registrationErrorPassword: false,
-}, action) {
+const user = function user(state, action) {
   switch (action.type) {
     case PROCESS_USER:
       return Object.assign({}, state, {
@@ -50,7 +44,12 @@ const user = function user(state = {
   }
 };
 
-export default function session(state = {}, action) {
+export default function session(state = {
+  isProcessing: false,
+  signedIn: false,
+  email: '',
+  authError: false,
+}, action) {
   switch (action.type) {
     case PROCESS_USER:
     case SIGNED_IN:
