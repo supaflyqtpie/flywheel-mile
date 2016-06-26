@@ -10,7 +10,6 @@
 === Front End ui/ux
   * Landing page
   * Package detail page
-  * registration failure
   * packages failure on get packages, add, delete?
 === Front End logic
   * redux get a package
