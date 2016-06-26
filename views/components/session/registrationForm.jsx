@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/session';
 
-const RegistrationForm = ({ dispatch }) => {
+const RegistrationForm = ({ dispatch, registrationErrors }) => {
   let emailInput;
   let passwordInput;
   let passwordConfirmInput;
@@ -15,9 +15,6 @@ const RegistrationForm = ({ dispatch }) => {
         id="registerForm"
         onSubmit={e => {
           e.preventDefault();
-          if (!emailInput.value.trim() || !passwordInput.value || !passwordConfirmInput.value) {
-            return;
-          }
           dispatch(registerUser(emailInput.value, passwordInput.value, passwordConfirmInput.value));
           passwordInput.value = emailInput.value = passwordConfirmInput.value ='';
         }}
@@ -64,6 +61,13 @@ const RegistrationForm = ({ dispatch }) => {
             }}
           />
         </div>
+        <ul className="list-group">
+          {registrationErrors.map(error =>
+            <div key={error.key} className="panel panel-danger">
+              <div className="panel-heading">{error.message}</div>
+            </div>
+          )}
+        </ul>
         <div className="form-group">
           <button type="submit" className="btn btn-block">Sign Up</button>
         </div>
@@ -74,6 +78,13 @@ const RegistrationForm = ({ dispatch }) => {
 
 RegistrationForm.propTypes = {
   dispatch: React.PropTypes.func.isRequired,
+  registrationErrors: React.PropTypes.array,
 };
 
-export default connect()(RegistrationForm);
+function mapStateToProps(state) {
+  return {
+    registrationErrors: state.session.registrationErrors,
+  };
+}
+
+export default connect(mapStateToProps)(RegistrationForm);
