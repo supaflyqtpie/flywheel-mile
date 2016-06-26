@@ -90,23 +90,24 @@ function destroySession(request) {
 
 function doRegistration(email, password, confirmPassword, request) {
   const errorList = [];
-  if (password !== confirmPassword) {
-    errorList.push({
-      message: REGISTRATION_MATCH_ERROR,
-      key: errorKey++,
-    });
-  }
-  if (password && password.length < 6) {
-    errorList.push({
-      message: REGISTRATION_LENGTH_ERROR,
-      key: errorKey++,
-    });
-  }
   if (!password || !email) {
     errorList.push({
       message: REGISTRATION_EMAIL_PASSWORD_ERROR,
       key: errorKey++,
     });
+  } else {
+    if (password !== confirmPassword) {
+      errorList.push({
+        message: REGISTRATION_MATCH_ERROR,
+        key: errorKey++,
+      });
+    }
+    if (password && password.length < 6) {
+      errorList.push({
+        message: REGISTRATION_LENGTH_ERROR,
+        key: errorKey++,
+      });
+    }
   }
   if (errorList.length > 0) {
     return dispatch => {

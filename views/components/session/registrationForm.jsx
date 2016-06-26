@@ -15,9 +15,6 @@ const RegistrationForm = ({ dispatch, registrationErrors }) => {
         id="registerForm"
         onSubmit={e => {
           e.preventDefault();
-          if (!emailInput.value.trim() || !passwordInput.value || !passwordConfirmInput.value) {
-            return;
-          }
           dispatch(registerUser(emailInput.value, passwordInput.value, passwordConfirmInput.value));
           passwordInput.value = emailInput.value = passwordConfirmInput.value ='';
         }}
