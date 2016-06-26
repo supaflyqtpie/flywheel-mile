@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Package from './package';
 import { requestToDeletePackage } from '../../actions/packages';
 
-function FeedsTable({ packages, onDeleteClick }) {
+function PackagesTable({ packages, onDeleteClick }) {
   return (
     <table className="table table-striped">
       <thead>
@@ -25,7 +25,7 @@ function FeedsTable({ packages, onDeleteClick }) {
   );
 }
 
-FeedsTable.propTypes = {
+PackagesTable.propTypes = {
   packages: React.PropTypes.array,
   onDeleteClick: React.PropTypes.func,
 };
@@ -44,4 +44,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FeedsTable);
+export default connect(mapStateToProps, mapDispatchToProps)(PackagesTable);
