@@ -9,39 +9,27 @@ const NavigationBar = function navigationBar({ email, signedIn, onLogoutClick })
       <nav className="navbar navbar-inverse navbar-static-top">
         <div className="container">
           <div className="navbar-header">
-            <button
-              type="button"
-              className="navbar-toggle collapsed"
-              data-toggle="collapse"
-              data-target="#navbar3"
-            >
-              <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-            </button>
-            <Link to="/" className="navbar-brand">
-              <img alt="Flywheel-Mile" height="30" width="200" />
+            <Link to="/" className="navbar-brand" id="logo">
+              <i className="fa fa-paper-plane-o fa-lg"></i>
+              <span className="fa-tag-text" id="app-title">Flywheel-Mile</span>
             </Link>
           </div>
-          <div id="navbar3" className="navbar-collapse collapse">
-            <ul className="nav navbar-nav navbar-right">
-              {signedIn?
-                <li>
-                  <Link to="/packages">My Packages</Link>
-                </li> : false
-              }
-              {signedIn?
-                <li>
-                  <Link to="/" onClick={onLogoutClick}>Logout</Link>
-                </li>
-              :
-                <li>
-                  <Link to="/login">Login</Link>
-                </li>
-              }
-            </ul>
-          </div>
+          <ul className="nav navbar-nav navbar-right">
+            {signedIn?
+              <li>
+                <Link to="/packages">My Packages</Link>
+              </li> : false
+            }
+            {signedIn?
+              <li>
+                <Link to="/" onClick={onLogoutClick}>Logout</Link>
+              </li>
+            :
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+            }
+          </ul>
         </div>
       </nav>
     </div>
