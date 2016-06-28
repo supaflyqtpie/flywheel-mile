@@ -57,22 +57,23 @@ function createSession(request) {
   return dispatch => {
     dispatch(processUser());
     return query(request).then(response => {
-      if (response.ok) {
-        response.json().then(json => {
+      response.json().then(json => {
+        debugger;
+        if (response.ok) {
           dispatch(signedIn(json));
           dispatch(push('/packages'));
-        });
-      } else {
-        if (response.status === 422 &&
-          response.statusText === 'Unprocessable Entity') {
-          dispatch(addRegistrationErrors([{
-            message: REGISTRATION_EMAIL_ERROR,
-            key: errorKey++,
-          }]));
         } else {
-          dispatch(authError());
+          if (response.status === 422 &&
+            response.statusText === 'Unprocessable Entity') {
+            dispatch(addRegistrationErrors([{
+              message: REGISTRATION_EMAIL_ERROR,
+              key: errorKey++,
+            }]));
+          } else {
+            dispatch(authError());
+          }
         }
-      }
+      })
     });
   };
 }

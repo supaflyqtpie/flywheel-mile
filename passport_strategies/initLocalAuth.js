@@ -13,11 +13,6 @@ module.exports = function localAuthStrategy(passport) {
           message: 'Get REKT son',
         });
       }
-
-      // if (!user.validPassword(password)) {
-      //   return done(null, false, { message: 'Incorrect password.' });
-      // }
-
       console.log(`Successfully Authenticated: ${user.email}`);
       return done(null, user);
     }).catch((err) => {
