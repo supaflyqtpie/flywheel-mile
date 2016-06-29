@@ -9,13 +9,13 @@ module.exports = function sessionRoutes(passport) {
         return next(err);
       }
       if (!user) {
-        return res.status(401).json({ success: false, message: info.message });
+        return res.status(401).json({ message: info.message });
       }
       req.login(user, loginErr => {
         if (loginErr) {
           return next(loginErr);
         }
-        return res.send({ success: true, email: user.email, id: user.id });
+        return res.send({ email: user.email, id: user.id });
       });
     })(req, res, next);
   });
