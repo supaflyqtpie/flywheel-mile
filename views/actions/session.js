@@ -53,26 +53,34 @@ export function addRegistrationErrors(errors) {
   };
 }
 
-function createSession(request) {
+function handleAuthErrors(json) {
+  return dispatch => {
+    dispatch(authError());
+  };
+}
+
+function handleRegistrationErrors(json) {
+  // Duplicate email: db could not create user
+  return dispatch => {
+    dispatch(addRegistrationErrors([{
+      message: REGISTRATION_EMAIL_ERROR,
+      key: errorKey++,
+    }]));
+  };
+}
+
+function createSession(request, errorHandler) {
   return dispatch => {
     dispatch(processUser());
     return query(request).then(response => {
-      if (response.ok) {
-        response.json().then(json => {
+      response.json().then(json => {
+        if (response.ok) {
           dispatch(signedIn(json));
           dispatch(push('/packages'));
-        });
-      } else {
-        if (response.status === 422 &&
-          response.statusText === 'Unprocessable Entity') {
-          dispatch(addRegistrationErrors([{
-            message: REGISTRATION_EMAIL_ERROR,
-            key: errorKey++,
-          }]));
         } else {
-          dispatch(authError());
+          dispatch(errorHandler(json));
         }
-      }
+      });
     });
   };
 }
@@ -114,7 +122,7 @@ function doRegistration(email, password, confirmPassword, request) {
       dispatch(addRegistrationErrors(errorList));
     };
   }
-  return (dispatch, getState) => dispatch(createSession(request));
+  return (dispatch, getState) => dispatch(createSession(request, handleRegistrationErrors));
 }
 
 export function registerUser(email, password, confirmPassword) {
@@ -142,7 +150,7 @@ export function loginUser(email, password) {
       password,
     },
   };
-  return (dispatch, getState) => dispatch(createSession(request));
+  return (dispatch, getState) => dispatch(createSession(request, handleAuthErrors));
 }
 
 export function logoutUser() {

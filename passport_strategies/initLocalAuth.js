@@ -10,14 +10,15 @@ module.exports = function localAuthStrategy(passport) {
       if (!user) {
         console.log(`Email does not exist: ${email}`);
         return done(null, false, {
-          message: 'Get REKT son',
+          message: 'bad email',
         });
       }
-
-      // if (!user.validPassword(password)) {
-      //   return done(null, false, { message: 'Incorrect password.' });
-      // }
-
+      if (password !== user.password) {
+        console.log(`Incorrect password for user: ${user.email}`);
+        return done(null, false, {
+          message: 'bad password',
+        });
+      }
       console.log(`Successfully Authenticated: ${user.email}`);
       return done(null, user);
     }).catch((err) => {
