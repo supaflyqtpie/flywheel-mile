@@ -53,16 +53,20 @@ export function addRegistrationErrors(errors) {
   };
 }
 
-function handleAuthErrors(dispatch, json) {
-  dispatch(authError());
+function handleAuthErrors(json) {
+  return dispatch => {
+    dispatch(authError());
+  };
 }
 
-function handleRegistrationErrors(dispatch, json) {
+function handleRegistrationErrors(json) {
   // Duplicate email: db could not create user
-  dispatch(addRegistrationErrors([{
-    message: REGISTRATION_EMAIL_ERROR,
-    key: errorKey++,
-  }]));
+  return dispatch => {
+    dispatch(addRegistrationErrors([{
+      message: REGISTRATION_EMAIL_ERROR,
+      key: errorKey++,
+    }]));
+  };
 }
 
 function createSession(request, errorHandler) {
@@ -74,7 +78,7 @@ function createSession(request, errorHandler) {
           dispatch(signedIn(json));
           dispatch(push('/packages'));
         } else {
-          errorHandler(dispatch, json);
+          dispatch(errorHandler(json));
         }
       });
     });
