@@ -61,13 +61,15 @@ const RegistrationForm = ({ dispatch, registrationErrors }) => {
             }}
           />
         </div>
-        <ul className="list-group">
-          {registrationErrors.map(error =>
-            <div key={error.key} className="panel panel-danger">
-              <div className="panel-heading">{error.message}</div>
-            </div>
-          )}
-        </ul>
+        <div className={registrationErrors.length !== 0? 'alert alert-danger': ''}>
+          <ul style={{ listStyleType: 'circle' }}>
+            {registrationErrors.map(error =>
+              <li key={error.key} >
+                {error.message}
+              </li>
+            )}
+          </ul>
+        </div>
         <div className="form-group">
           <button type="submit" className="btn btn-block">Sign Up</button>
         </div>
