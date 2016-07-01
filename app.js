@@ -61,8 +61,8 @@ const userSession = require('./routes/session')(passport);
 app.use(handleRender);
 
 // Setup server API routes
-app.use('/api/user', user);
-app.use('/api/session', userSession);
+app.use('/api', user);
+app.use('/api', userSession);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

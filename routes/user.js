@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models').User;
 
-// Create a new user: post /user
-router.post('/', (req, res, next) => {
+// Register a new user and login
+router.post('/user', (req, res, next) => {
   const postData = req.body;
   if (postData.password !== postData.confirmPassword) {
     res.status(422).json({ message: 'Passwords do not match.' });
