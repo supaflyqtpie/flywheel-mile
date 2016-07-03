@@ -1,10 +1,14 @@
 module.exports = {
   up(queryInterface, Sequelize) {
-    return queryInterface.createTable('Packages', {
+    return queryInterface.createTable('Package', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+      },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -13,14 +17,10 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      email: {
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull: false,
-      },
       trackingNumber: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
       carrier: {
         type: Sequelize.STRING,
@@ -30,6 +30,6 @@ module.exports = {
   },
 
   down(queryInterface, Sequelize) {
-    return queryInterface.dropTable('Packages');
+    return queryInterface.dropTable('Package');
   },
 };

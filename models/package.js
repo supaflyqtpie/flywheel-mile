@@ -5,27 +5,34 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
     carrier: DataTypes.STRING,
   });
 
-  Package.createPackage = function createPackage(email, trackingNumber, carrier) {
+  Package.createPackage = function createPackage(userId, trackingNumber, carrier) {
     return Package.create({
-      email,
+      userId,
       trackingNumber,
       carrier,
     });
   };
 
-  Package.findByEmail = function findByEmail(email) {
+  Package.findByUserId = function findByUserId(userId) {
     return Package.findOne({
       where: {
-        email,
+        userId,
       },
     });
   };
 
-  Package.findByTrackingNumber = function findByTrackingNumber(trackingNumber) {
+  Package.findByUserIdTrackingNumber = function findByUserIdTrackingNumber(userId, trackingNumber) {
     return Package.findOne({
       where: {
+        userId,
         trackingNumber,
       },
+    });
+  };
+
+  Package.associate = function associate(db) {
+    Package.belongsTo(db.User, {
+      as: 'user',
     });
   };
 

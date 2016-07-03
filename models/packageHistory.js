@@ -43,5 +43,6 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
       as: 'package',
     });
   };
+
   return PackageHistory;
 };
