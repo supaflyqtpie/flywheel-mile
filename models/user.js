@@ -19,25 +19,5 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
     });
   };
 
-  User.findOrCreate = function findOrCreate(email, password) {
-    User.findOrCreate({
-      where: {
-        email,
-      },
-      defaults: {
-        email,
-        password,
-      },
-    }).spread((user, created) => {
-      if (!created) {
-        // TODO: logic for already existing user
-        console.log('User already exists!');
-      } else {
-        console.log('Created User');
-        console.log(user.dataValues);
-      }
-    });
-  };
-
   return User;
 };
