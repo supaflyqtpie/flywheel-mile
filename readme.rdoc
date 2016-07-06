@@ -16,8 +16,6 @@
   * block going to login page when logged in
   * redux packages failure
 === Back-end
-  * new table for packages -> link to users table
-  * new table for carriers -> link to packages
   * restful packages routes
   * implement carrier APIs
   * encrypt password
