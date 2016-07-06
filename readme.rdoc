@@ -15,9 +15,11 @@
   * redux get a package
   * block going to login page when logged in
   * redux packages failure
+  * unit tests
 === Back-end
   * restful packages routes
   * implement carrier APIs
   * encrypt password
   * log errors
   * forgot password
+  * unit tests
