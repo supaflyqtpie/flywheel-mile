@@ -6,6 +6,7 @@ import Packages from './components/packages/packages';
 import Landing from './components/landing/landing';
 import Rekt from './components/rekt/rekt';
 import { resetAuthError } from './actions/session';
+import { getSubscribedPackages } from './actions/packages';
 
 export default function getRoutes(store) {
   // client route authorization
@@ -14,6 +15,10 @@ export default function getRoutes(store) {
     if (!signedIn) {
       replace('/');
     }
+  };
+
+  const loadPackages = () => {
+    store.dispatch(getSubscribedPackages());
   };
 
   const resetLogin = () => {
@@ -25,7 +30,7 @@ export default function getRoutes(store) {
       <IndexRoute component={Landing} />
       <Route path="login" component={Session} onLeave={resetLogin} />
       <Route onEnter={requireLogin}>
-        <Route path="packages" component={Packages} />
+        <Route path="packages" component={Packages} onEnter={loadPackages} />
       </Route>
       <Route path="*" component={Rekt} />
     </Route>

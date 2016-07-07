@@ -31,7 +31,6 @@ function packages(state, action) {
     case REQUEST_PACKAGES:
       return Object.assign({}, state, {
         isFetching: true,
-        items: [],
       });
     case RECEIVED_PACKAGES:
       return Object.assign({}, state, {
