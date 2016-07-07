@@ -4,11 +4,11 @@ import { setupDB } from '../utils';
 const Package = db.package;
 const User = db.user;
 
-describe('Package', () => {
+describe('Package Model', () => {
   beforeEach(setupDB);
 
-  describe('#UserPackageAssociation', () => {
-    it('should be able to belong to a user on create', () => {
+  describe('belongs to user', () => {
+    it('should show which user it belongs to', () => {
       const trackingNumber = 'flywheelpackage';
       const carrier = 'usps';
       return Package.create({
