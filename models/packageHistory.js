@@ -1,5 +1,5 @@
 module.exports = function defineUserModel(sequelize, DataTypes) {
-  const PackageHistory = sequelize.define('PackageHistory', {
+  const PackageHistory = sequelize.define('packageHistory', {
     statusDate: DataTypes.DATE,
     city: DataTypes.STRING,
     state: DataTypes.STRING,
@@ -8,14 +8,6 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
     status: DataTypes.STRING,
     statusDetail: DataTypes.STRING,
   });
-
-  PackageHistory.findByPackageId = function findByPackageId(packageId) {
-    return PackageHistory.findAll({
-      where: {
-        packageId,
-      },
-    });
-  };
 
   PackageHistory.createPackageHistory = function createPackageHistory(
     packageId,
@@ -39,9 +31,7 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
   };
 
   PackageHistory.associate = function associate(db) {
-    PackageHistory.belongsTo(db.Package, {
-      as: 'package',
-    });
+    PackageHistory.belongsTo(db.package);
   };
 
   return PackageHistory;

@@ -1,6 +1,6 @@
 module.exports = {
   up(queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('PackageHistory', [
+    return queryInterface.bulkInsert('packageHistory', [
         { packageId: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -16,6 +16,6 @@ module.exports = {
   },
 
   down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('PackageHistory', null, {});
+    return queryInterface.bulkDelete('packageHistory', null, {});
   },
 };
