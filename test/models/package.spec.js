@@ -6,7 +6,6 @@ const User = db.user;
 
 describe('Package', () => {
   beforeEach(setupDB);
-  beforeEach(setupDB);
 
   describe('#UserPackageAssociation', () => {
     it('should be able to belong to a user on create', () => {
