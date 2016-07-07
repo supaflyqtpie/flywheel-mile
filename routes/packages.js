@@ -1,32 +1,35 @@
 const express = require('express');
 const router = express.Router();
 const handleAuthentication = require('../middleware/handleAuthentication');
-const Package = require('../models').Package;
+const Package = require('../models').package;
 
 // All routes below require authentication
 router.use(handleAuthentication);
 
 // Get the user's package list
 router.get('/packages', (req, res, next) => {
-  res.json(req.user.packages);
+  req.user.getPackages().then((packages) => res.json(packages));
 });
 
 // Create a new package for the user
 router.post('/packages', (req, res, next) => {
   Package.create(req.package).then((item) => {
-    req.user.packages.push(item);
-    res.json(item);
+    req.user.setPackages(item).then(() => res.json(item));
   }).catch((err) => {
     next(new Error('Failed to create new package'));
   });
 });
 
 router.param('id', (req, res, next, id) => {
-  req.user.findById(id).then((item) => {
-    req.package = item; // eslint-disable-line no-param-reassign
-    next();
+  req.user.getPackages({ where: { id } }).then((packages) => {
+    if (packages.length !== 1) {
+      throw new Error('Failed to find package');
+    } else {
+      req.package = packages[0]; // eslint-disable-line no-param-reassign
+      next();
+    }
   }).catch((err) => {
-    next(new Error('Failed to find package'));
+    next(err);
   });
 });
 
@@ -37,7 +40,7 @@ router.get('/packages/:id', (req, res, next) => {
 
 // Delete the a user's package by id
 router.delete('/packages/:id', (req, res, next) => {
-  req.package.delete();
+  req.package.destroy();
   res.status(204).end();
 });
 
