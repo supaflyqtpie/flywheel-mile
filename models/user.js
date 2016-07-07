@@ -1,5 +1,5 @@
 module.exports = function defineUserModel(sequelize, DataTypes) {
-  const User = sequelize.define('User', {
+  const User = sequelize.define('user', {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
   });
@@ -17,6 +17,10 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
         email,
       },
     });
+  };
+
+  User.associate = function associate(db) {
+    User.hasMany(db.package);
   };
 
   return User;

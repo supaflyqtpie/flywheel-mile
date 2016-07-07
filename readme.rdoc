@@ -1,10 +1,14 @@
 = Flywheel-Mile
 
-== Setup Database
-  node_modules/.bin/sequelize db:migrate
+=== Run tests:
+  npm test
 
-== Seed Database
-  node_modules/.bin/sequelize db:seed:all
+=== Database commands
+  npm run db:migrate
+  npm run db:seed
+  npm run db:drop
+  npm run db:migrate:test
+  npm run db:seed:test
 
 == TODO
 === Front End ui/ux

@@ -1,5 +1,5 @@
 module.exports = function defineUserModel(sequelize, DataTypes) {
-  const Package = sequelize.define('Package', {
+  const Package = sequelize.define('package', {
     trackingNumber: DataTypes.STRING,
     carrier: DataTypes.STRING,
   });
@@ -11,25 +11,9 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
     });
   };
 
-  Package.findByUserId = function findByUserId(userId) {
-    return Package.findOne({
-      where: {
-        userId,
-      },
-    });
-  };
-
-  Package.findByUserIdTrackingNumber = function findByUserIdTrackingNumber(userId, trackingNumber) {
-    return Package.findOne({
-      where: {
-        userId,
-        trackingNumber,
-      },
-    });
-  };
-
   Package.associate = function associate(db) {
-    Package.belongsTo(db.User);
+    Package.belongsTo(db.user);
+    Package.hasMany(db.packageHistory);
   };
 
   return Package;

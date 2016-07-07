@@ -1,21 +1,31 @@
 import { expect } from 'chai';
 import db from '../../models/index';
-const Package = db.Package;
+import { setupDB } from '../utils';
+const Package = db.package;
+const User = db.user;
 
 describe('Package', () => {
-  beforeEach(() => {
-    return db.sequelize.drop({ logging: false, cascade: true }).then(() => {
-      return db.sequelize.sync({ logging: false });
-    });
-  });
+  beforeEach(setupDB);
+  beforeEach(setupDB);
 
-  describe('#createPackage', () => {
-    it('respond with matching records', () => {
-      const trackingNumber = 'abc';
-      const carrier = 'Lockheed F-117 Nighthawk';
-      return Package.createPackage(trackingNumber, carrier).then(pack => {
-        console.log(pack);
-        expect(pack).to.equal(null);
+  describe('#UserPackageAssociation', () => {
+    it('should be able to belong to a user on create', () => {
+      const trackingNumber = 'flywheelpackage';
+      const carrier = 'usps';
+      return Package.create({
+        trackingNumber,
+        carrier,
+        user: {
+          email: 'Son@goku.dbz',
+          password: 'over9000',
+        },
+      }, {
+        include: [User],
+      }).then(item => {
+        expect(item).to.exist;
+        item.getUser().then((user) => {
+          expect(user).to.exist;
+        });
       });
     });
   });
