@@ -1,25 +1,23 @@
 module.exports = function defineUserModel(sequelize, DataTypes) {
   const User = sequelize.define('user', {
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
+    email: { type: DataTypes.STRING, unique: true, allowNull: false },
+    password: { type: DataTypes.STRING, allowNull: false },
   });
 
-  User.createUser = function createUser(email, password) {
-    return User.create({
+  User.createUser = (email, password) =>
+    User.create({
       email,
       password,
     });
-  };
 
-  User.findByEmail = function findByEmail(email) {
-    return User.findOne({
+  User.findByEmail = (email) =>
+    User.findOne({
       where: {
         email,
       },
     });
-  };
 
-  User.associate = function associate(db) {
+  User.associate = (db) => {
     User.hasMany(db.package);
   };
 
