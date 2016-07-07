@@ -46,7 +46,7 @@
   },
   "scripts": {
     "start": "node_modules/.bin/babel-node ./bin/www",
-    "test": "node_modules/.bin/mocha test --reporter nyan --recursive --compilers js:babel-core/register"
+    "test": "node_modules/.bin/mocha test --recursive --compilers js:babel-core/register"
   },
   "babel": {
     "presets": [

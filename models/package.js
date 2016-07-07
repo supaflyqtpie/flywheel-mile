@@ -1,13 +1,11 @@
 module.exports = function defineUserModel(sequelize, DataTypes) {
   const Package = sequelize.define('Package', {
-    email: DataTypes.STRING,
     trackingNumber: DataTypes.STRING,
     carrier: DataTypes.STRING,
   });
 
-  Package.createPackage = function createPackage(userId, trackingNumber, carrier) {
+  Package.createPackage = function createPackage(trackingNumber, carrier) {
     return Package.create({
-      userId,
       trackingNumber,
       carrier,
     });
@@ -31,9 +29,7 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
   };
 
   Package.associate = function associate(db) {
-    Package.belongsTo(db.User, {
-      as: 'user',
-    });
+    Package.belongsTo(db.User);
   };
 
   return Package;
