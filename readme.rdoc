@@ -1,4 +1,5 @@
 = Flywheel-Mile
+{<img src="https://travis-ci.org/supaflyqtpie/flywheel-mile.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/supaflyqtpie/flywheel-mile]
 
 == Setup Database
   node_modules/.bin/sequelize db:migrate
