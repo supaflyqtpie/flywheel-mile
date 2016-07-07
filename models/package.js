@@ -1,7 +1,7 @@
 module.exports = function defineUserModel(sequelize, DataTypes) {
   const Package = sequelize.define('package', {
-    trackingNumber: DataTypes.STRING,
-    carrier: DataTypes.STRING,
+    trackingNumber: { type: DataTypes.STRING, unique: true, allowNull: false },
+    carrier: { type: DataTypes.STRING, allowNull: false },
   });
 
   Package.createPackage = function createPackage(trackingNumber, carrier) {

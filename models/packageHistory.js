@@ -1,12 +1,17 @@
 module.exports = function defineUserModel(sequelize, DataTypes) {
   const PackageHistory = sequelize.define('packageHistory', {
-    statusDate: DataTypes.DATE,
-    city: DataTypes.STRING,
-    state: DataTypes.STRING,
-    zip: DataTypes.STRING,
-    country: DataTypes.STRING,
-    status: DataTypes.STRING,
-    statusDetail: DataTypes.STRING,
+    statusDate: { type: DataTypes.DATE, allowNull: false },
+    city: { type: DataTypes.STRING, allowNull: false },
+    state: { type: DataTypes.STRING, allowNull: false },
+    zip: { type: DataTypes.STRING, allowNull: false },
+    country: { type: DataTypes.STRING, allowNull: false },
+    status: { type: DataTypes.STRING, allowNull: false },
+    statusDetail: { type: DataTypes.STRING, allowNull: false },
+  }, {
+    name: {
+      singular: 'packageHistory',
+      plural: 'packageHistories',
+    },
   });
 
   PackageHistory.createPackageHistory = function createPackageHistory(
