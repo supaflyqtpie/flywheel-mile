@@ -24,7 +24,6 @@
 === Back-end
   * restful packages routes
   * implement carrier APIs
-  * encrypt password
   * log errors
   * forgot password
   * unit tests
