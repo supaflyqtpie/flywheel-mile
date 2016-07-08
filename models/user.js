@@ -5,14 +5,19 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
   const User = sequelize.define('user', {
     email: { type: DataTypes.STRING, unique: true, allowNull: false },
     password: { type: DataTypes.STRING, allowNull: false },
+  }, {
+    hooks: {
+      beforeCreate: (user, options) => {
+        user.password = bcrypt.hashSync(user.password, saltRounds); // eslint-disable-line no-param-reassign
+      },
+    },
   });
 
-  User.createUser = (email, password) => new Promise((resolve, reject) => {
-    bcrypt.hash(password, saltRounds, (err, hash) => {
-      if (err) { reject(err); }
-      resolve(User.create({ email, password: hash }));
+  User.createUser = (email, password) =>
+    User.create({
+      email,
+      password,
     });
-  });
 
   User.comparePassword = (password, hash) => new Promise((resolve, reject) => {
     bcrypt.compare(password, hash, (err, res) => {
