@@ -10,7 +10,7 @@ module.exports = function localAuthStrategy(passport) {
       if (!user) {
         console.log(`Email does not exist: ${email}`);
         done(null, false, {
-          message: 'bad email',
+          message: 'Incorrect Username or Password',
         });
       } else {
         User.comparePassword(password, user.password).then((success) => {
@@ -20,7 +20,7 @@ module.exports = function localAuthStrategy(passport) {
           } else {
             console.log(`Incorrect password for user: ${user.email}`);
             done(null, false, {
-              message: 'bad password',
+              message: 'Incorrect Username or Password',
             });
           }
         });
