@@ -9,21 +9,25 @@ module.exports = function localAuthStrategy(passport) {
     User.findByEmail(email).then((user) => {
       if (!user) {
         console.log(`Email does not exist: ${email}`);
-        return done(null, false, {
-          message: 'bad email',
+        done(null, false, {
+          message: 'Incorrect Username or Password',
+        });
+      } else {
+        User.comparePassword(password, user.password).then((success) => {
+          if (success) {
+            console.log(`Successfully Authenticated: ${user.email}`);
+            done(null, user);
+          } else {
+            console.log(`Incorrect password for user: ${user.email}`);
+            done(null, false, {
+              message: 'Incorrect Username or Password',
+            });
+          }
         });
       }
-      if (password !== user.password) {
-        console.log(`Incorrect password for user: ${user.email}`);
-        return done(null, false, {
-          message: 'bad password',
-        });
-      }
-      console.log(`Successfully Authenticated: ${user.email}`);
-      return done(null, user);
     }).catch((err) => {
       console.log(err);
-      return done(err);
+      done(err);
     });
   }));
 

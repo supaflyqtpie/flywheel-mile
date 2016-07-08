@@ -51,7 +51,7 @@ const LoginForm = ({ dispatch, authError }) => {
         </div>
         {authError?
           <div className="panel panel-danger">
-            <div className="panel-heading">Oops! Incorrect username or Password</div>
+            <div className="panel-heading">Oops! Incorrect Username or Password</div>
           </div> : false
         }
         <div className="form-group">
