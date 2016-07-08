@@ -13,21 +13,31 @@ describe('User Model', () => {
   describe('User Functions', () => {
     describe('createUser', () => {
       it('should be able to create a user', () => {
-        return User.createUser(email, password)
-        .then(item => {
+        return User.createUser(email, password).then(item => {
           expect(item.email).to.equal(email);
-          expect(item.password).to.equal(password);
+          expect(item.password).to.not.equal(password);
         });
       });
     });
 
     describe('findByEmail', () => {
       it('should be able to find a user by email', () => {
-        return User.create({ email, password })
-        .then(item => User.findByEmail(email).then(user => {
-          expect(item.email).to.equal(user.email);
-          expect(item.password).to.equal(user.password);
-        }));
+        return User.create({ email, password }).then(item => {
+          User.findByEmail(email).then(user => {
+            expect(item.email).to.equal(user.email);
+            expect(item.password).to.equal(user.password);
+          });
+        });
+      });
+    });
+
+    describe('comparePassword', () => {
+      it('should be able to find a user by email', () => {
+        return User.create({ email, password }).then(item => {
+          User.findByEmail(email).then(user => {
+            User.comparePassword(password, user.password).then(success => expect(success).to.be.true);
+          });
+        });
       });
     });
   });
