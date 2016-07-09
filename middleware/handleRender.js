@@ -29,7 +29,7 @@ function renderFullPage(html, initialState) {
 }
 
 function isServerRoute(path) {
-  return /^\/api\//.exec(path);
+  return /^\/api\/|^\/static\/|^\/css\/|^\/public\/|^\/favicon.ico/.exec(path) !== null;
 }
 
 module.exports = function handleRender(req, res, next) {
