@@ -1,21 +1,14 @@
 module.exports = {
   up(queryInterface, Sequelize) {
-    return queryInterface.createTable('PackageHistory', {
+    return queryInterface.createTable('packageHistories', {
       id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
+        allowNull: false,
         autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
       },
       packageId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      createdAt: {
-        type: Sequelize.DATE,
-      },
-      updatedAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
       },
       statusDate: {
         type: Sequelize.DATE,
@@ -45,10 +38,18 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
     });
   },
 
   down(queryInterface, Sequelize) {
-    return queryInterface.dropTable('PackageHistory');
+    return queryInterface.dropTable('packageHistories');
   },
 };

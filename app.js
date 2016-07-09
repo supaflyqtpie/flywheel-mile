@@ -1,4 +1,5 @@
 require('babel-core/register');
+require('babel-polyfill');
 const express = require('express');
 const path = require('path');
 // const favicon = require('serve-favicon');
@@ -56,13 +57,15 @@ initPassport(passport);
 // Initialize Routes
 const user = require('./routes/user');
 const userSession = require('./routes/session')(passport);
+const userPackages = require('./routes/packages');
 
 // Setup client route rendering
 app.use(handleRender);
 
 // Setup server API routes
-app.use('/api/user', user);
-app.use('/api/session', userSession);
+app.use('/api', user);
+app.use('/api', userSession);
+app.use('/api', userPackages);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

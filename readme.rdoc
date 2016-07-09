@@ -1,10 +1,15 @@
 = Flywheel-Mile
+{<img src="https://travis-ci.org/supaflyqtpie/flywheel-mile.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/supaflyqtpie/flywheel-mile]
 
-== Setup Database
-  node_modules/.bin/sequelize db:migrate
+=== Run tests:
+  npm test
 
-== Seed Database
-  node_modules/.bin/sequelize db:seed:all
+=== Database commands
+  npm run db:migrate
+  npm run db:seed
+  npm run db:drop
+  npm run db:migrate:test
+  npm run db:seed:test
 
 == TODO
 === Front End ui/ux
@@ -19,7 +24,6 @@
 === Back-end
   * restful packages routes
   * implement carrier APIs
-  * encrypt password
   * log errors
   * forgot password
   * unit tests

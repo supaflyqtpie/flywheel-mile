@@ -1,21 +1,18 @@
 module.exports = function defineUserModel(sequelize, DataTypes) {
-  const PackageHistory = sequelize.define('PackageHistory', {
-    statusDate: DataTypes.DATE,
-    city: DataTypes.STRING,
-    state: DataTypes.STRING,
-    zip: DataTypes.STRING,
-    country: DataTypes.STRING,
-    status: DataTypes.STRING,
-    statusDetail: DataTypes.STRING,
+  const PackageHistory = sequelize.define('packageHistory', {
+    statusDate: { type: DataTypes.DATE, allowNull: false },
+    city: { type: DataTypes.STRING, allowNull: false },
+    state: { type: DataTypes.STRING, allowNull: false },
+    zip: { type: DataTypes.STRING, allowNull: false },
+    country: { type: DataTypes.STRING, allowNull: false },
+    status: { type: DataTypes.STRING, allowNull: false },
+    statusDetail: { type: DataTypes.STRING, allowNull: false },
+  }, {
+    name: {
+      singular: 'packageHistory',
+      plural: 'packageHistories',
+    },
   });
-
-  PackageHistory.findByPackageId = function findByPackageId(packageId) {
-    return PackageHistory.findAll({
-      where: {
-        packageId,
-      },
-    });
-  };
 
   PackageHistory.createPackageHistory = function createPackageHistory(
     packageId,
@@ -39,9 +36,7 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
   };
 
   PackageHistory.associate = function associate(db) {
-    PackageHistory.belongsTo(db.Package, {
-      as: 'package',
-    });
+    PackageHistory.belongsTo(db.package);
   };
 
   return PackageHistory;
