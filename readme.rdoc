@@ -13,17 +13,19 @@
 
 == TODO
 === Front End ui/ux
-  * Landing page
-  * Package detail page
-  * packages failure on get packages, add, delete?
+* Landing page
+* Package history page
+* Package history google maps
+* packages failure on get packages, add, delete
 === Front End logic
-  * redux get a package
-  * block going to login page when logged in
-  * redux packages failure
-  * unit tests
+* redux package histories
+* redux package add and delete failure
+* redux unit tests
 === Back-end
-  * restful packages routes
-  * implement carrier APIs
-  * log errors
-  * forgot password
-  * unit tests
+* implement carrier APIs
+* controller unit tests
+
+== Future Features
+* password reset
+* fb messenger notification
+* service worker notifications
