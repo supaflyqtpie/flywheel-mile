@@ -15,21 +15,21 @@ function renderFullPage(html, initialState) {
         <title>Flywheel-Mile</title>
         <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" charSet="utf-8" />
         <link rel="stylesheet" href="/css/font-awesome.min.css" />
-        <link rel="stylesheet" href="/static/css/application.css" />
+        <link rel="stylesheet" href="/dist/application.css" />
       </head>
       <body>
         <div id="root">${html}</div>
         <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
         </script>
-        <script src="/public/static/bundle.js"></script>
+        <script src="/public/dist/bundle.js"></script>
       </body>
     </html>
     `;
 }
 
 function isServerRoute(path) {
-  return /^\/api\//.exec(path);
+  return /^\/api\/|^\/static\/|^\/css\/|^\/public\/|^\/favicon.ico/.exec(path) !== null;
 }
 
 module.exports = function handleRender(req, res, next) {

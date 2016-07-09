@@ -11,7 +11,6 @@
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "morgan": "~1.6.1",
-    "node-sass-middleware": "^0.9.8",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "pg": "^4.5.3",
@@ -40,6 +39,7 @@
     "eslint-plugin-jsx-a11y": "^1.2.2",
     "eslint-plugin-react": "^5.1.1",
     "mocha": "^2.5.3",
+    "node-sass": "^3.8.0",
     "sequelize-cli": "^2.4.0",
     "sqlite": "0.0.4",
     "webpack": "^1.13.1",
@@ -47,21 +47,20 @@
     "webpack-hot-middleware": "^2.10.0"
   },
   "scripts": {
-    "start": "node_modules/.bin/babel-node ./bin/www",
+    "start": "node ./bin/www",
     "test": "NODE_ENV=test node_modules/.bin/mocha test --recursive --compilers js:babel-core/register",
+    "dev": "node_modules/.bin/babel-node ./bin/www",
     "debug": "node_modules/.bin/babel-node debug ./bin/www",
+    "clean": "npm run clean-server && npm run clean-client",
+    "clean-server": "rm -rf build && mkdir build",
+    "clean-client": "rm -rf public/dist && mkdir public/dist",
+    "build-css": "node_modules/.bin/node-sass public/scss/application.scss public/dist/application.css",
+    "build-client": "node_modules/.bin/webpack",
+    "build-server": "node_modules/.bin/babel ./ -d ./build -s --ignore node_modules/,test/,seeders/,migrations/,build/",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
-    "db:migrate:test": "NODE_ENV=test node_modules/.bin/sequelize db:migrate",
     "db:drop": "node_modules/.bin/sequelize db:migrate:undo:all",
-    "db:drop:test": "NODE_ENV=test node_modules/.bin/sequelize db:migrate:undo:all",
     "db:seed": "node_modules/.bin/sequelize db:seed:all",
     "db:reset": "npm run db:drop && npm run db:migrate && npm run db:seed"
-  },
-  "babel": {
-    "presets": [
-      "react",
-      "es2015"
-    ]
   },
   "repository": {
     "type": "git",

@@ -8,9 +8,9 @@ module.exports = {
     './views/index.jsx',
   ],
   output: {
-    path: path.join(__dirname, '/public/static'),
+    path: path.join(__dirname, '/public/dist'),
     filename: 'bundle.js',
-    publicPath: '/public/static/',
+    publicPath: '/public/dist/',
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
@@ -22,9 +22,15 @@ module.exports = {
       loaders: ['babel'],
       exclude: /node_modules/,
       include: __dirname,
+    }, {
+      test: /\.css$/,
+      loaders: ['style', 'css'],
+    }, {
+      test: /\.scss$/,
+      loaders: ['style', 'css', 'sass'],
     }],
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['', '.js', '.jsx', 'css', 'scss'],
   },
 };
