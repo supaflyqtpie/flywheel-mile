@@ -53,7 +53,8 @@
     "db:migrate:test": "NODE_ENV=test node_modules/.bin/sequelize db:migrate",
     "db:drop": "node_modules/.bin/sequelize db:migrate:undo:all",
     "db:drop:test": "NODE_ENV=test node_modules/.bin/sequelize db:migrate:undo:all",
-    "db:seed": "node_modules/.bin/sequelize db:seed:all"
+    "db:seed": "node_modules/.bin/sequelize db:seed:all",
+    "db:reset": "npm run db:drop && npm run db:migrate && npm run db:seed"
   },
   "babel": {
     "presets": [
