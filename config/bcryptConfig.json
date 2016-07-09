@@ -1,0 +1,11 @@
+{
+  "development": {
+    "salt_rounds": 1
+  },
+  "test": {
+    "salt_rounds": 5
+  },
+  "production": {
+    "salt_rounds": 10
+  }
+}
