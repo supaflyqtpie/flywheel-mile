@@ -60,9 +60,8 @@ export function getSubscribedPackages() {
   return (dispatch, getState) => {
     dispatch(requestPackages());
     query(request).then((response) => {
-      response.json().then(json => dispatch(receivedPackages(json)));
-    }).catch((error) => {
-    });
+      response.json().then((json) => dispatch(receivedPackages(json)));
+    }).catch((error) => {});
   };
 }
 

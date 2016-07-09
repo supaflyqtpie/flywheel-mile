@@ -49,6 +49,7 @@
   "scripts": {
     "start": "node_modules/.bin/babel-node ./bin/www",
     "test": "NODE_ENV=test node_modules/.bin/mocha test --recursive --compilers js:babel-core/register",
+    "debug": "node_modules/.bin/babel-node debug ./bin/www",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
     "db:migrate:test": "NODE_ENV=test node_modules/.bin/sequelize db:migrate",
     "db:drop": "node_modules/.bin/sequelize db:migrate:undo:all",
