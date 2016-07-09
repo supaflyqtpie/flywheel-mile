@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
 
-const saltRounds = 10;
 module.exports = function defineUserModel(sequelize, DataTypes) {
   const User = sequelize.define('user', {
     email: { type: DataTypes.STRING, unique: true, allowNull: false },
@@ -8,10 +7,12 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
   }, {
     hooks: {
       beforeCreate: (user, options) => {
-        user.password = bcrypt.hashSync(user.password, saltRounds); // eslint-disable-line no-param-reassign
+        user.password = bcrypt.hashSync(user.password, User.saltRounds); // eslint-disable-line no-param-reassign
       },
     },
   });
+
+  User.saltRounds = 10;
 
   User.createUser = (email, password) =>
     User.create({

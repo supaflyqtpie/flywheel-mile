@@ -15,7 +15,6 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
   });
 
   PackageHistory.createPackageHistory = function createPackageHistory(
-    packageId,
     statusDate,
     city,
     state,
@@ -24,7 +23,6 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
     status,
     statusDetail) {
     return PackageHistory.create({
-      packageId,
       statusDate,
       city,
       state,
