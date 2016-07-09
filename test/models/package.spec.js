@@ -11,6 +11,17 @@ const carrier = 'usps';
 describe('Package Model', () => {
   beforeEach(setupDB);
 
+  describe('Package Functions', () => {
+    describe('createPackage', () => {
+      it('should be able to create a package', () => {
+        return Package.createPackage(trackingNumber, carrier).then(item => {
+          expect(item.trackingNumber).to.equal(trackingNumber);
+          expect(item.carrier).to.equal(carrier);
+        });
+      });
+    });
+  });
+
   describe('belongs to user', () => {
     it('should show which user it belongs to', () => {
       return Package.create({

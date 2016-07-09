@@ -23,7 +23,7 @@ describe('User Model', () => {
     describe('findByEmail', () => {
       it('should be able to find a user by email', () => {
         return User.create({ email, password }).then(item => {
-          User.findByEmail(email).then(user => {
+          return User.findByEmail(email).then(user => {
             expect(item.email).to.equal(user.email);
             expect(item.password).to.equal(user.password);
           });
@@ -34,8 +34,8 @@ describe('User Model', () => {
     describe('comparePassword', () => {
       it('should be able to find a user by email', () => {
         return User.create({ email, password }).then(item => {
-          User.findByEmail(email).then(user => {
-            User.comparePassword(password, user.password).then(success => expect(success).to.be.true);
+          return User.findByEmail(email).then(user => {
+            return User.comparePassword(password, user.password).then(success => expect(success).to.be.true);
           });
         });
       });
