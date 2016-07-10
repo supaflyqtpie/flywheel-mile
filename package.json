@@ -57,7 +57,7 @@
     "build": "npm run build-client && npm run build-server",
     "build-css": "node_modules/.bin/node-sass public/scss/application.scss public/dist/application.css",
     "build-client": "npm run clean-client && node_modules/.bin/webpack && npm run build-css",
-    "build-server": "npm run clean-server && node_modules/.bin/babel ./ -d ./build -s --copy-files --ignore node_modules/,test/,seeders/,migrations/,build/,public/",
+    "build-server": "npm run clean-server && node_modules/.bin/babel ./ -d ./build -s --copy-files --ignore node_modules/,test/,seeders/,migrations/,build/",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
     "db:drop": "node_modules/.bin/sequelize db:migrate:undo:all",
     "db:seed": "node_modules/.bin/sequelize db:seed:all",
