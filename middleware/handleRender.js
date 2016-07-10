@@ -22,7 +22,7 @@ function renderFullPage(html, initialState) {
         <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
         </script>
-        <script src="/public/dist/bundle.js"></script>
+        <script src="/dist/bundle.js"></script>
       </body>
     </html>
     `;

@@ -2,8 +2,9 @@
 {<img src="https://travis-ci.org/supaflyqtpie/flywheel-mile.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/supaflyqtpie/flywheel-mile]
 
 === Start dev server:
+  npm run build-css
   npm run dev
-  npm run debug
+Note for debug: "npm run dev debug"
 
 === Start prod server:
   npm run build
