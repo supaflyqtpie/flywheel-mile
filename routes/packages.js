@@ -13,8 +13,10 @@ router.get('/packages', (req, res, next) => {
 
 // Create a new package for the user
 router.post('/packages', (req, res, next) => {
-  Package.create(req.package).then((item) => {
-    req.user.setPackages(item).then(() => res.json(item));
+  Package.create(req.body.package).then((item) => {
+    req.user.setPackages(item).then(() => {
+      res.json(item);
+    });
   }).catch((err) => {
     next(new Error('Failed to create new package'));
   });

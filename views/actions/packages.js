@@ -1,4 +1,5 @@
 import { query } from '../helpers';
+import { shippoGet } from '../../shippoAPIRequestHandler';
 
 export const REQUEST_PACKAGES = 'REQUEST_PACKAGES';
 export const RECEIVED_PACKAGES = 'RECEIVED_PACKAGES';
@@ -33,10 +34,11 @@ function processDeletePackage(id) {
   };
 }
 
-function addPackage(id, trackingNumber) {
+function addPackage(id, carrier, trackingNumber) {
   return {
     type: ADD_PACKAGE,
     id,
+    carrier,
     trackingNumber,
   };
 }
@@ -65,26 +67,37 @@ export function getSubscribedPackages() {
   };
 }
 
-function createAddPackageRequest(trackingNumber) {
+function createAddPackageRequest(carrier, trackingNumber) {
   return {
     path: '/packages',
     method: 'POST',
     body: {
       package: {
+        carrier,
         trackingNumber,
       },
     },
   };
 }
 
-export function requestToAddPackage(trackingNumber) {
-  const request = createAddPackageRequest(trackingNumber);
+export function requestToAddPackage(carrier, trackingNumber) {
+  const request = createAddPackageRequest(carrier, trackingNumber);
   return (dispatch, getState) => {
-    dispatch(processAddPackage());
-    query(request).then((json) => {
-      dispatch(addPackage(json.id, json.trackingNumber));
-    }).catch((error) => {
+    shippoGet(carrier, trackingNumber).then((response) => {
+      response.json().then((json) => {
+        if (!json || !json.tracking_status) {
+          // get fucked
+        } else {
+          query(request).then((response2) => {
+            response2.json().then((json2) => {
+              dispatch(addPackage(json2.id, json2.carrier, json2.trackingNumber));
+            });
+          }).catch((error) => {
+          });
+        }
+      });
     });
+    dispatch(processAddPackage());
   };
 }
 

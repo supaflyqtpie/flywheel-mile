@@ -4,6 +4,7 @@ import { requestToAddPackage } from '../../actions/packages';
 
 const AddPackage = ({ dispatch, id, isAdding }) => {
   let inputTrackingNumber;
+  let inputCarrier;
 
   return (
     <form
@@ -14,7 +15,7 @@ const AddPackage = ({ dispatch, id, isAdding }) => {
         if (!inputTrackingNumber.value.trim()) {
           return;
         }
-        dispatch(requestToAddPackage(inputTrackingNumber.value));
+        dispatch(requestToAddPackage(inputCarrier, inputTrackingNumber.value));
         inputTrackingNumber.value = '';
       }}
       disabled={isAdding}
@@ -29,6 +30,21 @@ const AddPackage = ({ dispatch, id, isAdding }) => {
           }}
         />
       </div>
+      <select
+        className="form-control left"
+        ref={node => {
+          if (node) {
+            inputCarrier = node.value;
+          }
+        }}
+        onChange={event => {
+          inputCarrier = event.target.value;
+        }}
+      >
+        <option value="fedex">Fedex</option>
+        <option value="ups">UPS</option>
+        <option value="usps">USPS</option>
+      </select>
       <button
         type="submit"
         className="btn btn-primary"

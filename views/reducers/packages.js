@@ -11,6 +11,7 @@ function singlePackage(item, action) {
     case ADD_PACKAGE:
       return {
         id: action.id,
+        carrier: action.carrier,
         trackingNumber: action.trackingNumber,
         isProcessingDelete: false,
       };
