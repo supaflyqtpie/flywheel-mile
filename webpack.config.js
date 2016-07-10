@@ -22,15 +22,9 @@ module.exports = {
       loaders: ['babel'],
       exclude: /node_modules/,
       include: __dirname,
-    }, {
-      test: /\.css$/,
-      loaders: ['style', 'css'],
-    }, {
-      test: /\.scss$/,
-      loaders: ['style', 'css', 'sass'],
     }],
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', 'css', 'scss'],
+    extensions: ['', '.js', '.jsx'],
   },
 };

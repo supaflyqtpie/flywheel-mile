@@ -1,14 +1,16 @@
 = Flywheel-Mile
 {<img src="https://travis-ci.org/supaflyqtpie/flywheel-mile.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/supaflyqtpie/flywheel-mile]
 
-=== Start server:
+=== Start dev server:
+  npm run dev
+  npm run debug
+
+=== Start prod server:
+  npm run build
   npm start
 
 === Run tests:
   npm test
-
-=== Start server in debug mode:
-  npm run debug
 
 === Database commands
   npm run db:reset
