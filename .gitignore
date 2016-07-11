@@ -48,8 +48,11 @@ flywheel_mile.sublime*
 # database
 *.sqlite
 
-# scss generated css files
-public/static
+# server build
+build
+
+# dist
+public/dist
 
 # ctags -R --exclude=.git --exclude=node_modules
 tags

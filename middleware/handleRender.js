@@ -15,14 +15,14 @@ function renderFullPage(html, initialState) {
         <title>Flywheel-Mile</title>
         <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" charSet="utf-8" />
         <link rel="stylesheet" href="/css/font-awesome.min.css" />
-        <link rel="stylesheet" href="/static/css/application.css" />
+        <link rel="stylesheet" href="/dist/application.css" />
       </head>
       <body>
         <div id="root">${html}</div>
         <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
         </script>
-        <script src="/public/static/bundle.js"></script>
+        <script src="/dist/bundle.js"></script>
       </body>
     </html>
     `;
