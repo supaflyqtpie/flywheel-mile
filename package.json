@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "flywheel-mile",
   "private": true,
-  "main": "./bin/www",
+  "main": "./bin/server.js",
   "dependencies": {
     "babel-cli": "^6.10.1",
     "babel-core": "^6.10.4",
@@ -48,9 +48,9 @@
   },
   "scripts": {
     "postinstall": "npm run build",
-    "start": "node ./build/bin/www",
+    "start": "node ./build/bin/server.js",
     "test": "NODE_ENV=test node_modules/.bin/mocha test --recursive --compilers js:babel-core/register",
-    "dev": "node_modules/.bin/babel-node ./bin/www",
+    "dev": "node_modules/.bin/babel-node ./bin/server.js",
     "clean": "npm run clean-server && npm run clean-client",
     "clean-server": "rm -rf build && mkdir build",
     "clean-client": "rm -rf public/dist && mkdir public/dist",
