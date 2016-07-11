@@ -6,7 +6,6 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import configureStore from '../views/store/configureStore';
 import getRoutes from '../views/routes';
 import { signedIn } from '../views/actions/session';
-import { receivedPackages } from '../views/actions/packages';
 
 function renderFullPage(html, initialState) {
   return `
