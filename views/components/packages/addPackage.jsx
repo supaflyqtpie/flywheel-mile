@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { requestToAddPackage } from '../../actions/packages';
 
-const AddPackage = ({ dispatch, id, isAdding }) => {
+const AddPackage = ({ dispatch, id, isAdding, addPackageError }) => {
   let inputTrackingNumber;
   let inputCarrier;
 
@@ -55,6 +55,11 @@ const AddPackage = ({ dispatch, id, isAdding }) => {
           : <i className="fa fa-plus" aria-hidden="true"></i>
         }
       </button>
+      {addPackageError?
+        <div className="panel panel-danger right">
+          <div className="panel-heading">Sorry, your package was not found.</div>
+        </div> : false
+      }
     </form>
   );
 };
@@ -63,11 +68,13 @@ AddPackage.propTypes = {
   dispatch: React.PropTypes.func.isRequired,
   id: React.PropTypes.string,
   isAdding: React.PropTypes.bool,
+  addPackageError: React.PropTypes.bool,
 };
 
 function mapStateToProps(state) {
   return {
     isAdding: state.packages.isAdding,
+    addPackageError: state.packages.addPackageError,
   };
 }
 

@@ -1,3 +1,5 @@
+const fetch = require('node-fetch');
+
 const baseURI = 'https://api.goshippo.com/v1/tracks';
 
 function buildURI(carrier, trackingNumber) {
