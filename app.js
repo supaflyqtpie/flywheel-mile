@@ -6,10 +6,6 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
-const webpackConfig = require('./webpack.config');
-const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
 const handleRender = require('./middleware/handleRender');
 
 const app = express();
@@ -24,6 +20,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Setup dev webpack
 if (app.get('env') === 'development') {
+  const webpackConfig = require('./webpack.config'); // eslint-disable-line global-require
+  const webpack = require('webpack'); // eslint-disable-line global-require
+  const webpackDevMiddleware = require('webpack-dev-middleware'); // eslint-disable-line global-require
+  const webpackHotMiddleware = require('webpack-hot-middleware'); // eslint-disable-line global-require
   const compiler = webpack(webpackConfig);
   app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: webpackConfig.output.publicPath }));
   app.use(webpackHotMiddleware(compiler));
