@@ -55,9 +55,9 @@ const AddPackage = ({ dispatch, id, isAdding, addPackageError }) => {
           : <i className="fa fa-plus" aria-hidden="true"></i>
         }
       </button>
-      {addPackageError?
+      {(addPackageError.length > 0) ?
         <div className="panel panel-danger right">
-          <div className="panel-heading">Sorry, your package was not found.</div>
+          <div className="panel-heading">{addPackageError}</div>
         </div> : false
       }
     </form>
@@ -68,7 +68,7 @@ AddPackage.propTypes = {
   dispatch: React.PropTypes.func.isRequired,
   id: React.PropTypes.string,
   isAdding: React.PropTypes.bool,
-  addPackageError: React.PropTypes.bool,
+  addPackageError: React.PropTypes.string,
 };
 
 function mapStateToProps(state) {

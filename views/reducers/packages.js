@@ -6,7 +6,9 @@ import {
   PROCESS_ADD_PACKAGE,
   PROCESS_DELETE_PACKAGE,
   ADD_ADD_PACKAGE_ERROR,
-  RESET_ADD_PACKAGE_ERROR } from '../actions/packages';
+  RESET_ADD_PACKAGE_ERROR,
+  ADD_GET_PACKAGES_ERROR,
+  RESET_GET_PACKAGES_ERROR } from '../actions/packages';
 
 function singlePackage(item, action) {
   switch (action.type) {
@@ -47,7 +49,8 @@ function packages(state, action) {
     case ADD_PACKAGE:
       return Object.assign({}, state, {
         isAdding: false,
-        addPackageError: false,
+        addPackageError: '',
+        getPackagesError: '',
         items: [...state.items, singlePackage(undefined, action)],
       });
     case PROCESS_DELETE_PACKAGE:
@@ -61,11 +64,20 @@ function packages(state, action) {
     case ADD_ADD_PACKAGE_ERROR:
       return Object.assign({}, state, {
         isAdding: false,
-        addPackageError: true,
+        addPackageError: action.msg,
       });
     case RESET_ADD_PACKAGE_ERROR:
       return Object.assign({}, state, {
-        addPackageError: false,
+        addPackageError: '',
+      });
+    case ADD_GET_PACKAGES_ERROR:
+      return Object.assign({}, state, {
+        getPackagesError: action.msg,
+        isFetching: false,
+      });
+    case RESET_GET_PACKAGES_ERROR:
+      return Object.assign({}, state, {
+        getPackagesError: '',
       });
     default:
       return state;
@@ -75,7 +87,8 @@ function packages(state, action) {
 export default function trackedPackages(state = {
   isFetching: false,
   isAdding: false,
-  addPackageError: false,
+  addPackageError: '',
+  getPackagesError: '',
   items: [],
 }, action) {
   switch (action.type) {
@@ -86,6 +99,8 @@ export default function trackedPackages(state = {
     case ADD_PACKAGE:
     case ADD_ADD_PACKAGE_ERROR:
     case RESET_ADD_PACKAGE_ERROR:
+    case ADD_GET_PACKAGES_ERROR:
+    case RESET_GET_PACKAGES_ERROR:
     case DELETE_PACKAGE:
       return Object.assign({}, state, packages(state, action));
     default:

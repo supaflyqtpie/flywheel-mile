@@ -9,7 +9,9 @@ router.use(handleAuthentication);
 
 // Get the user's package list
 router.get('/packages', (req, res, next) => {
-  req.user.getPackages().then((packages) => res.json(packages));
+  req.user.getPackages().then((packages) => res.json(packages)).catch((err) => {
+    res.status(422).json({ message: 'Unexpected error occured while retrieving packages' });
+  });
 });
 
 // Create a new package for the user
@@ -21,7 +23,7 @@ router.post('/packages', (req, res, next) => {
       // If carrier is valid but not tracking number, shippo will return null
       // tracking_status. This is the only known behavior so far...
       if (!response.ok || !json || !json.tracking_status) {
-        res.status(404).json({ message: 'Could not get package from Shippo' });
+        res.status(422).json({ message: 'Could not get package from Shippo' });
       } else {
         Package.create(newPackage).then((item) => {
           req.user.addPackage(item).then(() => {
@@ -57,7 +59,9 @@ router.get('/packages/:id', (req, res, next) => {
 
 // Delete the a user's package by id
 router.delete('/packages/:id', (req, res, next) => {
-  req.package.destroy();
+  req.package.destroy().catch((err) => {
+    res.status(422).json({ message: 'Unexpected error occured while deleting package' });
+  });
   res.status(204).end();
 });
 

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Package from './package';
 import { requestToDeletePackage } from '../../actions/packages';
 
-function PackagesTable({ packages, onDeleteClick }) {
+function PackagesTable({ packages, onDeleteClick, getPackagesError }) {
   return (
     <table className="table table-striped">
       <thead>
@@ -21,6 +21,9 @@ function PackagesTable({ packages, onDeleteClick }) {
             {...item}
           />
         )}
+        {(getPackagesError.length > 0) ?
+          <h3 className="text-center">{getPackagesError}</h3>
+        : false}
       </tbody>
     </table>
   );
@@ -29,11 +32,13 @@ function PackagesTable({ packages, onDeleteClick }) {
 PackagesTable.propTypes = {
   packages: React.PropTypes.array,
   onDeleteClick: React.PropTypes.func,
+  getPackagesError: React.PropTypes.string,
 };
 
 function mapStateToProps(state) {
   return {
     packages: state.packages.items,
+    getPackagesError: state.packages.getPackagesError,
   };
 }
 
