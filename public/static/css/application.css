@@ -1,0 +1,14 @@
+body {
+  background-color: #eff1f2; }
+
+.fa-tag-text {
+  margin-left: 10px; }
+
+#app-title {
+  font-weight: bold; }
+
+.left {
+  float: left; }
+
+.right {
+  float: right; }

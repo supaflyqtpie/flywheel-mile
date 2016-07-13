@@ -6,6 +6,8 @@ export const ADD_PACKAGE = 'ADD_PACKAGE';
 export const DELETE_PACKAGE = 'DELETE_PACKAGE';
 export const PROCESS_ADD_PACKAGE = 'PROCESS_ADD_PACKAGE';
 export const PROCESS_DELETE_PACKAGE = 'PROCESS_DELETE_PACKAGE';
+export const ADD_ADD_PACKAGE_ERROR = 'ADD_ADD_PACKAGE_ERROR';
+export const RESET_ADD_PACKAGE_ERROR = 'RESET_ADD_PACKAGE_ERROR';
 
 function requestPackages() {
   return {
@@ -13,7 +15,7 @@ function requestPackages() {
   };
 }
 
-function receivedPackages(packages) {
+export function receivedPackages(packages) {
   return {
     type: RECEIVED_PACKAGES,
     packages,
@@ -33,10 +35,11 @@ function processDeletePackage(id) {
   };
 }
 
-function addPackage(id, trackingNumber) {
+function addPackage(id, carrier, trackingNumber) {
   return {
     type: ADD_PACKAGE,
     id,
+    carrier,
     trackingNumber,
   };
 }
@@ -45,6 +48,18 @@ function deletePackage(id) {
   return {
     type: DELETE_PACKAGE,
     id,
+  };
+}
+
+function addAddPackageError() {
+  return {
+    type: ADD_ADD_PACKAGE_ERROR,
+  };
+}
+
+export function resetAddPackageError() {
+  return {
+    type: RESET_ADD_PACKAGE_ERROR,
   };
 }
 
@@ -65,26 +80,32 @@ export function getSubscribedPackages() {
   };
 }
 
-function createAddPackageRequest(trackingNumber) {
+function createAddPackageRequest(carrier, trackingNumber) {
   return {
     path: '/packages',
     method: 'POST',
     body: {
       package: {
+        carrier,
         trackingNumber,
       },
     },
   };
 }
 
-export function requestToAddPackage(trackingNumber) {
-  const request = createAddPackageRequest(trackingNumber);
+export function requestToAddPackage(carrier, trackingNumber) {
+  const request = createAddPackageRequest(carrier, trackingNumber);
   return (dispatch, getState) => {
+    query(request).then((response) => {
+      response.json().then((json) => {
+        if (!response.ok) {
+          dispatch(addAddPackageError());
+        } else {
+          dispatch(addPackage(json.id, json.carrier, json.trackingNumber));
+        }
+      });
+    }).catch((error) => {});
     dispatch(processAddPackage());
-    query(request).then((json) => {
-      dispatch(addPackage(json.id, json.trackingNumber));
-    }).catch((error) => {
-    });
   };
 }
 

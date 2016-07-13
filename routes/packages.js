@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const handleAuthentication = require('../middleware/handleAuthentication');
 const Package = require('../models').package;
+import { shippoGet } from '../shippoAPIRequestHandler';
 
 // All routes below require authentication
 router.use(handleAuthentication);
@@ -13,10 +14,26 @@ router.get('/packages', (req, res, next) => {
 
 // Create a new package for the user
 router.post('/packages', (req, res, next) => {
-  Package.create(req.package).then((item) => {
-    req.user.setPackages(item).then(() => res.json(item));
+  const newPackage = req.body.package;
+  shippoGet(newPackage.carrier, newPackage.trackingNumber).then((response) => {
+    response.json().then((json) => {
+      // If carrier is invalid, shippo will return 404 with body-parser
+      // If carrier is valid but not tracking number, shippo will return null
+      // tracking_status. This is the only known behavior so far...
+      if (!response.ok || !json || !json.tracking_status) {
+        res.status(404).json({ message: 'Could not get package from Shippo' });
+      } else {
+        Package.create(newPackage).then((item) => {
+          req.user.addPackage(item).then(() => {
+            res.json(item);
+          });
+        }).catch((err) => {
+          res.status(422).json({ message: 'Unable to create package' });
+        });
+      }
+    });
   }).catch((err) => {
-    next(new Error('Failed to create new package'));
+    res.status(422).json({ message: err }); // error with shippo
   });
 });
 

@@ -8,6 +8,7 @@ function PackagesTable({ packages, onDeleteClick }) {
     <table className="table table-striped">
       <thead>
         <tr>
+          <th>Carrier</th>
           <th>Your Packages</th>
           <th>Remove</th>
         </tr>

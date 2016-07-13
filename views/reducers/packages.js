@@ -4,13 +4,16 @@ import {
   ADD_PACKAGE,
   DELETE_PACKAGE,
   PROCESS_ADD_PACKAGE,
-  PROCESS_DELETE_PACKAGE } from '../actions/packages';
+  PROCESS_DELETE_PACKAGE,
+  ADD_ADD_PACKAGE_ERROR,
+  RESET_ADD_PACKAGE_ERROR } from '../actions/packages';
 
 function singlePackage(item, action) {
   switch (action.type) {
     case ADD_PACKAGE:
       return {
         id: action.id,
+        carrier: action.carrier,
         trackingNumber: action.trackingNumber,
         isProcessingDelete: false,
       };
@@ -31,7 +34,6 @@ function packages(state, action) {
     case REQUEST_PACKAGES:
       return Object.assign({}, state, {
         isFetching: true,
-        items: [],
       });
     case RECEIVED_PACKAGES:
       return Object.assign({}, state, {
@@ -45,6 +47,7 @@ function packages(state, action) {
     case ADD_PACKAGE:
       return Object.assign({}, state, {
         isAdding: false,
+        addPackageError: false,
         items: [...state.items, singlePackage(undefined, action)],
       });
     case PROCESS_DELETE_PACKAGE:
@@ -55,6 +58,15 @@ function packages(state, action) {
       return Object.assign({}, state, {
         items: state.items.filter((item) => item.id !== action.id),
       });
+    case ADD_ADD_PACKAGE_ERROR:
+      return Object.assign({}, state, {
+        isAdding: false,
+        addPackageError: true,
+      });
+    case RESET_ADD_PACKAGE_ERROR:
+      return Object.assign({}, state, {
+        addPackageError: false,
+      });
     default:
       return state;
   }
@@ -63,6 +75,7 @@ function packages(state, action) {
 export default function trackedPackages(state = {
   isFetching: false,
   isAdding: false,
+  addPackageError: false,
   items: [],
 }, action) {
   switch (action.type) {
@@ -71,6 +84,8 @@ export default function trackedPackages(state = {
     case PROCESS_ADD_PACKAGE:
     case PROCESS_DELETE_PACKAGE:
     case ADD_PACKAGE:
+    case ADD_ADD_PACKAGE_ERROR:
+    case RESET_ADD_PACKAGE_ERROR:
     case DELETE_PACKAGE:
       return Object.assign({}, state, packages(state, action));
     default:

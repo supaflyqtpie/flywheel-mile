@@ -1,8 +1,9 @@
 import React from 'react';
 
-export default function Package({ trackingNumber, onDeleteClick, isProcessingDelete }) {
+export default function Package({ carrier, trackingNumber, onDeleteClick, isProcessingDelete }) {
   return (
     <tr>
+      <td>{carrier}</td>
       <td>{trackingNumber}</td>
       <td>
         <button className="btn btn-danger" onClick={onDeleteClick} disabled={isProcessingDelete}>
@@ -17,6 +18,7 @@ export default function Package({ trackingNumber, onDeleteClick, isProcessingDel
 }
 
 Package.propTypes = {
+  carrier: React.PropTypes.string,
   trackingNumber: React.PropTypes.string,
   onDeleteClick: React.PropTypes.func,
   isProcessingDelete: React.PropTypes.bool,

@@ -24,10 +24,10 @@ Note for debug: "npm run dev debug"
 * Landing page
 * Package history page
 * Package history google maps
-* packages failure on get packages, add, delete
+* packages failure on get packages, delete
 === Front End logic
 * redux package histories
-* redux package add and delete failure
+* redux package delete failure
 * redux unit tests
 === Back-end
 * implement carrier APIs
