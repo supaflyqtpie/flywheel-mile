@@ -24,14 +24,13 @@ Note for debug: "npm run dev debug"
 * Landing page
 * Package history page
 * Package history google maps
-* packages failure on get packages, delete
 === Front End logic
 * redux package histories
 * redux package delete failure
 * redux unit tests
 === Back-end
-* implement carrier APIs
 * controller unit tests
+* route for shippo hook
 
 == Future Features
 * password reset

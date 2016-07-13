@@ -8,6 +8,8 @@ export const PROCESS_ADD_PACKAGE = 'PROCESS_ADD_PACKAGE';
 export const PROCESS_DELETE_PACKAGE = 'PROCESS_DELETE_PACKAGE';
 export const ADD_ADD_PACKAGE_ERROR = 'ADD_ADD_PACKAGE_ERROR';
 export const RESET_ADD_PACKAGE_ERROR = 'RESET_ADD_PACKAGE_ERROR';
+export const ADD_GET_PACKAGES_ERROR = 'ADD_GET_PACKAGES_ERROR';
+export const RESET_GET_PACKAGES_ERROR = 'RESET_GET_PACKAGES_ERROR';
 
 function requestPackages() {
   return {
@@ -51,15 +53,29 @@ function deletePackage(id) {
   };
 }
 
-function addAddPackageError() {
+function addAddPackageError(msg) {
   return {
     type: ADD_ADD_PACKAGE_ERROR,
+    msg,
   };
 }
 
 export function resetAddPackageError() {
   return {
     type: RESET_ADD_PACKAGE_ERROR,
+  };
+}
+
+function addGetPackagesError(msg) {
+  return {
+    type: ADD_GET_PACKAGES_ERROR,
+    msg,
+  };
+}
+
+export function resetGetPackagesError() {
+  return {
+    type: RESET_GET_PACKAGES_ERROR,
   };
 }
 
@@ -75,7 +91,13 @@ export function getSubscribedPackages() {
   return (dispatch, getState) => {
     dispatch(requestPackages());
     query(request).then((response) => {
-      response.json().then((json) => dispatch(receivedPackages(json)));
+      response.json().then((json) => {
+        if (!response.ok) {
+          dispatch(addGetPackagesError(json.message));
+        } else {
+          dispatch(receivedPackages(json));
+        }
+      });
     }).catch((error) => {});
   };
 }
@@ -96,16 +118,18 @@ function createAddPackageRequest(carrier, trackingNumber) {
 export function requestToAddPackage(carrier, trackingNumber) {
   const request = createAddPackageRequest(carrier, trackingNumber);
   return (dispatch, getState) => {
+    dispatch(processAddPackage());
     query(request).then((response) => {
-      response.json().then((json) => {
+      return response.json().then((json) => {
         if (!response.ok) {
-          dispatch(addAddPackageError());
+          throw new Error(json.message);
         } else {
           dispatch(addPackage(json.id, json.carrier, json.trackingNumber));
         }
+      }).catch((error) => {
+        dispatch(addAddPackageError(error.message));
       });
-    }).catch((error) => {});
-    dispatch(processAddPackage());
+    });
   };
 }
 
