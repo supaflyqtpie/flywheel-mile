@@ -5,7 +5,7 @@ import { requestToDeletePackage } from '../../actions/packages';
 
 function PackagesTable({ packages, onDeleteClick, getPackagesError }) {
   return (
-    <table className="table table-striped">
+    <table className="table table-striped table-hover">
       <thead>
         <tr>
           <th>Carrier</th>
