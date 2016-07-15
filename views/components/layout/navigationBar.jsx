@@ -6,7 +6,7 @@ import { logoutUser } from '../../actions/session';
 const NavigationBar = function navigationBar({ email, signedIn, onLogoutClick }) {
   return (
     <div>
-      <nav className="navbar navbar-inverse navbar-static-top">
+      <nav className="navbar navbar-inverse navbar-static-top" id="navigationBar">
         <div className="container">
           <div className="navbar-header">
             <Link to="/" className="navbar-brand" id="logo">
