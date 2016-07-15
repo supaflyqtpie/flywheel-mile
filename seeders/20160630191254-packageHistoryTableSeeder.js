@@ -1,7 +1,7 @@
 module.exports = {
   up(queryInterface, Sequelize) {
     return queryInterface.bulkInsert('packageHistories', [{
-      packageID: 1,
+      packageId: 1,
       status: 'UNKNOWN',
       statusDetail: 'The shipping label has been created.',
       statusDate: new Date(Date.parse('2016-06-03T12:23:00Z')),
@@ -12,7 +12,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     }, {
-      packageID: 1,
+      packageId: 1,
       status: 'TRANSIT',
       statusDetail: 'Your shipment has been picked up.',
       statusDate: new Date(Date.parse('2016-06-03T15:21:00Z')),
@@ -23,7 +23,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     }, {
-      packageID: 1,
+      packageId: 1,
       status: 'TRANSIT',
       statusDetail: 'Your shipment has been accepted at the USPS origin facility.',
       statusDate: new Date(Date.parse('2016-06-03T19:00:00Z')),
@@ -34,7 +34,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     }, {
-      packageID: 1,
+      packageId: 1,
       status: 'TRANSIT',
       statusDetail: 'Your shipment has arrived at the USPS origin facility.',
       statusDate: new Date(Date.parse('2016-06-03T20:15:00Z')),
@@ -45,7 +45,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     }, {
-      packageID: 1,
+      packageId: 1,
       status: 'TRANSIT',
       statusDetail: 'Your shipment has departed the USPS facility.',
       statusDate: new Date(Date.parse('2016-06-04T03:27:00Z')),
@@ -56,7 +56,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     }, {
-      packageID: 1,
+      packageId: 1,
       status: 'TRANSIT',
       statusDetail: 'Your shipment has arrived at the USPS destination facility.',
       statusDate: new Date(Date.parse('2016-06-04T19:34:00Z')),
@@ -67,7 +67,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     }, {
-      packageID: 1,
+      packageId: 1,
       status: 'TRANSIT',
       statusDetail: 'Your shipment has arrived at the post office.',
       statusDate: new Date(Date.parse('2016-06-06T05:16:00Z')),
@@ -78,7 +78,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     }, {
-      packageID: 1,
+      packageId: 1,
       status: 'TRANSIT',
       statusDetail: 'Your shipment has been sorted completely.',
       statusDate: new Date(Date.parse('2016-06-06T09:21:00Z')),
@@ -89,7 +89,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     }, {
-      packageID: 1,
+      packageId: 1,
       status: 'TRANSIT',
       statusDetail: 'Your shipment is out for delivery.',
       statusDate: new Date(Date.parse('2016-06-06T09:31:00Z')),
@@ -100,7 +100,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     }, {
-      packageID: 1,
+      packageId: 1,
       status: 'DELIVERED',
       statusDetail: 'Your shipment has been delivered at the destination mailbox.',
       statusDate: new Date(Date.parse('2016-06-06T14:03:00Z')),
