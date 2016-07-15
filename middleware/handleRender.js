@@ -17,7 +17,7 @@ function renderFullPage(html, initialState) {
         <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css"/>
         <link rel="stylesheet" href="/css/bootstrap-material-design.min.css" type="text/css"/>
         <link rel="stylesheet" href="/css/ripples.min.css" type="text/css"/>
-        <link rel="stylesheet" href="/dist/application.css" type="text/css"/>
+        <link rel="stylesheet" href="/public/dist/application.css" type="text/css"/>
       </head>
       <body>
         <div id="root">${html}</div>
@@ -26,7 +26,7 @@ function renderFullPage(html, initialState) {
         </script>
         <script src="/js/jquery.min.js"></script>
         <script src="/js/material.min.js"></script>
-        <script src="/dist/bundle.js"></script>
+        <script src="/public/dist/bundle.js"></script>
       </body>
     </html>
     `;
