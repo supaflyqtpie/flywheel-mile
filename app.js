@@ -17,6 +17,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/js', express.static(path.join(__dirname, '/node_modules/jquery/dist')));
+app.use('/js', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));
+app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css')));
+app.use('/css', express.static(path.join(__dirname, '/node_modules/font-awesome/css')));
+app.use('/fonts', express.static(path.join(__dirname, '/node_modules/font-awesome/fonts')));
 
 // Setup dev webpack
 if (app.get('env') === 'development') {
