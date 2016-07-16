@@ -1,0 +1,72 @@
+import React from 'react';
+
+const PackageForm = ({ onSubmitForm, id, isProcessing, packageError }) => {
+  let inputTrackingNumber;
+  let inputCarrier;
+
+  return (
+    <form
+      id={id}
+      className="form-inline"
+      onSubmit={e => {
+        e.preventDefault();
+        if (!inputTrackingNumber.value.trim()) {
+          return;
+        }
+        onSubmitForm(inputCarrier, inputTrackingNumber.value);
+        inputTrackingNumber.value = '';
+      }}
+      disabled={isProcessing}
+    >
+      <div className="form-group">
+        <input
+          className="form-control"
+          placeholder="Tracking Number"
+          type="text"
+          ref={node => {
+            inputTrackingNumber = node;
+          }}
+        />
+        <select
+          className="form-control left"
+          ref={node => {
+            if (node) {
+              inputCarrier = node.value;
+            }
+          }}
+          onChange={event => {
+            inputCarrier = event.target.value;
+          }}
+        >
+          <option value="fedex">Fedex</option>
+          <option value="ups">UPS</option>
+          <option value="usps">USPS</option>
+        </select>
+      </div>
+      <button
+        type="submit"
+        className="btn btn-primary"
+        disabled={isProcessing}
+      >
+        {isProcessing
+          ? <i className="fa fa-spinner fa-spin" aria-hidden="true"></i>
+          : <i className="fa fa-plus" aria-hidden="true"></i>
+        }
+      </button>
+      {(packageError.length > 0) ?
+        <div className="panel panel-danger right">
+          <div className="panel-heading">{packageError}</div>
+        </div> : false
+      }
+    </form>
+  );
+};
+
+PackageForm.propTypes = {
+  onSubmitForm: React.PropTypes.func.isRequired,
+  id: React.PropTypes.string,
+  isProcessing: React.PropTypes.bool.isRequired,
+  packageError: React.PropTypes.string.isRequired,
+};
+
+export default PackageForm;
