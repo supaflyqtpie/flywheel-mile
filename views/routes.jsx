@@ -6,6 +6,7 @@ import Packages from './components/packages/packages';
 import Landing from './components/landing/landing';
 import Rekt from './components/rekt/rekt';
 import { resetAuthError } from './actions/session';
+import { resetAddPackageError, resetGetPackagesError } from './actions/packages';
 
 export default function getRoutes(store) {
   // client route authorization
@@ -20,12 +21,17 @@ export default function getRoutes(store) {
     store.dispatch(resetAuthError());
   };
 
+  const resetPackageError = () => {
+    store.dispatch(resetAddPackageError());
+    store.dispatch(resetGetPackagesError());
+  };
+
   return (
     <Route path="/" component={App}>
       <IndexRoute component={Landing} />
       <Route path="login" component={Session} onLeave={resetLogin} />
       <Route onEnter={requireLogin}>
-        <Route path="packages" component={Packages} />
+        <Route path="packages" component={Packages} onLeave={resetPackageError} />
       </Route>
       <Route path="*" component={Rekt} />
     </Route>

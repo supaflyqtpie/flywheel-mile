@@ -6,6 +6,10 @@ export const ADD_PACKAGE = 'ADD_PACKAGE';
 export const DELETE_PACKAGE = 'DELETE_PACKAGE';
 export const PROCESS_ADD_PACKAGE = 'PROCESS_ADD_PACKAGE';
 export const PROCESS_DELETE_PACKAGE = 'PROCESS_DELETE_PACKAGE';
+export const ADD_ADD_PACKAGE_ERROR = 'ADD_ADD_PACKAGE_ERROR';
+export const RESET_ADD_PACKAGE_ERROR = 'RESET_ADD_PACKAGE_ERROR';
+export const ADD_GET_PACKAGES_ERROR = 'ADD_GET_PACKAGES_ERROR';
+export const RESET_GET_PACKAGES_ERROR = 'RESET_GET_PACKAGES_ERROR';
 
 function requestPackages() {
   return {
@@ -13,7 +17,7 @@ function requestPackages() {
   };
 }
 
-function receivedPackages(packages) {
+export function receivedPackages(packages) {
   return {
     type: RECEIVED_PACKAGES,
     packages,
@@ -33,10 +37,11 @@ function processDeletePackage(id) {
   };
 }
 
-function addPackage(id, trackingNumber) {
+function addPackage(id, carrier, trackingNumber) {
   return {
     type: ADD_PACKAGE,
     id,
+    carrier,
     trackingNumber,
   };
 }
@@ -45,6 +50,32 @@ function deletePackage(id) {
   return {
     type: DELETE_PACKAGE,
     id,
+  };
+}
+
+function addAddPackageError(msg) {
+  return {
+    type: ADD_ADD_PACKAGE_ERROR,
+    msg,
+  };
+}
+
+export function resetAddPackageError() {
+  return {
+    type: RESET_ADD_PACKAGE_ERROR,
+  };
+}
+
+function addGetPackagesError(msg) {
+  return {
+    type: ADD_GET_PACKAGES_ERROR,
+    msg,
+  };
+}
+
+export function resetGetPackagesError() {
+  return {
+    type: RESET_GET_PACKAGES_ERROR,
   };
 }
 
@@ -60,30 +91,44 @@ export function getSubscribedPackages() {
   return (dispatch, getState) => {
     dispatch(requestPackages());
     query(request).then((response) => {
-      response.json().then((json) => dispatch(receivedPackages(json)));
+      response.json().then((json) => {
+        if (!response.ok) {
+          dispatch(addGetPackagesError(json.message));
+        } else {
+          dispatch(receivedPackages(json));
+        }
+      });
     }).catch((error) => {});
   };
 }
 
-function createAddPackageRequest(trackingNumber) {
+function createAddPackageRequest(carrier, trackingNumber) {
   return {
     path: '/packages',
     method: 'POST',
     body: {
       package: {
+        carrier,
         trackingNumber,
       },
     },
   };
 }
 
-export function requestToAddPackage(trackingNumber) {
-  const request = createAddPackageRequest(trackingNumber);
+export function requestToAddPackage(carrier, trackingNumber) {
+  const request = createAddPackageRequest(carrier, trackingNumber);
   return (dispatch, getState) => {
     dispatch(processAddPackage());
-    query(request).then((json) => {
-      dispatch(addPackage(json.id, json.trackingNumber));
-    }).catch((error) => {
+    query(request).then((response) => {
+      return response.json().then((json) => {
+        if (!response.ok) {
+          throw new Error(json.message);
+        } else {
+          dispatch(addPackage(json.id, json.carrier, json.trackingNumber));
+        }
+      }).catch((error) => {
+        dispatch(addAddPackageError(error.message));
+      });
     });
   };
 }
