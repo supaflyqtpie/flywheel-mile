@@ -18,7 +18,7 @@ const PackageForm = ({ onSubmitForm, id, isProcessing, packageError }) => {
       }}
       disabled={isProcessing}
     >
-      <div className="form-group">
+      <div className="form-group package-form-group">
         <input
           className="form-control"
           placeholder="Tracking Number"
@@ -27,8 +27,10 @@ const PackageForm = ({ onSubmitForm, id, isProcessing, packageError }) => {
             inputTrackingNumber = node;
           }}
         />
+      </div>
+      <div className="form-group package-form-group">
         <select
-          className="form-control left"
+          className="form-control"
           ref={node => {
             if (node) {
               inputCarrier = node.value;
@@ -45,16 +47,17 @@ const PackageForm = ({ onSubmitForm, id, isProcessing, packageError }) => {
       </div>
       <button
         type="submit"
+        id="package-form-btn"
         className="btn btn-primary"
         disabled={isProcessing}
       >
         {isProcessing
           ? <i className="fa fa-spinner fa-spin" aria-hidden="true"></i>
-          : <i className="fa fa-plus" aria-hidden="true"></i>
+          : 'Track'
         }
       </button>
       {(packageError.length > 0) ?
-        <div className="panel panel-danger right">
+        <div className="panel panel-danger right" style={{ color: '#1A237E' }}>
           <div className="panel-heading">{packageError}</div>
         </div> : false
       }
