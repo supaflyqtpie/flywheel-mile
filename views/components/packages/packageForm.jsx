@@ -1,12 +1,11 @@
 import React from 'react';
 
-const PackageForm = ({ onSubmitForm, id, isProcessing, packageError }) => {
+const PackageForm = ({ onSubmitForm, isProcessing, packageError }) => {
   let inputTrackingNumber;
   let inputCarrier;
 
   return (
     <form
-      id={id}
       className="form-inline"
       onSubmit={e => {
         e.preventDefault();
@@ -67,7 +66,6 @@ const PackageForm = ({ onSubmitForm, id, isProcessing, packageError }) => {
 
 PackageForm.propTypes = {
   onSubmitForm: React.PropTypes.func.isRequired,
-  id: React.PropTypes.string,
   isProcessing: React.PropTypes.bool.isRequired,
   packageError: React.PropTypes.string.isRequired,
 };
