@@ -2,4 +2,15 @@
   background-image: url('/public/images/landing_background.png');
   min-height: 680px;
   background-size: cover;
+  padding: 150px;
+}
+
+#landing-title {
+  font-size: 40px;
+  letter-spacing: 5px;
+}
+
+#landing-form {
+  background-color: white;
+  border-radius: 5px;
 }

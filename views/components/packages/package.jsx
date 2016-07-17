@@ -6,12 +6,12 @@ export default function Package({ carrier, trackingNumber, onDeleteClick, isProc
       <td>{carrier}</td>
       <td>{trackingNumber}</td>
       <td>
-        <button className="btn btn-danger" onClick={onDeleteClick} disabled={isProcessingDelete}>
+        <div onClick={onDeleteClick} disabled={isProcessingDelete}>
           {isProcessingDelete
             ? <i className="fa fa-spinner fa-spin" aria-hidden="true"></i>
             : <i className="fa fa-remove" aria-hidden="true"></i>
           }
-        </button>
+        </div>
       </td>
     </tr>
   );

@@ -21,10 +21,10 @@ Note for debug: "npm run dev debug"
 
 == TODO
 === Front End ui/ux
-* Landing page
 * Package history page
 * Package history google maps
 === Front End logic
+* redux search package
 * redux package histories
 * redux package delete failure
 * redux unit tests
@@ -33,6 +33,5 @@ Note for debug: "npm run dev debug"
 * route for shippo hook
 
 == Future Features
-* password reset
 * fb messenger notification
 * service worker notifications
