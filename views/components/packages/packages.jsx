@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PackagesTable from './packagesTable';
-import AddPackage from './addPackage';
+import AddPackage from '../../containers/packages/addPackage';
 import { getSubscribedPackages } from '../../actions/packages';
 
 class Packages extends React.Component {
