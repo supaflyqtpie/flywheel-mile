@@ -65,4 +65,17 @@ router.delete('/packages/:id', (req, res, next) => {
   res.status(204).end();
 });
 
+// Get the user's package history for a particular package
+router.get('/packages/:id/packageHistory', (req, res, next) => {
+  req.package.getPackageHistories().then((hist) => {
+    if (hist) {
+      res.json(hist);
+    } else {
+      res.status(404).json({ message: 'No history found for package' });
+    }
+  }).catch((err) => {
+    res.status(422).json({ message: 'Unexpected error occured while fetching package history' });
+  });
+});
+
 module.exports = router;
