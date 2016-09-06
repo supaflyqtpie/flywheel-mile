@@ -25,6 +25,7 @@ function renderFullPage(html, initialState) {
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
         </script>
         <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
         <script src="/js/material.min.js"></script>
         <script src="/public/dist/bundle.js"></script>
       </body>

@@ -5,15 +5,18 @@ import { requestToDeletePackage } from '../../actions/packages';
 
 function PackagesTable({ packages, onDeleteClick, getPackagesError }) {
   return (
-    <table className="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th>Carrier</th>
-          <th>Your Packages</th>
-          <th>Remove</th>
-        </tr>
-      </thead>
-      <tbody>
+    <div>
+    {(getPackagesError.length > 0) ?
+      <h3 className="text-center">{getPackagesError}</h3>
+      : false}
+      <table className="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Carrier</th>
+            <th>Your Packages</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
         {packages.map(item =>
           <Package
             key={item.id}
@@ -21,11 +24,8 @@ function PackagesTable({ packages, onDeleteClick, getPackagesError }) {
             {...item}
           />
         )}
-        {(getPackagesError.length > 0) ?
-          <h3 className="text-center">{getPackagesError}</h3>
-        : false}
-      </tbody>
-    </table>
+      </table>
+    </div>
   );
 }
 
