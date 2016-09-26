@@ -8,6 +8,13 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      {
+        userId: 1,
+        trackingNumber: '602922005857',
+        carrier: 'fedex',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     ]);
   },
 

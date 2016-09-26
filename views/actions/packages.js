@@ -10,6 +10,7 @@ export const ADD_ADD_PACKAGE_ERROR = 'ADD_ADD_PACKAGE_ERROR';
 export const RESET_ADD_PACKAGE_ERROR = 'RESET_ADD_PACKAGE_ERROR';
 export const ADD_GET_PACKAGES_ERROR = 'ADD_GET_PACKAGES_ERROR';
 export const RESET_GET_PACKAGES_ERROR = 'RESET_GET_PACKAGES_ERROR';
+export const ADD_PACKAGE_HISTORY = 'ADD_PACKAGE_HISTORY';
 
 function requestPackages() {
   return {
@@ -79,6 +80,13 @@ export function resetGetPackagesError() {
   };
 }
 
+export function addPackageHistory(history) {
+  return {
+    type: ADD_PACKAGE_HISTORY,
+    history,
+  };
+}
+
 function createGetPackagesRequest() {
   return {
     path: '/packages',
@@ -86,8 +94,16 @@ function createGetPackagesRequest() {
   };
 }
 
+function createGetPackageHistoryRequest(id) {
+  return {
+    path: `/packages/${id}/packageHistory`,
+    method: 'GET',
+  };
+}
+
 export function getSubscribedPackages() {
   const request = createGetPackagesRequest();
+  const result = [];
   return (dispatch, getState) => {
     dispatch(requestPackages());
     query(request).then((response) => {
@@ -95,8 +111,20 @@ export function getSubscribedPackages() {
         if (!response.ok) {
           dispatch(addGetPackagesError(json.message));
         } else {
-          dispatch(receivedPackages(json));
+          const actions = json.map((item) => {
+            const request2 = createGetPackageHistoryRequest(item.id);
+            return query(request2);
+          });
+          return Promise.all(actions);
         }
+      }).then((response2) => {
+        const json2 = response2.map((stuff) => {
+          return stuff.json();
+        });
+        return Promise.all(json2);
+      }).then((result) => {
+        debugger;
+        dispatch(receivedPackages(result));
       });
     }).catch((error) => {});
   };

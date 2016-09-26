@@ -67,7 +67,7 @@ router.delete('/packages/:id', (req, res, next) => {
 
 // Get the user's package history for a particular package
 router.get('/packages/:id/packageHistory', (req, res, next) => {
-  req.package.getPackageHistories().then((hist) => {
+  req.package.getPackageHistories({ order: '"statusDate" DESC' }).then((hist) => {
     if (hist) {
       res.json(hist);
     } else {

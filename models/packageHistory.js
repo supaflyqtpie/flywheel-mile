@@ -1,5 +1,6 @@
 module.exports = function defineUserModel(sequelize, DataTypes) {
   const PackageHistory = sequelize.define('packageHistory', {
+    packageId: { type: DataTypes.INTEGER, allowNull: false },
     statusDate: { type: DataTypes.DATE, allowNull: false },
     city: { type: DataTypes.STRING, allowNull: false },
     state: { type: DataTypes.STRING, allowNull: false },
@@ -32,6 +33,12 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
       statusDetail,
     });
   };
+
+  PackageHistory.getOrdered = (packageId) =>
+    PackageHistory.findAll({
+      where: { packageId },
+      order: '"statusDate" DESC',
+    });
 
   PackageHistory.associate = function associate(db) {
     PackageHistory.belongsTo(db.package);

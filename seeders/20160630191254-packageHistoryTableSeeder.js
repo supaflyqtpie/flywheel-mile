@@ -110,7 +110,19 @@ module.exports = {
       country: 'US',
       createdAt: new Date(),
       updatedAt: new Date(),
-    }]);
+    }, {
+      packageId: 2,
+      status: 'DELIVERED',
+      statusDetail: 'Your shipment has been delivered at the destination mailbox.',
+      statusDate: new Date(Date.parse('2016-05-19T12:31:00Z')),
+      city: 'Fremont',
+      state: 'CA',
+      zip: '94538',
+      country: 'US',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ]);
   },
 
   down(queryInterface, Sequelize) {

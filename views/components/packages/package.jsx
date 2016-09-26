@@ -1,4 +1,5 @@
 import React from 'react';
+import PackageDetail from './packageDetail';
 
 export default function Package({ carrier, trackingNumber, onDeleteClick, isProcessingDelete }) {
   return (
@@ -15,9 +16,10 @@ export default function Package({ carrier, trackingNumber, onDeleteClick, isProc
           </div>
         </td>
       </tr>
-      <tr>
+      <PackageDetail />
+      {/*<tr>
         <td id="demo" className="collapse">Hello</td>
-      </tr>
+      </tr>*/}
     </tbody>
   );
 }

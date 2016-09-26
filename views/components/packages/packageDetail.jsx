@@ -2,7 +2,9 @@ import React from 'react';
 
 export default function PackageDetail({ carrier, trackingNumber, onDeleteClick, isProcessingDelete }) {
   return (
-    <div id="test">Hello</div>
+    <tr>
+      <td>Status</td>
+    </tr>
   );
 }
 
