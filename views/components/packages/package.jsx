@@ -16,10 +16,10 @@ export default function Package({ carrier, trackingNumber, onDeleteClick, isProc
           </div>
         </td>
       </tr>
-      <PackageDetail />
-      {/*<tr>
+      {/*<PackageDetail />*/}
+      <tr>
         <td id="demo" className="collapse">Hello</td>
-      </tr>*/}
+      </tr>
     </tbody>
   );
 }

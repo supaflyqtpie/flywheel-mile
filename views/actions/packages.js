@@ -103,7 +103,7 @@ function createGetPackageHistoryRequest(id) {
 
 export function getSubscribedPackages() {
   const request = createGetPackagesRequest();
-  const result = [];
+  let packagesResponse;
   return (dispatch, getState) => {
     dispatch(requestPackages());
     query(request).then((response) => {
@@ -111,19 +111,23 @@ export function getSubscribedPackages() {
         if (!response.ok) {
           dispatch(addGetPackagesError(json.message));
         } else {
-          const actions = json.map((item) => {
+          packagesResponse = json;
+          const historyQueries = json.map((item) => {
             const request2 = createGetPackageHistoryRequest(item.id);
             return query(request2);
           });
-          return Promise.all(actions);
+          return Promise.all(historyQueries);
         }
-      }).then((response2) => {
-        const json2 = response2.map((stuff) => {
+      }).then((histories) => {
+        const json2 = histories.map((stuff) => {
           return stuff.json();
         });
         return Promise.all(json2);
       }).then((result) => {
-        debugger;
+        return packagesResponse.map((pkg, index) => {
+          return Object.assign({}, pkg, { history: result[index] });
+        });
+      }).then((result) => {
         dispatch(receivedPackages(result));
       });
     }).catch((error) => {});
