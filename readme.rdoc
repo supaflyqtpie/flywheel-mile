@@ -18,20 +18,3 @@ Note for debug: "npm run dev debug"
   npm run db:migrate
   npm run db:seed
   npm run db:drop
-
-== TODO
-=== Front End ui/ux
-* Package history page
-* Package history google maps
-=== Front End logic
-* redux search package
-* redux package histories
-* redux package delete failure
-* redux unit tests
-=== Back-end
-* controller unit tests
-* route for shippo hook
-
-== Future Features
-* fb messenger notification
-* service worker notifications
