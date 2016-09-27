@@ -1,7 +1,7 @@
 import React from 'react';
-import PackageDetail from './packageDetail';
+const moment = require('moment');
 
-export default function Package({ carrier, trackingNumber, onDeleteClick, isProcessingDelete }) {
+export default function Package({ carrier, trackingNumber, history, onDeleteClick, isProcessingDelete }) {
   return (
     <tbody>
       <tr data-toggle="collapse" data-target={'#'+trackingNumber}>
@@ -16,17 +16,32 @@ export default function Package({ carrier, trackingNumber, onDeleteClick, isProc
           </div>
         </td>
       </tr>
-      {/*<PackageDetail />*/}
-      <tr>
-        <td id={trackingNumber} className="collapse">Hello</td>
+      <tr id={trackingNumber} className="collapse">
+        <td>
+          <tr>Location:</tr>
+          <tr>Status:</tr>
+          <tr>Detail:</tr>
+          <tr>Updated:</tr>
+        </td>
+        <td>
+          <tr>{history[0].city + ', ' +history[0].state}</tr>
+          <tr>{history[0].status}</tr>
+          <tr>{history[0].statusDetail}</tr>
+          <tr>{moment(history[0].statusDate).format('LLL')}</tr>
+        </td>
       </tr>
     </tbody>
+      // {/*<PackageDetail />*/}
+      // <tr>
+      //   <td id={trackingNumber} className="collapse">Hello</td>
+      // </tr>
   );
 }
 
 Package.propTypes = {
   carrier: React.PropTypes.string,
   trackingNumber: React.PropTypes.string,
+  history: React.PropTypes.array,
   onDeleteClick: React.PropTypes.func,
   isProcessingDelete: React.PropTypes.bool,
 };

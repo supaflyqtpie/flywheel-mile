@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Package from './package';
 import { requestToDeletePackage } from '../../actions/packages';
+import PackageDetail from './packageDetail';
 
 function PackagesTable({ packages, onDeleteClick, getPackagesError }) {
   return (
