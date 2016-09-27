@@ -4,7 +4,7 @@ import PackageDetail from './packageDetail';
 export default function Package({ carrier, trackingNumber, onDeleteClick, isProcessingDelete }) {
   return (
     <tbody>
-      <tr data-toggle="collapse" data-target="#demo">
+      <tr data-toggle="collapse" data-target={'#'+trackingNumber}>
         <td>{carrier}</td>
         <td>{trackingNumber}</td>
         <td>
@@ -18,7 +18,7 @@ export default function Package({ carrier, trackingNumber, onDeleteClick, isProc
       </tr>
       {/*<PackageDetail />*/}
       <tr>
-        <td id="demo" className="collapse">Hello</td>
+        <td id={trackingNumber} className="collapse">Hello</td>
       </tr>
     </tbody>
   );
