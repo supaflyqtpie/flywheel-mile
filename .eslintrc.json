@@ -36,6 +36,8 @@
     "comma-dangle": 1,
     "semi": [1, "always"],
     "react/prefer-stateless-function": 1,
-    "react/no-render-return-value": 0
+    "react/no-render-return-value": 0,
+    "arrow-body-style": ["error", "always"],
+    "newline-per-chained-call": 0
   }
 }
