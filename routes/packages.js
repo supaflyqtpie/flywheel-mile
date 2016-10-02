@@ -2,14 +2,17 @@ const express = require('express');
 const router = express.Router();
 const handleAuthentication = require('../middleware/handleAuthentication');
 const Package = require('../models').package;
-import { shippoGet } from '../shippoAPIRequestHandler';
+const PackageHistory = require('../models').packageHistory;
+import { shippoGet } from '../util/shippoAPIRequestHandler';
 
 // All routes below require authentication
 router.use(handleAuthentication);
 
 // Get the user's package list
 router.get('/packages', (req, res, next) => {
-  req.user.getPackages().then((packages) => res.json(packages)).catch((err) => {
+  req.user.getPackages().then((packages) => {
+    return res.json(packages);
+  }).catch((err) => {
     res.status(422).json({ message: 'Unexpected error occured while retrieving packages' });
   });
 });
@@ -26,8 +29,19 @@ router.post('/packages', (req, res, next) => {
         res.status(422).json({ message: 'Could not get package from Shippo' });
       } else {
         Package.create(newPackage).then((item) => {
-          req.user.addPackage(item).then(() => {
-            res.json(item);
+          req.user.addPackage(item);
+          return item;
+        }).then((item) => {
+          PackageHistory.createFromShippoResponse(item.id, json).then((history) => {
+            res.json({
+              id: item.id,
+              carrier: item.carrier,
+              trackingNumber: item.trackingNumber,
+              history,
+            });
+          }).catch((err) => {
+            console.log(err);
+            res.status(422).json({ message: 'help' });
           });
         }).catch((err) => {
           res.status(422).json({ message: 'Unable to create package' });

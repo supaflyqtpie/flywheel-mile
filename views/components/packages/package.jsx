@@ -1,5 +1,5 @@
 import React from 'react';
-const moment = require('moment');
+import { formatDatePretty } from '../../../util/dateUtil';
 
 export default function Package({ carrier, trackingNumber, history, onDeleteClick, isProcessingDelete }) {
   return (
@@ -27,7 +27,7 @@ export default function Package({ carrier, trackingNumber, history, onDeleteClic
           <tr>{history[0].city + ', ' +history[0].state}</tr>
           <tr>{history[0].status}</tr>
           <tr>{history[0].statusDetail}</tr>
-          <tr>{moment(history[0].statusDate).format('LLL')}</tr>
+          <tr>{formatDatePretty(history[0].statusDate)}</tr>
         </td>
       </tr>
     </tbody>

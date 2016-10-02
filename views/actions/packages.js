@@ -1,4 +1,5 @@
 import { query } from '../helpers';
+import { dateComparator } from '../../util/dateUtil';
 
 export const REQUEST_PACKAGES = 'REQUEST_PACKAGES';
 export const RECEIVED_PACKAGES = 'RECEIVED_PACKAGES';
@@ -38,12 +39,13 @@ function processDeletePackage(id) {
   };
 }
 
-function addPackage(id, carrier, trackingNumber) {
+function addPackage(id, carrier, trackingNumber, history) {
   return {
     type: ADD_PACKAGE,
     id,
     carrier,
     trackingNumber,
+    history,
   };
 }
 
@@ -152,6 +154,12 @@ function createAddPackageRequest(carrier, trackingNumber) {
   };
 }
 
+function sortHistoryByDate(history) {
+  return history.sort((a, b) => {
+    return dateComparator(a, b);
+  });
+}
+
 export function requestToAddPackage(carrier, trackingNumber) {
   const request = createAddPackageRequest(carrier, trackingNumber);
   return (dispatch, getState) => {
@@ -161,7 +169,7 @@ export function requestToAddPackage(carrier, trackingNumber) {
         if (!response.ok) {
           throw new Error(json.message);
         } else {
-          dispatch(addPackage(json.id, json.carrier, json.trackingNumber));
+          dispatch(addPackage(json.id, json.carrier, json.trackingNumber, sortHistoryByDate(json.history)));
         }
       }).catch((error) => {
         dispatch(addAddPackageError(error.message));
