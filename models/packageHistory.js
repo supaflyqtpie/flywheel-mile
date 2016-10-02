@@ -14,6 +14,23 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
     },
   });
 
+  const transformShippoResponseToDb = function transformShippoResponseToDb(packageId, response) {
+    return new Promise((resolve, reject) => {
+      resolve(response.tracking_history.map((value) => {
+        return {
+          packageId,
+          statusDate: value.status_date,
+          city: value.location.city,
+          state: value.location.state,
+          zip: value.location.zip,
+          country: value.location.country,
+          status: value.status,
+          statusDetail: value.status_details,
+        };
+      }));
+    });
+  };
+
   PackageHistory.createPackageHistory = function createPackageHistory(
     statusDate,
     city,
@@ -30,6 +47,19 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
       country,
       status,
       statusDetail,
+    });
+  };
+
+  PackageHistory.createFromShippoResponse = function createFromShippoResponse(packageId, res) {
+    return transformShippoResponseToDb(packageId, res).then((history) => {
+      return PackageHistory.bulkCreate(history, { ignoreDuplicates: true });
+    });
+  };
+
+  PackageHistory.getOrdered = (packageId) => {
+    return PackageHistory.findAll({
+      where: { packageId },
+      order: '"statusDate" DESC',
     });
   };
 

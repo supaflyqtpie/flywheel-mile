@@ -17,6 +17,7 @@ function singlePackage(item, action) {
         id: action.id,
         carrier: action.carrier,
         trackingNumber: action.trackingNumber,
+        history: action.history,
         isProcessingDelete: false,
       };
     case PROCESS_DELETE_PACKAGE:
@@ -55,11 +56,11 @@ function packages(state, action) {
       });
     case PROCESS_DELETE_PACKAGE:
       return Object.assign({}, state, {
-        items: state.items.map((item) => singlePackage(item, action)),
+        items: state.items.map((item) => { return singlePackage(item, action); }),
       });
     case DELETE_PACKAGE:
       return Object.assign({}, state, {
-        items: state.items.filter((item) => item.id !== action.id),
+        items: state.items.filter((item) => { return item.id !== action.id; }),
       });
     case ADD_ADD_PACKAGE_ERROR:
       return Object.assign({}, state, {

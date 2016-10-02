@@ -56,3 +56,6 @@ public/dist
 
 # ctags -R --exclude=.git --exclude=node_modules
 tags
+
+# designated test/debug file (:
+test.js

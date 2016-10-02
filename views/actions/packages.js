@@ -1,4 +1,5 @@
 import { query } from '../helpers';
+import { dateComparator } from '../../util/dateUtil';
 
 export const REQUEST_PACKAGES = 'REQUEST_PACKAGES';
 export const RECEIVED_PACKAGES = 'RECEIVED_PACKAGES';
@@ -10,6 +11,7 @@ export const ADD_ADD_PACKAGE_ERROR = 'ADD_ADD_PACKAGE_ERROR';
 export const RESET_ADD_PACKAGE_ERROR = 'RESET_ADD_PACKAGE_ERROR';
 export const ADD_GET_PACKAGES_ERROR = 'ADD_GET_PACKAGES_ERROR';
 export const RESET_GET_PACKAGES_ERROR = 'RESET_GET_PACKAGES_ERROR';
+export const ADD_PACKAGE_HISTORY = 'ADD_PACKAGE_HISTORY';
 
 function requestPackages() {
   return {
@@ -37,12 +39,13 @@ function processDeletePackage(id) {
   };
 }
 
-function addPackage(id, carrier, trackingNumber) {
+function addPackage(id, carrier, trackingNumber, history) {
   return {
     type: ADD_PACKAGE,
     id,
     carrier,
     trackingNumber,
+    history,
   };
 }
 
@@ -79,6 +82,13 @@ export function resetGetPackagesError() {
   };
 }
 
+export function addPackageHistory(history) {
+  return {
+    type: ADD_PACKAGE_HISTORY,
+    history,
+  };
+}
+
 function createGetPackagesRequest() {
   return {
     path: '/packages',
@@ -86,8 +96,30 @@ function createGetPackagesRequest() {
   };
 }
 
+function createGetPackageHistoryRequest(id) {
+  return {
+    path: `/packages/${id}/packageHistory`,
+    method: 'GET',
+  };
+}
+
+function getAndAddPackageHistories(packages) {
+  const historyQueries = packages.map((item) => {
+    const request = createGetPackageHistoryRequest(item.id);
+    return query(request);
+  });
+
+  return Promise.all(historyQueries).then((histories) => {
+    const json = histories.map((data) => {
+      return data.json();
+    });
+    return Promise.all(json);
+  });
+}
+
 export function getSubscribedPackages() {
   const request = createGetPackagesRequest();
+  let packagesResponse;
   return (dispatch, getState) => {
     dispatch(requestPackages());
     query(request).then((response) => {
@@ -95,9 +127,16 @@ export function getSubscribedPackages() {
         if (!response.ok) {
           dispatch(addGetPackagesError(json.message));
         } else {
-          dispatch(receivedPackages(json));
+          packagesResponse = json;
+          return getAndAddPackageHistories(json);
         }
-      });
+      }).then((result) => {
+        return packagesResponse.map((pkg, index) => {
+          return Object.assign({}, pkg, { history: result[index] });
+        });
+      }).then((result) => {
+        dispatch(receivedPackages(result));
+      }).catch((error) => {});
     }).catch((error) => {});
   };
 }
@@ -115,6 +154,12 @@ function createAddPackageRequest(carrier, trackingNumber) {
   };
 }
 
+function sortHistoryByDate(history) {
+  return history.sort((a, b) => {
+    return dateComparator(a, b);
+  });
+}
+
 export function requestToAddPackage(carrier, trackingNumber) {
   const request = createAddPackageRequest(carrier, trackingNumber);
   return (dispatch, getState) => {
@@ -124,7 +169,7 @@ export function requestToAddPackage(carrier, trackingNumber) {
         if (!response.ok) {
           throw new Error(json.message);
         } else {
-          dispatch(addPackage(json.id, json.carrier, json.trackingNumber));
+          dispatch(addPackage(json.id, json.carrier, json.trackingNumber, sortHistoryByDate(json.history)));
         }
       }).catch((error) => {
         dispatch(addAddPackageError(error.message));
