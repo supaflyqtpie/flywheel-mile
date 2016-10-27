@@ -31,10 +31,6 @@ export default function Package({ carrier, trackingNumber, history, onDeleteClic
         </td>
       </tr>
     </tbody>
-      // {/*<PackageDetail />*/}
-      // <tr>
-      //   <td id={trackingNumber} className="collapse">Hello</td>
-      // </tr>
   );
 }
 

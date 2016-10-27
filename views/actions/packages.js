@@ -1,5 +1,7 @@
 import { query } from '../helpers';
 import { dateComparator } from '../../util/dateUtil';
+import { shippoGet } from '../../util/shippoAPIRequestHandler';
+import { push } from 'react-router-redux';
 
 export const REQUEST_PACKAGES = 'REQUEST_PACKAGES';
 export const RECEIVED_PACKAGES = 'RECEIVED_PACKAGES';
@@ -192,6 +194,22 @@ export function requestToDeletePackage(id) {
     query(request).then((json) => {
       dispatch(deletePackage(id));
     }).catch((error) => {
+    });
+  };
+}
+
+export function queryPackage(trackingNumber, carrier) {
+  return (dispatch, getState) => {
+    dispatch(processAddPackage());
+    shippoGet(trackingNumber, carrier).then((res) => {
+      res.json().then((json) => {
+        if (!res.ok || !json || !json.tracking_status) {
+          dispatch(addAddPackageError(json));
+        } else {
+          dispatch(addPackage(json.id, json.carrier, json.trackingNumber, sortHistoryByDate(json.history)));
+          dispatch(push('/details'));
+        }
+      });
     });
   };
 }

@@ -1,16 +1,18 @@
 import { connect } from 'react-redux';
 import PackageForm from '../../components/packages/packageForm';
+import { queryPackage } from '../../actions/packages';
 
 function mapStateToProps(state) {
   return {
-    isProcessing: false,
-    packageError: '',
+    isProcessing: state.packages.isAdding,
+    packageError: state.packages.addPackageError,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     onSubmitForm: (inputCarrier, inputTrackingNumber) => {
+      dispatch(queryPackage(inputCarrier, inputTrackingNumber));
     },
   };
 }
