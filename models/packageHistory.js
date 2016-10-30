@@ -16,16 +16,16 @@ module.exports = function defineUserModel(sequelize, DataTypes) {
 
   const transformShippoResponseToDb = function transformShippoResponseToDb(packageId, response) {
     return new Promise((resolve, reject) => {
-      resolve(response.tracking_history.map((value) => {
+      resolve(response.trackingHistory.map((value) => {
         return {
           packageId,
-          statusDate: value.status_date,
-          city: value.location.city,
-          state: value.location.state,
-          zip: value.location.zip,
-          country: value.location.country,
+          statusDate: value.statusDate,
+          city: value.city,
+          state: value.state,
+          zip: value.zip,
+          country: value.country,
           status: value.status,
-          statusDetail: value.status_details,
+          statusDetail: value.statusDetail,
         };
       }));
     });
