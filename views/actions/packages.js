@@ -197,21 +197,29 @@ export function requestToDeletePackage(id) {
   };
 }
 
-export function queryPackage(trackingNumber, carrier) {
-
+function createQueryPackageRequest(trackingNumber, carrier) {
+  return {
+    path: '/queryPackage',
+    method: 'POST',
+    body: {
+      package: {
+        carrier,
+        trackingNumber,
+      },
+    },
+  };
 }
-// export function queryPackage(trackingNumber, carrier) {
-//   return (dispatch, getState) => {
-//     dispatch(processAddPackage());
-//     shippoGet(trackingNumber, carrier).then((res) => {
-//       res.json().then((json) => {
-//         if (!res.ok || !json || !json.tracking_status) {
-//           dispatch(addAddPackageError(json));
-//         } else {
-//           dispatch(addPackage(json.id, json.carrier, json.trackingNumber, sortHistoryByDate(json.history)));
-//           dispatch(push('/details'));
-//         }
-//       });
-//     });
-//   };
-// }
+
+export function queryPackage(carrier, trackingNumber) {
+  const request = createQueryPackageRequest(trackingNumber, carrier);
+  return (dispatch, getState) => {
+    query(request).then((response) => {
+      response.json().then((json) => {
+        dispatch(addPackage(0, json.carrier, json.trackingNumber, sortHistoryByDate(json.trackingHistory)));
+        dispatch(push('/details'));
+      });
+    }).catch((error) => {
+      dispatch(addAddPackageError('Error query package'));
+    });
+  };
+}

@@ -5,12 +5,14 @@ const Package = require('../models').package;
 const PackageHistory = require('../models').packageHistory;
 import { shippoGet } from '../util/shippoAPIRequestHandler';
 
-// All routes below require authentication
 router.post('/queryPackage', (req, res, next) => {
-  shippoGet(req.body.carrier, req.body.trackingNumber).then((response) => {
-
+  const data = req.body.package;
+  shippoGet(data.carrier, data.trackingNumber).then((response) => {
+    res.json(response);
   });
 });
+
+// All routes below require authentication
 router.use(handleAuthentication);
 
 // Get the user's package list
