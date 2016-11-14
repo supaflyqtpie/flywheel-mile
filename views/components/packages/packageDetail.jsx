@@ -1,13 +1,9 @@
 import React from 'react';
-
-export default function PackageDetail({ carrier, trackingNumber, history }) {
+import PackageDetailInfo from './packageDetailInfo';
+export default function PackageDetail() {
   return (
-    <div>{trackingNumber}</div>
+    <div>
+      <PackageDetailInfo />
+    </div>
   );
 }
-
-PackageDetail.propTypes = {
-  carrier: React.PropTypes.string,
-  trackingNumber: React.PropTypes.string,
-  history: React.PropTypes.array,
-};
