@@ -1,5 +1,5 @@
 import { query } from '../helpers';
-import { dateComparator } from '../../util/dateUtil';
+import { dateComparator } from '../../util/formatUtil';
 import { push } from 'react-router-redux';
 
 export const REQUEST_PACKAGES = 'REQUEST_PACKAGES';
