@@ -19,6 +19,28 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      originCity: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      originState: {
+        type: Sequelize.STRING,
+      },
+      originCountry: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      destinationCity: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      destinationState: {
+        type: Sequelize.STRING,
+      },
+      destinationCountry: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,

@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import db from '../../models/index';
 import { setupDB } from '../utils';
+import { origin, destination } from './package.spec';
 const Package = db.package;
 const PackageHistory = db.packageHistory;
 
@@ -44,6 +45,10 @@ describe('PackageHistory Model', () => {
         package: {
           trackingNumber: 'kamehameha',
           carrier: 'piccolo',
+          originCity: origin.city,
+          originCountry: origin.country,
+          destinationCity: destination.city,
+          destinationCountry: destination.country,
         },
       }, {
         include: [Package],
