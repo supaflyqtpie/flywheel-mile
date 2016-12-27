@@ -1,11 +1,15 @@
 import { expect } from 'chai';
 import db from '../../models/index';
 import { setupDB } from '../utils';
+import { origin, destination } from './package.spec';
+
 const Package = db.package;
 const User = db.user;
 
 const email = 'dory@blue.fish';
 const password = 'findingbluefish';
+const eta = '2016-06-03T15:21:00Z';
+const serviceLevel = 'priority';
 
 describe('User Model', () => {
   beforeEach(setupDB);
@@ -48,8 +52,26 @@ describe('User Model', () => {
         email,
         password,
         packages: [
-          { trackingNumber: 'S0mEFunkie#', carrier: 'usps' },
-          { trackingNumber: '1800dankmemes', carrier: 'fedex' },
+          {
+            trackingNumber: 'S0mEFunkie#',
+            carrier: 'usps',
+            originCity: origin.city,
+            originCountry: origin.country,
+            destinationCity: destination.city,
+            destinationCountry: destination.country,
+            eta,
+            serviceLevel,
+          },
+          {
+            trackingNumber: '1800dankmemes',
+            carrier: 'fedex',
+            originCity: origin.city,
+            originCountry: origin.country,
+            destinationCity: destination.city,
+            destinationCountry: destination.country,
+            eta,
+            serviceLevel,
+          },
         ],
       }, {
         include: [Package],

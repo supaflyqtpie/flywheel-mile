@@ -22,6 +22,10 @@ function singlePackage(item, action) {
         trackingNumber: action.trackingNumber,
         history: action.history,
         isProcessingDelete: false,
+        origin: action.origin,
+        destination: action.destination,
+        eta: action.eta,
+        serviceLevel: action.serviceLevel,
       };
     case PROCESS_DELETE_PACKAGE:
       if (item.id !== action.id) {

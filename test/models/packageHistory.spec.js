@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import db from '../../models/index';
 import { setupDB } from '../utils';
+import { origin, destination } from './package.spec';
 const Package = db.package;
 const PackageHistory = db.packageHistory;
 
@@ -11,6 +12,9 @@ const zip = '22222';
 const country = 'Altoids';
 const status = 'Transit';
 const statusDetail = 'In transit';
+
+const eta = '2016-06-03T15:21:00Z';
+const serviceLevel = 'priority';
 
 describe('PackageHistory Model', () => {
   beforeEach(setupDB);
@@ -44,6 +48,12 @@ describe('PackageHistory Model', () => {
         package: {
           trackingNumber: 'kamehameha',
           carrier: 'piccolo',
+          originCity: origin.city,
+          originCountry: origin.country,
+          destinationCity: destination.city,
+          destinationCountry: destination.country,
+          eta,
+          serviceLevel,
         },
       }, {
         include: [Package],

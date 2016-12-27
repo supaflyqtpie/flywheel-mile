@@ -29,9 +29,14 @@ router.post('/packages', (req, res, next) => {
   const newPackage = req.body.package;
   shippoGet(newPackage.carrier, newPackage.trackingNumber).then((json) => {
     console.log(json);
-    Package.create(newPackage).then((item) => {
-      req.user.addPackage(item);
-      return item;
+    Package.createPackage(newPackage.trackingNumber,
+      newPackage.carrier,
+      json.addressFrom,
+      json.addressTo,
+      json.eta,
+      json.serviceLevel).then((item) => {
+        req.user.addPackage(item);
+        return item;
     }).then((item) => {
       PackageHistory.createFromShippoResponse(item.id, json).then((history) => {
         res.json({
@@ -39,6 +44,18 @@ router.post('/packages', (req, res, next) => {
           carrier: item.carrier,
           trackingNumber: item.trackingNumber,
           history,
+          origin: {
+            city: item.originCity,
+            state: item.originState,
+            country: item.originCountry,
+          },
+          destination: {
+            city: item.destinationCity,
+            state: item.destinationState,
+            country: item.destinationCountry,
+          },
+          eta: item.eta,
+          serviceLevel: item.serviceLevel,
         });
       }).catch((err) => {
         console.log(err);
