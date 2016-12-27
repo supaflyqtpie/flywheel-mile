@@ -8,10 +8,13 @@ import {
   ADD_ADD_PACKAGE_ERROR,
   RESET_ADD_PACKAGE_ERROR,
   ADD_GET_PACKAGES_ERROR,
-  RESET_GET_PACKAGES_ERROR } from '../actions/packages';
+  RESET_GET_PACKAGES_ERROR,
+  UPDATE_CURRENT_PACKAGE_DETAIL,
+} from '../actions/packages';
 
 function singlePackage(item, action) {
   switch (action.type) {
+    case UPDATE_CURRENT_PACKAGE_DETAIL:
     case ADD_PACKAGE:
       return {
         id: action.id,
@@ -54,6 +57,12 @@ function packages(state, action) {
         getPackagesError: '',
         items: [...state.items, singlePackage(undefined, action)],
       });
+    case UPDATE_CURRENT_PACKAGE_DETAIL:
+      return Object.assign({}, state, {
+        addPackageError: '',
+        getPackagesError: '',
+        packageDetail: singlePackage(undefined, action),
+      });
     case PROCESS_DELETE_PACKAGE:
       return Object.assign({}, state, {
         items: state.items.map((item) => { return singlePackage(item, action); }),
@@ -91,6 +100,7 @@ export default function trackedPackages(state = {
   addPackageError: '',
   getPackagesError: '',
   items: [],
+  packageDetail: {},
 }, action) {
   switch (action.type) {
     case REQUEST_PACKAGES:
@@ -102,6 +112,7 @@ export default function trackedPackages(state = {
     case RESET_ADD_PACKAGE_ERROR:
     case ADD_GET_PACKAGES_ERROR:
     case RESET_GET_PACKAGES_ERROR:
+    case UPDATE_CURRENT_PACKAGE_DETAIL:
     case DELETE_PACKAGE:
       return Object.assign({}, state, packages(state, action));
     default:

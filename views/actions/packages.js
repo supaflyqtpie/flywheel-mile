@@ -1,5 +1,6 @@
 import { query } from '../helpers';
-import { dateComparator } from '../../util/dateUtil';
+import { dateComparator } from '../../util/formatUtil';
+import { push } from 'react-router-redux';
 
 export const REQUEST_PACKAGES = 'REQUEST_PACKAGES';
 export const RECEIVED_PACKAGES = 'RECEIVED_PACKAGES';
@@ -12,6 +13,7 @@ export const RESET_ADD_PACKAGE_ERROR = 'RESET_ADD_PACKAGE_ERROR';
 export const ADD_GET_PACKAGES_ERROR = 'ADD_GET_PACKAGES_ERROR';
 export const RESET_GET_PACKAGES_ERROR = 'RESET_GET_PACKAGES_ERROR';
 export const ADD_PACKAGE_HISTORY = 'ADD_PACKAGE_HISTORY';
+export const UPDATE_CURRENT_PACKAGE_DETAIL = 'UPDATE_CURRENT_PACKAGE_DETAIL';
 
 function requestPackages() {
   return {
@@ -42,6 +44,16 @@ function processDeletePackage(id) {
 function addPackage(id, carrier, trackingNumber, history) {
   return {
     type: ADD_PACKAGE,
+    id,
+    carrier,
+    trackingNumber,
+    history,
+  };
+}
+
+function updateCurrentPackageDetail(id, carrier, trackingNumber, history) {
+  return {
+    type: UPDATE_CURRENT_PACKAGE_DETAIL,
     id,
     carrier,
     trackingNumber,
@@ -136,8 +148,8 @@ export function getSubscribedPackages() {
         });
       }).then((result) => {
         dispatch(receivedPackages(result));
-      }).catch((error) => {});
-    }).catch((error) => {});
+      }).catch((error) => { console.log(error); });
+    }).catch((error) => { console.log(error); });
   };
 }
 
@@ -192,6 +204,33 @@ export function requestToDeletePackage(id) {
     query(request).then((json) => {
       dispatch(deletePackage(id));
     }).catch((error) => {
+    });
+  };
+}
+
+function createQueryPackageRequest(trackingNumber, carrier) {
+  return {
+    path: '/queryPackage',
+    method: 'POST',
+    body: {
+      package: {
+        carrier,
+        trackingNumber,
+      },
+    },
+  };
+}
+
+export function queryPackage(carrier, trackingNumber) {
+  const request = createQueryPackageRequest(trackingNumber, carrier);
+  return (dispatch, getState) => {
+    query(request).then((response) => {
+      response.json().then((json) => {
+        dispatch(updateCurrentPackageDetail(0, json.carrier, json.trackingNumber, sortHistoryByDate(json.trackingHistory)));
+        dispatch(push('/details'));
+      });
+    }).catch((error) => {
+      dispatch(addAddPackageError('Error query package'));
     });
   };
 }

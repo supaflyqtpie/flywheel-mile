@@ -12,3 +12,7 @@ export function dateComparator(a, b) {
 export function formatDatePretty(date) {
   return moment(date).format('LLL');
 }
+
+export function formatAddress(address) {
+  return `${address.city}, ${address.state} ${address.zip} ${address.country}`;
+}

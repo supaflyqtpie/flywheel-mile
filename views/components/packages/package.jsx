@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatDatePretty } from '../../../util/dateUtil';
+import { formatDatePretty } from '../../../util/formatUtil';
 
 export default function Package({ carrier, trackingNumber, history, onDeleteClick, isProcessingDelete }) {
   return (
@@ -31,10 +31,6 @@ export default function Package({ carrier, trackingNumber, history, onDeleteClic
         </td>
       </tr>
     </tbody>
-      // {/*<PackageDetail />*/}
-      // <tr>
-      //   <td id={trackingNumber} className="collapse">Hello</td>
-      // </tr>
   );
 }
 
