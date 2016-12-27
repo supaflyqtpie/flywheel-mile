@@ -15,6 +15,12 @@ export const RESET_GET_PACKAGES_ERROR = 'RESET_GET_PACKAGES_ERROR';
 export const ADD_PACKAGE_HISTORY = 'ADD_PACKAGE_HISTORY';
 export const UPDATE_CURRENT_PACKAGE_DETAIL = 'UPDATE_CURRENT_PACKAGE_DETAIL';
 
+function sortHistoryByDate(history) {
+  return history.sort((a, b) => {
+    return dateComparator(a, b);
+  });
+}
+
 function requestPackages() {
   return {
     type: REQUEST_PACKAGES,
@@ -41,23 +47,31 @@ function processDeletePackage(id) {
   };
 }
 
-function addPackage(id, carrier, trackingNumber, history) {
+function addPackage(json) {
   return {
     type: ADD_PACKAGE,
-    id,
-    carrier,
-    trackingNumber,
-    history,
+    id: json.id,
+    carrier: json.carrier,
+    trackingNumber: json.trackingNumber,
+    history: sortHistoryByDate(history),
+    origin: json.origin,
+    destination: json.destination,
+    eta: json.eta,
+    serviceLevel: json.serviceLevel,
   };
 }
 
-function updateCurrentPackageDetail(id, carrier, trackingNumber, history) {
+function updateCurrentPackageDetail(json) {
   return {
     type: UPDATE_CURRENT_PACKAGE_DETAIL,
-    id,
-    carrier,
-    trackingNumber,
-    history,
+    id: 0,
+    carrier: json.carrier,
+    trackingNumber: json.trackingNumber,
+    history: sortHistoryByDate(json.trackingHistory),
+    origin: json.addressFrom,
+    destination: json.addressTo,
+    eta: json.eta,
+    serviceLevel: json.serviceLevel.name,
   };
 }
 
@@ -166,12 +180,6 @@ function createAddPackageRequest(carrier, trackingNumber) {
   };
 }
 
-function sortHistoryByDate(history) {
-  return history.sort((a, b) => {
-    return dateComparator(a, b);
-  });
-}
-
 export function requestToAddPackage(carrier, trackingNumber) {
   const request = createAddPackageRequest(carrier, trackingNumber);
   return (dispatch, getState) => {
@@ -181,7 +189,7 @@ export function requestToAddPackage(carrier, trackingNumber) {
         if (!response.ok) {
           throw new Error(json.message);
         } else {
-          dispatch(addPackage(json.id, json.carrier, json.trackingNumber, sortHistoryByDate(json.history)));
+          dispatch(addPackage(json));
         }
       }).catch((error) => {
         dispatch(addAddPackageError(error.message));
@@ -226,7 +234,7 @@ export function queryPackage(carrier, trackingNumber) {
   return (dispatch, getState) => {
     query(request).then((response) => {
       response.json().then((json) => {
-        dispatch(updateCurrentPackageDetail(0, json.carrier, json.trackingNumber, sortHistoryByDate(json.trackingHistory)));
+        dispatch(updateCurrentPackageDetail(json));
         dispatch(push('/details'));
       });
     }).catch((error) => {

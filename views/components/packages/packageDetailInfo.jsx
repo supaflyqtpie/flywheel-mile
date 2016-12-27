@@ -48,13 +48,13 @@ const PackageDetailInfo = ({ packageDetail }) => {
                       <tr>Carrier:</tr>
                       <tr>Service:</tr>
                     </td>
-                    {/* <td>
-                      <tr>{formatAddress(packageDetail.addressFrom)}</tr>
-                      <tr>{formatAddress(packageDetail.addressTo)}</tr>
-                      <tr>{packageDetail.eta}</tr>
+                    <td>
+                      <tr>{formatAddress(packageDetail.origin)}</tr>
+                      <tr>{formatAddress(packageDetail.destination)}</tr>
+                      <tr>{formatDatePretty(packageDetail.eta)}</tr>
                       <tr>{packageDetail.carrier}</tr>
-                      <tr>{packageDetail.serviceLevel.name}</tr>
-                    </td> */}
+                      <tr>{packageDetail.serviceLevel}</tr>
+                    </td>
                   </tbody>
                 </table>
               </div>

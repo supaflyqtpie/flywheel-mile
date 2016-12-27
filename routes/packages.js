@@ -44,6 +44,18 @@ router.post('/packages', (req, res, next) => {
           carrier: item.carrier,
           trackingNumber: item.trackingNumber,
           history,
+          origin: {
+            city: item.originCity,
+            state: item.originState,
+            country: item.originCountry,
+          },
+          destination: {
+            city: item.destinationCity,
+            state: item.destinationState,
+            country: item.destinationCountry,
+          },
+          eta: item.eta,
+          serviceLevel: item.serviceLevel,
         });
       }).catch((err) => {
         console.log(err);
