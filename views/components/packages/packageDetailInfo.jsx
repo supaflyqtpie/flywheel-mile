@@ -26,7 +26,7 @@ const PackageDetailInfo = ({ packageDetail }) => {
                       <tr>
                         <td>{formatDatePretty(item.statusDate)}</td>
                         <td>{item.status}</td>
-                        <td>{item.city}</td>
+                        <td>{formatAddress(item.location)}</td>
                         <td>{item.statusDetail}</td>
                       </tr>
                     </tbody>

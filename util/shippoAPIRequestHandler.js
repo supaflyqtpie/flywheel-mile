@@ -1,16 +1,6 @@
+import { get } from './util';
 const fetch = require('node-fetch');
-
 const baseURI = 'https://api.goshippo.com/v1/tracks';
-
-export function isNullOrBlank(obj) {
-  return (typeof obj == 'undefined' || obj === null || obj === '');
-}
-
-export function get(obj, key) {
-  return key.split('.').reduce((p, c) => {
-    return isNullOrBlank(obj) ? p : p[c];
-  }, obj);
-}
 
 function buildURI(carrier, trackingNumber) {
   return `${baseURI}/${carrier}/${trackingNumber}/`;
@@ -52,10 +42,7 @@ function transformResponse(json) {
     trackingHistory: json.tracking_history.map((value) => {
       return {
         statusDate: get(value, 'status_date'),
-        city: get(value, 'location.city'),
-        state: get(value, 'location.state'),
-        zip: get(value, 'location.zip'),
-        country: get(value, 'location.country'),
+        location: get(value, 'location'),
         status: get(value, 'status'),
         statusDetail: get(value, 'status_details'),
       };
@@ -66,9 +53,7 @@ function transformResponse(json) {
 export function shippoGet(carrier, trackingNumber) {
   return new Promise((resolve, reject) => {
     fetch(buildURI(carrier, trackingNumber)).then((response) => {
-      debugger;
       response.json().then((json) => {
-        debugger;
         if (!response.ok || !json || !json.tracking_status) {
           reject('Error retrieving info from Shippo');
         } else {
