@@ -7,7 +7,9 @@ import { shippoGet } from '../util/shippoAPIRequestHandler';
 
 router.post('/queryPackage', (req, res, next) => {
   const data = req.body.package;
+  debugger;
   shippoGet(data.carrier, data.trackingNumber).then((response) => {
+    debugger;
     res.json(response);
   });
 });

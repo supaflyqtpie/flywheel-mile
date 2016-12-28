@@ -53,7 +53,7 @@ const PackageDetailInfo = ({ packageDetail }) => {
                       <tr>{formatAddress(packageDetail.destination)}</tr>
                       <tr>{formatDatePretty(packageDetail.eta)}</tr>
                       <tr>{packageDetail.carrier}</tr>
-                      <tr>{packageDetail.serviceLevel}</tr>
+                      <tr>{packageDetail.serviceLevel.name}</tr>
                     </td>
                   </tbody>
                 </table>

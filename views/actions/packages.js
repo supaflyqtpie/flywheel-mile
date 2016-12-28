@@ -71,7 +71,7 @@ function updateCurrentPackageDetail(json) {
     origin: json.addressFrom,
     destination: json.addressTo,
     eta: json.eta,
-    serviceLevel: json.serviceLevel.name,
+    serviceLevel: json.serviceLevel,
   };
 }
 
