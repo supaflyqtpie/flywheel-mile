@@ -1,4 +1,5 @@
 const moment = require('moment');
+import { isNullOrBlank } from './util';
 
 export function dateComparator(a, b) {
   if (Date.parse(a.statusDate) > Date.parse(b.statusDate)) {
@@ -10,9 +11,10 @@ export function dateComparator(a, b) {
 }
 
 export function formatDatePretty(date) {
-  return moment(date).format('LLL');
+  return isNullOrBlank(date) ? 'N/A' : moment(date).format('LLL');
 }
 
 export function formatAddress(address) {
-  return `${address.city}, ${address.state} ${address.zip} ${address.country}`;
+  return address ? `${address.city}, ${address.state} ${address.zip} ${address.country}`
+  : 'N/A';
 }
